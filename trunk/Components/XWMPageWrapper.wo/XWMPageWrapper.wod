@@ -1,0 +1,27 @@
+ComponentContent: WOComponentContent {
+}
+
+ComposeHyperlink: WOHyperlink {
+	action = composeAction;
+	string = "Compose";
+}
+
+InboxHyperlink: WOHyperlink {
+	action = inboxAction;
+	string = "Inbox";
+}
+
+ListTitleBgImageURL: WOResourceURL {
+	filename = "listTitleBg.gif";
+	framework = "app";
+}
+
+LogoutHyperlink: WOHyperlink {
+	directActionName = "logout";
+	string = "Logout";
+	?wosid = session.sessionID;
+}
+
+UsernameString: WOString {
+	value = session.username;
+}

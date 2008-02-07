@@ -1,0 +1,70 @@
+AttachmentHyperlink: WOHyperlink {
+	action = downloadAttachmentAction;
+	string = currentAttachmentName;
+}
+
+AttachmentsRepetition: WORepetition {
+	item = currentAttachment;
+	list = attachments;
+}
+
+BccAddressesTextField: WOTextField {
+	size = 55;
+	value = bccAddresses;
+}
+
+CcAddressesTextField: WOTextField {
+	size = 55;
+	value = ccAddresses;
+}
+
+CancelButton: WOSubmitButton {
+	action = cancelAction;
+	value = "Cancel";
+}
+
+DeleteAttachmentHyperlink: WOHyperlink {
+	action = deleteAttachmentAction;
+	string = "Delete";
+}
+
+ErrorMessageString: WOString {
+	value = errorMessage;
+}
+
+Form: WOForm {
+	multipleSubmit = true;
+}
+
+PageWrapper: WOSwitchComponent {
+	WOComponentName = pageWrapperName;
+}
+
+SendButton: WOSubmitButton {
+	action = sendAction;
+	value = "Send";
+}
+
+ShowAttachmentsConditional: ERXNonZeroConditional {
+	condition = attachments.count;
+}
+
+ShowErrorMessageConditional: ERXNonNullConditional {
+	condition = errorMessage;
+}
+
+SubjectTextField: WOTextField {
+	size = 55;
+	value = subject;
+}
+
+Textbox: WOText {
+	cols = 60;
+	rows = 20;
+	value = emailText;
+}
+
+ToAddressesTextField: WOTextField {
+	size = 55;
+	value = toAddresses;
+}

@@ -1,0 +1,91 @@
+#########################################################################
+# Log4j Configuration
+#########################################################################
+# Set root logger priority to INFO and its only appender to A1.
+log4j.rootLogger = DEBUG, A1
+#log4j.rootLogger = INFO, A2, A3
+
+# Appenders 
+log4j.appender.A1 = org.apache.log4j.ConsoleAppender
+
+log4j.appender.A2 = org.apache.log4j.RollingFileAppender
+log4j.appender.A2.File = /Library/WebObjects/log/XWM.log
+log4j.appender.A2.MaxFileSize = 10MB
+log4j.appender.A2.MaxBackupIndex = 1
+
+# A1, A2 uses PatternLayout.
+log4j.appender.A1.layout = er.extensions.ERXPatternLayout
+log4j.appender.A2.layout = er.extensions.ERXPatternLayout
+
+# This pattern will produce logs that look like:
+# 2002-06-18 17:46:18,292 MyAppName[4002:9133 0] MyCategory (MyClass.java:40)  - Some log
+log4j.appender.A1.layout.ConversionPattern = %d{ISO8601} %-5p %W{n[i:p s]} %c (%F:%L) %x - %m%n 
+log4j.appender.A2.layout.ConversionPattern = %d{ISO8601} %-5p %W{n[i:p s]} %c (%F:%L) %x - %m%n
+# Note that %F and %L is fairly slow and shouldn't be used in performance intensive logging
+
+########################################################################
+# Custom Categories - These are the main categories and sub categories 
+#	that are used in frameworks.
+########################################################################
+
+# Base Category
+log4j.logger.er = INFO
+log4j.logger.ca = INFO
+log4j.logger.org = INFO
+log4j.logger.httpclient = INFO
+
+#########################################################################
+# ERJavaMail settings
+#########################################################################
+# *** ERJavaMail settings
+# *** Defaults to 'safe' settings:
+# ***
+
+# Sometimes when sending big masses of emails, the java virtual machine
+# doesn't collects correctly the garbage and needs a little delay
+# between each message sending. Use this option if you have problem with
+# memory management
+er.javamail.useSenderDelay = false
+
+# This delay is set to 15 milliseconds
+er.javamail.senderDelayMillis = 15
+
+# * Default encoding used for ERJavaMail
+er.javamail.defaultEncoding = iso-8859-1
+
+# * Enables ERJavaMail to send all the mails to only one destination
+# This is useful when debugging
+er.javamail.centralize = true
+
+# * Prints javamail debug infos
+# It is recommended to activate this switch when there are problems
+# with smtp configuration
+er.javamail.debugEnabled = false
+
+# * The admin email, this is where "centralized" mails will go
+#er.javamail.adminEmail = admin@example.com
+
+# * SMTP outbound host
+mail.smtp.host = 172.16.1.20
+mail.smtp.port = 25
+mail.smtp.connectiontimeout = 600000
+mail.smtp.timeout = 600000
+mail.smtp.sendpartial = true
+
+# * Number of messages that the sender queue can hold at a time
+er.javamail.senderQueue.size = 50
+
+# * Time to wait when mail sender queue is overflowed
+er.javamail.milliSecondsWaitIfSenderOverflowed = 3600
+
+# Used to set a default X-Mailer
+#er.javamail.mailer.XMailerHeader = 
+
+# White and black email address patterns
+# This can be useful in testing when say
+# you only want to allow emails to be sent to *@mycompany.com
+# In this case you would add:
+# er.javamail.WhiteListEmailAddressPatterns=("*@mycompany.com", "somebody@mac.com")
+
+# To prevent sending mail to certain addresses you can use the black list
+# er.javamail.BlackListEmailAddressPatterns=("*@baddomain.com", "badperson@mycompany.com")

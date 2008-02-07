@@ -1,0 +1,25 @@
+<webobject name="PageWrapper">
+	<webobject name="ListScript"Ê/>
+	<webobject name="Form">
+		<div class="XWMlistOperations">
+			<webobject name="DeleteSelectedMessagesButton"Ê/>
+		</div>
+		<table class="XWMmessageList" id="XWMmessageList">
+			<tr class="XWMheaderListRow">
+				<th>&nbsp;</th>
+				<th><webobject name="SubjectHeaderHyperlink" /></th>
+				<th>From</th>
+				<th>Date Sent</th>
+			</tr>
+			<webobject name="MessageRepetition">
+				<webobject name="ListRowGeneric">
+					<td align="center"><webobject name="SelectMessageCheckbox" /></td>
+					<td><webobject name="MessageSubjectHyperlink" /></td>
+					<td nowrap><webobject name="SenderString" /></td>
+					<td nowrap><webobject name="DateSentString" /></td>
+				</webobject>
+			</webobject>
+		</table>
+		<div class="XWMlistOperations">Select: <webobject name="SelectAllMessagesHyperlink" /> <webobject name="SelectNoMessagesHyperlink" /></div>
+	</webobject>
+</webobject>

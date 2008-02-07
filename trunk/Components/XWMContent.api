@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wodefinitions>
+    <wo class="XWMContent" wocomponentcontent="false">
+        <binding name="message"/>
+        <validation message="'message' is a required binding">
+            <unbound name="message"/>
+        </validation>
+    </wo>
+</wodefinitions>

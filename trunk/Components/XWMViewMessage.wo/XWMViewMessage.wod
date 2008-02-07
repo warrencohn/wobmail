@@ -1,0 +1,58 @@
+DefaultMessageContentString: WOString {
+	value = defaultMessageContent;
+}
+
+DeleteHyperlink: WOHyperlink {
+	action = deleteAction;
+	string = "Delete";
+}
+
+ForwardAsAttachmentHyperlink: WOHyperlink {
+	action = forwardAsAttachmentAction;
+	string = "Forward as attachment";
+}
+
+ForwardHyperlink: WOHyperlink {
+	action = forwardAction;
+	string = "Forward";
+}
+
+FromString: WOString {
+	value = messageSender;
+}
+
+MessageContent: XWMContent {
+	message = message;
+}
+
+PageWrapper: WOSwitchComponent {
+	WOComponentName = pageWrapperName;
+}
+
+ReplyHyperlink: WOHyperlink {
+	action = replyAction;
+	string = "Reply";
+}
+
+ReplyToAllHyperlink: WOHyperlink {
+	action = replyToAllAction;
+	string = "Reply to all";
+}
+
+SentDateString: WOString {
+	value = messageSentDate;
+}
+
+SubjectString: WOString {
+	value = messageSubject;
+}
+
+ToString: WOString {
+	value = messageToRecipient;
+}
+
+ViewSourceHyperlink: WOHyperlink {
+	href = viewSourceUrl;
+	string = "View message source";
+	target = "_blank";
+}
