@@ -1,0 +1,33 @@
+<webobject name="PageWrapper">
+	<table>
+		<tr>
+			<td>From:</td>
+			<td><webobject name="FromString"Ê/></td>
+		</tr>
+		<tr>
+			<td>To:</td>
+			<td><webobject name="ToString"Ê/></td>
+		</tr>
+		<tr>
+			<td>Date</td>
+			<td><webobject name="SentDateString"Ê/></td>
+		</tr>
+		<tr>
+			<td>Subject:</td>
+			<td><webobject name="SubjectString" /></td>
+		</tr>
+	</table>
+	<table width="100%"><tr>
+		<td>
+			<webobject name="ReplyHyperlink" /> ::
+			<webobject name="ReplyToAllHyperlink" /> ::
+			<webobject name="ForwardHyperlink" /> ::
+			<webobject name="ForwardAsAttachmentHyperlink" /> ::
+			<webobject name="DeleteHyperlink"Ê/>
+		</td>
+		<td align="right"><webobject name="ViewSourceHyperlink" /></td>
+	</tr></table>
+	<div style="background-color: white; border: 1px solid #999999; padding: 2px"><pre><webobject name="DefaultMessageContentString"Ê/></pre></div>
+	<br/>
+	<div><webobject name="MessageContent" /></div>
+</webobject>

@@ -1,0 +1,60 @@
+DateSentString: WOString {
+	value = currentMessageRow.dateSent;
+}
+
+DeleteSelectedMessagesButton: WOSubmitButton {
+	action = deleteSelectedMessagesAction;
+	class = "XWMsubmitButton";
+	value = "Delete";
+}
+
+Form: WOForm {
+	multipleSubmit = true;
+}
+
+ListRowGeneric: WOGenericContainer {
+	elementName = "tr";
+	class = listRowClass;
+}
+
+ListScript: WOJavaScript {
+	scriptSource = "mailList.js";
+}
+
+MessageRepetition: WORepetition {
+	index = currentMessageIndex;
+	item = currentMessageRow;
+	list = availableMessages;
+}
+
+MessageSubjectHyperlink: WOHyperlink {
+	action = viewMessageAction;
+	string = currentMessageRow.subject;
+}
+
+PageWrapper: WOSwitchComponent {
+	WOComponentName = pageWrapperName;
+}
+
+SelectAllMessagesHyperlink: WOHyperlink {
+	action = selectAllMessagesAction;
+	string = "All";
+}
+
+SelectMessageCheckbox: WOCheckBox {
+	checked = currentMessageChecked;
+}
+
+SelectNoMessagesHyperlink: WOHyperlink {
+	action = selectNoMessagesAction;
+	string = "None";
+}
+
+SenderString: WOString {
+	value = currentMessageRow.sender;
+}
+
+SubjectHeaderHyperlink: WOHyperlink {
+	action = sortBySubjectAction;
+	string = "Subject";
+}
