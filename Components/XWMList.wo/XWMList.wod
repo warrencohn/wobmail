@@ -1,3 +1,8 @@
+DateSentHeaderHyperlink: WOHyperlink {
+	action = sortByDateSentAction;
+	string = "Date Sent";
+}
+
 DateSentString: WOString {
 	value = currentMessageRow.dateSent;
 }
@@ -48,6 +53,11 @@ SelectMessageCheckbox: WOCheckBox {
 SelectNoMessagesHyperlink: WOHyperlink {
 	action = selectNoMessagesAction;
 	string = "None";
+}
+
+SenderHeaderHyperlink: WOHyperlink {
+	action = sortBySenderAction;
+	string = "Sender";
 }
 
 SenderString: WOString {

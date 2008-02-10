@@ -10,6 +10,8 @@ import javax.mail.Session;
 import javax.mail.Store;
 import javax.mail.internet.MimeMessage;
 
+import net.xytra.wobmail.application.Application;
+
 import com.webobjects.foundation.NSTimestamp;
 
 public class Pop3SessionManager
@@ -92,7 +94,10 @@ public class Pop3SessionManager
 		{
 			this.mailSession = Session.getInstance(new Properties());
 			this.store = this.mailSession.getStore("pop3");
-			this.store.connect("localhost", this.username, this.password);
+			this.store.connect(
+					((Application)Application.application()).getDefaultIncomingMailServerAddress(),
+					this.username,
+					this.password);
 		}
 
 		public MimeMessage obtainNewMimeMessage()

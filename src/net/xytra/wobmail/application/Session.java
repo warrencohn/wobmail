@@ -208,4 +208,14 @@ public class Session extends ERXSession
 		this.selectedMessagesForDeletion.removeAllObjects();
 	}
 
+	public String getCurrentSortParam()
+	{
+		return (currentSortParam);
+	}
+
+	public boolean getCurrentSortReverse()
+	{
+		return (currentSortReverse);
+	}
+
 }

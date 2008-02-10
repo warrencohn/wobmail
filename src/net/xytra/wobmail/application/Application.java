@@ -4,16 +4,32 @@ package net.xytra.wobmail.application;
 import com.webobjects.foundation.NSLog;
 
 import er.extensions.ERXApplication;
+import er.extensions.ERXProperties;
 
 public class Application extends ERXApplication
-{    
-    public static void main(String argv[]) {
-        ERXApplication.main(argv, Application.class);
-    }
+{
+	private String defaultIncomingMailServerAddress;
 
-    public Application() {
-        super();
-        NSLog.out.appendln("Welcome to " + this.name() + " !");
-        /* ** put your initialization code in here ** */
-    }
+	public static void main(String argv[]) {
+		ERXApplication.main(argv, Application.class);
+	}
+
+	public Application() {
+		super();
+		NSLog.out.appendln("Welcome to " + this.name() + " !");
+		/* ** put your initialization code in here ** */
+	}
+
+	public String getDefaultIncomingMailServerAddress()
+	{
+		if (this.defaultIncomingMailServerAddress == null)
+		{
+			this.defaultIncomingMailServerAddress = ERXProperties.stringForKeyWithDefault(
+					"net.xytra.wobmail.DefaultIncomingMailServerAddress",
+					"localhost");
+		}
+
+		return (this.defaultIncomingMailServerAddress);
+	}
+
 }

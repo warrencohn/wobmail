@@ -6,6 +6,10 @@ import com.webobjects.foundation.NSKeyValueCoding;
 
 public class MessageRow implements NSKeyValueCoding
 {
+	public static final String DATE_SENT_SORT_FIELD = "dateSent";
+	public static final String SENDER_SORT_FIELD = "sender"; 
+	public static final String SUBJECT_SORT_FIELD = "subject";
+
 	private int messageNumber;
 	private Date dateSent;
 	private String sender;
