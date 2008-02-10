@@ -1,3 +1,6 @@
+# Domain name or IP address of default incoming mail server 
+#net.xytra.wobmail.DefaultIncomingMailServerAddress = localhost
+
 #########################################################################
 # Log4j Configuration
 #########################################################################

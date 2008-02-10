@@ -15,8 +15,6 @@ import com.webobjects.foundation.NSArray;
 
 public class XWMList extends XWMAbstractPage
 {
-	private static String SUBJECT_SORT_FIELD = "subject";
-
 	public int currentMessageIndex;
 	public MessageRow currentMessageRow;
 
@@ -25,6 +23,10 @@ public class XWMList extends XWMAbstractPage
 
 	public XWMList(WOContext context) {
 		super(context);
+
+		Session session = ((Session)context.session());
+		this.currentSortField = session.getCurrentSortParam();
+		this.currentSortReverse = session.getCurrentSortReverse();
 	}
 
 	public WOComponent deleteSelectedMessagesAction() throws MessagingException
@@ -48,12 +50,30 @@ public class XWMList extends XWMAbstractPage
 		return (context().page());
 	}
 
+	public WOComponent sortByDateSentAction()
+	{
+		return (sortByFieldAction(MessageRow.DATE_SENT_SORT_FIELD));
+	}
+
+	public WOComponent sortBySenderAction()
+	{
+		return (sortByFieldAction(MessageRow.SENDER_SORT_FIELD));
+	}
+
 	public WOComponent sortBySubjectAction()
 	{
-		if (SUBJECT_SORT_FIELD == this.currentSortField)
-			currentSortReverse = !currentSortReverse;
+		return (sortByFieldAction(MessageRow.SUBJECT_SORT_FIELD));
+	}
+
+	protected WOComponent sortByFieldAction(String fieldName)
+	{
+		if (fieldName == this.currentSortField)
+			this.currentSortReverse = !this.currentSortReverse;
 		else
-			this.currentSortField = SUBJECT_SORT_FIELD;
+		{
+			this.currentSortField = fieldName;
+			this.currentSortReverse = false;
+		}
 
 		return (context().page());
 	}
