@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wodefinitions>
+    <wo class="XWMMultipartContent" wocomponentcontent="false">
+        <binding name="part"/>
+        <validation message="'part' is a required binding">
+            <unbound name="part"/>
+        </validation>
+    </wo>
+</wodefinitions>
