@@ -3,6 +3,8 @@ package net.xytra.wobmail.manager;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import javax.mail.Folder;
 import javax.mail.MessagingException;
@@ -12,16 +14,16 @@ import javax.mail.internet.MimeMessage;
 
 import net.xytra.wobmail.application.Application;
 
-import com.webobjects.foundation.NSTimestamp;
-
 public class Pop3SessionManager
 {
 	private static Pop3SessionManager _instance = new Pop3SessionManager();
 
 	private Map entries;
+	private Timer sessionTimer;
 
 	private Pop3SessionManager() {
 		this.entries = new HashMap();
+		this.sessionTimer = new Timer("Pop3SessionManager Timer");
 	}
 
 	public static Pop3SessionManager instance() {
@@ -31,7 +33,6 @@ public class Pop3SessionManager
 	public void registerEntry(String sessionId, String username, String password) throws MessagingException
 	{
 		SessionManagerEntry entry = new SessionManagerEntry(username, password);
-		entry.connectToStore();
 
 		entries.put(sessionId, entry);
 		System.err.println(entries.keySet().size());
@@ -79,7 +80,8 @@ public class Pop3SessionManager
 	{
 		private String username;
 		private String password;
-		private NSTimestamp lastUsed = null;
+
+		private TimerTask closeSessionTask;
 		private Folder inboxFolder;
 		private Session mailSession;
 		private Store store;
@@ -90,37 +92,7 @@ public class Pop3SessionManager
 			this.password = password;
 		}
 
-		public void connectToStore() throws MessagingException
-		{
-			this.mailSession = Session.getInstance(new Properties());
-			this.store = this.mailSession.getStore("pop3");
-			this.store.connect(
-					((Application)Application.application()).getDefaultIncomingMailServerAddress(),
-					this.username,
-					this.password);
-		}
-
-		public MimeMessage obtainNewMimeMessage()
-		{
-			return (new MimeMessage(this.mailSession));
-		}
-
-		public Folder obtainOpenInboxFolder() throws MessagingException
-		{
-			if (this.inboxFolder == null)
-			{
-				Folder folder = this.store.getFolder("INBOX");
-				folder.open(Folder.READ_WRITE);
-
-				this.inboxFolder = folder;
-			}
-
-			this.lastUsed = new NSTimestamp();
-
-			return (this.inboxFolder);
-		}
-
-		public void closeSession()
+		synchronized public void closeSession()
 		{
 			if (this.inboxFolder != null)
 			{
@@ -136,12 +108,93 @@ public class Pop3SessionManager
 					this.inboxFolder.getStore().close();
 				}
 				catch (MessagingException e) {}
+
+				this.inboxFolder = null;
 			}
 		}
 
-		public NSTimestamp lastUsed()
+		protected Session getSession()
 		{
-			return (this.lastUsed);
+			if (this.mailSession == null)
+				this.mailSession = Session.getInstance(new Properties());
+
+			return (this.mailSession);
+		}
+
+		protected Store getStore() throws MessagingException
+		{
+			if (this.store == null)
+				this.store = getSession().getStore("pop3");
+
+			if (!this.store.isConnected())
+			{
+				this.store.connect(
+						((Application)Application.application()).getDefaultIncomingMailServerAddress(),
+						this.username,
+						this.password);
+			}
+
+			return (this.store);
+		}
+
+		public MimeMessage obtainNewMimeMessage()
+		{
+			return (new MimeMessage(this.mailSession));
+		}
+
+		public Folder obtainOpenInboxFolder() throws MessagingException
+		{
+			// Deschedule closeSessionTask
+			cancelCloseSessionTask();
+
+			if (this.inboxFolder == null)
+				this.inboxFolder = getStore().getFolder("INBOX");
+			
+			if (!this.inboxFolder.isOpen())
+				this.inboxFolder.open(Folder.READ_WRITE);
+
+			// Reschedule closeSessionTask
+			scheduleCloseSessionTask();
+
+			return (this.inboxFolder);
+		}
+
+		/* closeSessionTask-related methods */
+		public void cancelCloseSessionTask()
+		{
+			if (this.closeSessionTask == null)
+				return;
+
+			System.err.println("cancelCloseSessionTask() at " + System.currentTimeMillis());
+			this.closeSessionTask.cancel();
+			this.closeSessionTask = null;
+		}
+
+		public void scheduleCloseSessionTask()
+		{
+			if (this.closeSessionTask != null)
+				return;
+
+			System.err.println("scheduleCloseSessionTask() at " + System.currentTimeMillis());
+			this.closeSessionTask = new CloseStoreTimerTask(this); 
+			sessionTimer.schedule(this.closeSessionTask, 30000l);			
+		}
+	}
+
+	private class CloseStoreTimerTask extends TimerTask
+	{
+		private SessionManagerEntry session;
+
+		public CloseStoreTimerTask(SessionManagerEntry session)
+		{
+			this.session = session;
+		}
+
+		@Override
+		public void run()
+		{
+			System.err.println("Closing the session!");
+			this.session.closeSession();
 		}
 	}
 
