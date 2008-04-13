@@ -22,10 +22,6 @@ ListRowGeneric: WOGenericContainer {
 	class = listRowClass;
 }
 
-ListScript: WOJavaScript {
-	scriptSource = "mailList.js";
-}
-
 MessageRepetition: WORepetition {
 	index = currentMessageIndex;
 	item = currentMessageRow;

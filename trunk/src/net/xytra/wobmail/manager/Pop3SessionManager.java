@@ -12,6 +12,8 @@ import javax.mail.Session;
 import javax.mail.Store;
 import javax.mail.internet.MimeMessage;
 
+import er.extensions.ERXLogger;
+
 import net.xytra.wobmail.application.Application;
 
 public class Pop3SessionManager
@@ -35,7 +37,7 @@ public class Pop3SessionManager
 		SessionManagerEntry entry = new SessionManagerEntry(username, password);
 
 		entries.put(sessionId, entry);
-		System.err.println(entries.keySet().size());
+//		System.err.println(entries.keySet().size());
 	}
 
 	public void deregisterEntry(String sessionId)
@@ -49,7 +51,7 @@ public class Pop3SessionManager
 
 		entry.closeSession();
 		entries.remove(sessionId);
-		System.err.println(entries.keySet().size());
+//		System.err.println(entries.keySet().size());
 	}
 
 	public MimeMessage obtainNewMimeMessageFor(String sessionId)
@@ -165,7 +167,7 @@ public class Pop3SessionManager
 			if (this.closeSessionTask == null)
 				return;
 
-			System.err.println("cancelCloseSessionTask() at " + System.currentTimeMillis());
+			ERXLogger.log.debug("cancelCloseSessionTask() at " + System.currentTimeMillis());
 			this.closeSessionTask.cancel();
 			this.closeSessionTask = null;
 		}
@@ -175,7 +177,7 @@ public class Pop3SessionManager
 			if (this.closeSessionTask != null)
 				return;
 
-			System.err.println("scheduleCloseSessionTask() at " + System.currentTimeMillis());
+			ERXLogger.log.debug("scheduleCloseSessionTask() at " + System.currentTimeMillis());
 			this.closeSessionTask = new CloseStoreTimerTask(this); 
 			sessionTimer.schedule(this.closeSessionTask, 30000l);			
 		}
@@ -193,7 +195,7 @@ public class Pop3SessionManager
 		@Override
 		public void run()
 		{
-			System.err.println("Closing the session!");
+			ERXLogger.log.debug("Closing the session!");
 			this.session.closeSession();
 		}
 	}
