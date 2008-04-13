@@ -11,11 +11,6 @@ InboxHyperlink: WOHyperlink {
 	string = "Inbox";
 }
 
-ListTitleBgImageURL: WOResourceURL {
-	filename = "listTitleBg.gif";
-	framework = "app";
-}
-
 LogoutHyperlink: WOHyperlink {
 	directActionName = "logout";
 	string = "Logout";
