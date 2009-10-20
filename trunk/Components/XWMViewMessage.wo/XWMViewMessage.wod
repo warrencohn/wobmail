@@ -27,6 +27,7 @@ MessageContent: XWMContent {
 
 PageWrapper: WOSwitchComponent {
 	WOComponentName = pageWrapperName;
+	pageTitle = messageSubject;
 }
 
 ReplyHyperlink: WOHyperlink {

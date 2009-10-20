@@ -35,6 +35,7 @@ MessageSubjectHyperlink: WOHyperlink {
 
 PageWrapper: WOSwitchComponent {
 	WOComponentName = pageWrapperName;
+	pageTitle = currentFolderName;
 }
 
 SelectAllMessagesHyperlink: WOHyperlink {

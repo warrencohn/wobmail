@@ -38,6 +38,7 @@ Form: WOForm {
 
 PageWrapper: WOSwitchComponent {
 	WOComponentName = pageWrapperName;
+	pageTitleKey = "Compose";
 }
 
 SendButton: WOSubmitButton {

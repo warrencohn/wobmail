@@ -108,6 +108,15 @@ public class XWMList extends XWMAbstractPage
 		return (Application.application().resourceManager().urlForResourceNamed("mailList.js", "app", null, context().request()));
 	}
 
+	/**
+	 * @return current folder name or localized version of "Inbox" if current folder is "INBOX".
+	 */
+	public String currentFolderName()
+	{
+		// TODO: Link this with current folder and localize if "INBOX"
+		return ("Inbox");
+	}
+
 	public boolean currentMessageChecked()
 	{
 		return (((Session)session()).isMessageSelectedForDeletion(currentMessageIndex));

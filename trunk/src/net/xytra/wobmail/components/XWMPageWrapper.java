@@ -25,4 +25,29 @@ public class XWMPageWrapper extends ERXNonSynchronizingComponent
 		return (pageWithName(XWMList.class.getName()));
 	}
 
+	/**
+	 * Get the page title of the current page.
+	 * This component supports two bindings: pageTitle can specify the
+	 * pageTitle to be displayed as is.  If unspecified, try to translate the
+	 * string for binding pageTitleKey.  If a page title can be determined,
+	 * return "Wobmail :: (page title)", otherwise just "Wobmail".
+	 *
+	 * @return title of web page, usually "Wobmail :: (something)".
+	 */
+	public String pageTitle()
+	{
+		// First, we try to get the page title as directly specified:
+		String pageTitle = stringValueForBinding("pageTitle");
+
+		// If that wasn't specified, get key and localize
+		if (pageTitle == null) {
+			String pageTitleKey = stringValueForBinding("pageTitleKey");
+	
+			// TODO: Localization should occur here
+			pageTitle = pageTitleKey;
+		}
+
+		return ("Wobmail" + (pageTitle != null ? " :: " + pageTitle : ""));
+	}
+
 }
