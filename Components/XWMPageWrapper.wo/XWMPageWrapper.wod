@@ -17,6 +17,10 @@ LogoutHyperlink: WOHyperlink {
 	?wosid = session.sessionID;
 }
 
+TitleString: WOString {
+	value = pageTitle;
+}
+
 UsernameString: WOString {
 	value = session.username;
 }
