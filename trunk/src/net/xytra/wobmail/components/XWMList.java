@@ -11,15 +11,22 @@ import net.xytra.wobmail.misc.MessageRow;
 
 import com.webobjects.appserver.WOComponent;
 import com.webobjects.appserver.WOContext;
+import com.webobjects.appserver.WOResponse;
 import com.webobjects.foundation.NSArray;
+import com.webobjects.foundation.NSRange;
 
 public class XWMList extends XWMAbstractPage
 {
+	public final NSArray numberPerPageArray = new NSArray(new Object[] { 2, 5, 10, 25, 50, 100 });
+
 	public int currentMessageIndex;
 	public MessageRow currentMessageRow;
 
 	private String currentSortField = null;
 	private boolean currentSortReverse = false;
+
+	private Integer _currentEndIndex = null;
+	private Integer _currentStartIndex = null;
 
 	public XWMList(WOContext context) {
 		super(context);
@@ -29,9 +36,76 @@ public class XWMList extends XWMAbstractPage
 		this.currentSortReverse = session.getCurrentSortReverse();
 	}
 
+	// Actions
+	/**
+	 * Process the new number of messages per page and return same page.
+	 * Ensure selected page index is reset to the first page.
+	 *
+	 * @return same message list page.
+	 */
+	public WOComponent changeNumberPerPageAction()
+	{
+		// The new selected number of messages per page is already set through the dropdown.
+		// Set the page index back to the first page
+		session().selectedPageIndex = 0;
+
+		return (context().page());
+	}
+
 	public WOComponent deleteSelectedMessagesAction() throws MessagingException
 	{
 		((Session)session()).deleteSelectedMessages();
+
+		return (context().page());
+	}
+
+	/**
+	 * Go to the first page of message list.
+	 *
+	 * @return same message list page.
+	 */
+	public WOComponent firstPageAction()
+	{
+		session().selectedPageIndex = 0;
+
+		return (context().page());
+	}
+
+	/**
+	 * Go to the last page of message list.
+	 *
+	 * @return same message list page.
+	 * @throws MessagingException 
+	 */
+	public WOComponent lastPageAction() throws MessagingException
+	{
+		session().selectedPageIndex = (fullMessageArray().size()-1) / session().selectedNumberPerPage;
+
+		return (context().page());
+	}
+
+	/**
+	 * Go to the next page of message list.
+	 *
+	 * @return same message list page.
+	 * @throws MessagingException 
+	 */
+	public WOComponent nextPageAction() throws MessagingException
+	{
+		session().selectedPageIndex = Math.min((fullMessageArray().size()-1) / session().selectedNumberPerPage,
+				session().selectedPageIndex+1);
+
+		return (context().page());
+	}
+
+	/**
+	 * Go to the previous page of message list.
+	 *
+	 * @return same message list page.
+	 */
+	public WOComponent previousPageAction()
+	{
+		session().selectedPageIndex = Math.max(0, session().selectedPageIndex-1);
 
 		return (context().page());
 	}
@@ -87,9 +161,26 @@ public class XWMList extends XWMAbstractPage
 		return (page);
 	}
 
+	// Data
 	public NSArray availableMessages() throws MessagingException
 	{
-		return (((Session)session()).availableInboxMessageRows(false, currentSortField, currentSortReverse));
+		NSArray fullMessageArray = fullMessageArray();
+
+		int startIndex = currentStartIndex();
+
+		// end index (exclusive) must be limited by the size of the full message list
+		int endIndex = currentEndIndex();
+
+		return (fullMessageArray.subarrayWithRange(new NSRange(startIndex, endIndex-startIndex)));
+	}
+
+	/**
+	 * @return the array representing the full list of messages in this folder.
+	 * @throws MessagingException
+	 */
+	// TODO: This would well be served by a caching mechanism
+	protected NSArray fullMessageArray() throws MessagingException {
+		return (session().availableInboxMessageRows(false, currentSortField, currentSortReverse));
 	}
 
 	public String listRowClass() throws MessagingException
@@ -117,6 +208,51 @@ public class XWMList extends XWMAbstractPage
 		return ("Inbox");
 	}
 
+	public boolean showFirstAndPreviousLinks() {
+		return (session().selectedPageIndex > 0);
+	}
+
+	public boolean showNextAndLastLinks() throws MessagingException {
+		return (session().selectedPageIndex < ((fullMessageArray().size()-1) / session().selectedNumberPerPage));
+	}
+
+	// Methods to access the current list bounds
+	public int currentPrintableStartIndex() {
+		return (currentStartIndex() + 1);
+	}
+
+	public int currentPrintableEndIndex() throws MessagingException {
+		return (currentEndIndex());
+	}
+
+	public int currentPrintableTotalMessages() throws MessagingException {
+		return (fullMessageArray().size());
+	}
+
+	/**
+	 * @return index of first message to be shown, starting at zero
+	 */
+	protected int currentStartIndex() {
+		if (_currentStartIndex == null) {
+			_currentStartIndex = session().selectedPageIndex * session().selectedNumberPerPage;
+		}
+
+		return (_currentStartIndex.intValue());
+	}
+
+	/**
+	 * @return index of the message after the last one to be shown
+	 * @throws MessagingException 
+	 */
+	protected int currentEndIndex() throws MessagingException {
+		if (_currentEndIndex == null) {
+			_currentEndIndex = Math.min(currentStartIndex() + session().selectedNumberPerPage, fullMessageArray().size());
+		}
+
+		return (_currentEndIndex.intValue());
+	}
+
+	// Check boxes
 	public boolean currentMessageChecked()
 	{
 		return (((Session)session()).isMessageSelectedForDeletion(currentMessageIndex));
@@ -125,6 +261,20 @@ public class XWMList extends XWMAbstractPage
 	public void setCurrentMessageChecked(boolean value)
 	{
 		((Session)session()).setMessageSelectedForDeletion(currentMessageIndex, value);
+	}
+
+	/**
+	 * @see com.webobjects.appserver.WOComponent#appendToResponse(com.webobjects.appserver.WOResponse, com.webobjects.appserver.WOContext)
+	 */
+	@Override
+	public void appendToResponse(WOResponse response, WOContext context) {
+		// Before we start building the response of this page, reset a few cached things...
+		// We have to cache these (and then reset them in here) because
+		// otherwise the page uses the new num per page too early.
+		_currentStartIndex = null;
+		_currentEndIndex = null;
+
+		super.appendToResponse(response, context);
 	}
 
 }
