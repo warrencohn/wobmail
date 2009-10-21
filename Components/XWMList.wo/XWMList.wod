@@ -1,3 +1,8 @@
+ChangeNumPerPageSubmitButton : WOSubmitButton {
+	action = changeNumberPerPageAction;
+	value = "Go!";
+}
+
 DateSentHeaderHyperlink: WOHyperlink {
 	action = sortByDateSentAction;
 	string = "Date Sent";
@@ -13,8 +18,20 @@ DeleteSelectedMessagesButton: WOSubmitButton {
 	value = "Delete";
 }
 
+EndIndexString: WOString {
+	value = currentPrintableEndIndex;
+}
+
+FirstPageHyperlink : WOHyperlink {
+	action = firstPageAction;
+}
+
 Form: WOForm {
 	multipleSubmit = true;
+}
+
+LastPageHyperlink : WOHyperlink {
+	action = lastPageAction;
 }
 
 ListRowGeneric: WOGenericContainer {
@@ -33,9 +50,25 @@ MessageSubjectHyperlink: WOHyperlink {
 	string = currentMessageRow.subject;
 }
 
+NextPageHyperlink: WOHyperlink {
+	action = nextPageAction;
+}
+
+NumPerPageForm: WOForm {
+}
+
+NumPerPagePopUpButton: WOPopUpButton {
+	list = numberPerPageArray;
+	selection = session.selectedNumberPerPage;
+}
+
 PageWrapper: WOSwitchComponent {
 	WOComponentName = pageWrapperName;
 	pageTitle = currentFolderName;
+}
+
+PreviousPageHyperlink: WOHyperlink {
+	action = previousPageAction;
 }
 
 SelectAllMessagesHyperlink: WOHyperlink {
@@ -61,7 +94,23 @@ SenderString: WOString {
 	value = currentMessageRow.sender;
 }
 
+ShowFirstPreviousConditional: WOConditional {
+	condition = showFirstAndPreviousLinks;
+}
+
+ShowNextLastConditional: WOConditional {
+	condition = showNextAndLastLinks;
+}
+
+StartIndexString: WOString {
+	value = currentPrintableStartIndex;
+}
+
 SubjectHeaderHyperlink: WOHyperlink {
 	action = sortBySubjectAction;
 	string = "Subject";
+}
+
+TotalNumberMessagesString: WOString {
+	value = currentPrintableTotalMessages;
 }

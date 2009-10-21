@@ -31,6 +31,10 @@ public class Session extends ERXSession
 	private NSArray _availableInboxMessageRows;
 	private NSArray _availableInboxMessages;
 
+	// Persistent parameters for display purposes
+	public int selectedPageIndex = 0;
+	public int selectedNumberPerPage = 50;
+
 	public void terminate()
 	{
 		Pop3SessionManager.instance().deregisterEntry(sessionID());
