@@ -6,7 +6,7 @@ import javax.mail.MessagingException;
 
 import net.xytra.wobmail.application.Application;
 import net.xytra.wobmail.application.Session;
-import net.xytra.wobmail.manager.Pop3SessionManager;
+import net.xytra.wobmail.manager.Pop3MailSessionManager;
 import net.xytra.wobmail.misc.MessageRow;
 
 import com.webobjects.appserver.WOComponent;
@@ -155,7 +155,7 @@ public class XWMList extends XWMAbstractPage
 	public WOComponent viewMessageAction() throws MessagingException
 	{
 		XWMViewMessage page = (XWMViewMessage)pageWithName(XWMViewMessage.class.getName());
-		Folder folder = Pop3SessionManager.instance().obtainOpenInboxFor(session().sessionID());
+		Folder folder = Pop3MailSessionManager.instance().obtainOpenInboxFor(session().sessionID());
 		page.setMessage(folder.getMessage(currentMessageRow.getMessageNumber()));
 
 		return (page);

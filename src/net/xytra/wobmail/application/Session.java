@@ -9,7 +9,7 @@ import javax.mail.Message;
 import javax.mail.MessagingException;
 
 import net.xytra.wobmail.export.ExportVisitor;
-import net.xytra.wobmail.manager.Pop3SessionManager;
+import net.xytra.wobmail.manager.Pop3MailSessionManager;
 import net.xytra.wobmail.misc.MessageRow;
 import net.xytra.wobmail.util.XWMUtils;
 
@@ -37,7 +37,7 @@ public class Session extends ERXSession
 
 	public void terminate()
 	{
-		Pop3SessionManager.instance().deregisterEntry(sessionID());
+		Pop3MailSessionManager.instance().deregisterEntry(sessionID());
 		super.terminate();
 	}
 
@@ -101,7 +101,7 @@ public class Session extends ERXSession
 	{
 		if (forceReload || (_availableInboxMessageRows == null))
 		{
-			Folder folder = Pop3SessionManager.instance().obtainOpenInboxFor(sessionID());
+			Folder folder = Pop3MailSessionManager.instance().obtainOpenInboxFor(sessionID());
 			Message[] messages = folder.getMessages();
 			NSMutableArray nonDeletedMessages = new NSMutableArray();
 			for (int i=0; i<messages.length; i++)
@@ -151,7 +151,7 @@ public class Session extends ERXSession
 	{
 		if (_availableInboxMessages == null)
 		{
-			Folder folder = Pop3SessionManager.instance().obtainOpenInboxFor(sessionID());
+			Folder folder = Pop3MailSessionManager.instance().obtainOpenInboxFor(sessionID());
 			Message[] messages = folder.getMessages();
 			NSMutableArray nonDeletedMessages = new NSMutableArray();
 			for (int i=0; i<messages.length; i++)

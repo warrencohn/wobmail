@@ -16,6 +16,7 @@ import er.extensions.ERXLogger;
 
 import net.xytra.wobmail.application.Application;
 
+@Deprecated
 public class Pop3SessionManager
 {
 	private static Pop3SessionManager _instance = new Pop3SessionManager();

@@ -5,7 +5,7 @@ package net.xytra.wobmail.components;
 import javax.mail.MessagingException;
 
 import net.xytra.wobmail.application.Session;
-import net.xytra.wobmail.manager.Pop3SessionManager;
+import net.xytra.wobmail.manager.Pop3MailSessionManager;
 
 import com.webobjects.appserver.WOComponent;
 import com.webobjects.appserver.WOContext;
@@ -26,10 +26,10 @@ public class Main extends ERXNonSynchronizingComponent
 	public WOComponent loginAction()
 	{
 		errorMessage = null;
-		Pop3SessionManager manager = Pop3SessionManager.instance();
+		Pop3MailSessionManager manager = Pop3MailSessionManager.instance();
 
 		try {
-			manager.registerEntry(session().sessionID(), username, password);
+			manager.registerMailSession(session().sessionID(), username, password);
 		}
 		catch (MessagingException e) {
 			errorMessage = "Invalid username or password (" + e.getMessage() + ')';

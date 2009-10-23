@@ -10,7 +10,7 @@ import javax.mail.internet.MimeMessage;
 
 import net.xytra.wobmail.application.Session;
 import net.xytra.wobmail.export.ExportVisitor;
-import net.xytra.wobmail.manager.Pop3SessionManager;
+import net.xytra.wobmail.manager.Pop3MailSessionManager;
 import net.xytra.wobmail.util.XWMUtils;
 
 import com.webobjects.appserver.WOComponent;
@@ -40,7 +40,7 @@ public class XWMViewMessage extends XWMAbstractPage
 	public WOComponent forwardAction() throws MessagingException, IOException
 	{
 		XWMCompose page = (XWMCompose)pageWithName(XWMCompose.class.getName());
-		page.setConstituentMessage(Pop3SessionManager.instance().obtainNewMimeMessageFor(session().sessionID()));
+		page.setConstituentMessage(Pop3MailSessionManager.instance().obtainNewMimeMessageFor(session().sessionID()));
 		page.setSubject("Fwd: " + message().getSubject());
 		page.setEmailText(XWMUtils.quotedText(
 				XWMUtils.defaultStringContentForPart(message()),
