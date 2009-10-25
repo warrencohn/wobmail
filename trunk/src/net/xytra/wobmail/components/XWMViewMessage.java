@@ -33,7 +33,7 @@ public class XWMViewMessage extends XWMAbstractPage
 	public WOComponent moveToTrashAction() throws MessagingException
 	{
 		// Mark message as deleted and return to List
-		getMessageRow().getMailSession().moveMessageRowToFolderWithName(
+		session().getMailSession().moveMessageRowToFolderWithName(
 				getMessageRow(), MailSession.TRASH_FOLDER_NAME);
 
 		return (pageWithName(XWMList.class.getName()));

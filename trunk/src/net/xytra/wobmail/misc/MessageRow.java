@@ -6,7 +6,6 @@ import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.Flags.Flag;
 
-import net.xytra.wobmail.manager.MailSession;
 import net.xytra.wobmail.util.XWMUtils;
 
 import com.webobjects.foundation.NSKeyValueCoding;
@@ -17,7 +16,6 @@ public class MessageRow implements NSKeyValueCoding
 	public static final String SENDER_SORT_FIELD = "sender"; 
 	public static final String SUBJECT_SORT_FIELD = "subject";
 
-	private MailSession mailSession;
 	private Message message;
 
 	private Date dateSent;
@@ -28,8 +26,7 @@ public class MessageRow implements NSKeyValueCoding
 
 	private boolean isSelected = false;
 
-	public MessageRow(MailSession mailSession, Message message) {
-		this.mailSession = mailSession;
+	public MessageRow(Message message) {
 		this.message = message;
 	}
 
@@ -39,10 +36,6 @@ public class MessageRow implements NSKeyValueCoding
 		}
 
 		return (dateSent);
-	}
-
-	public MailSession getMailSession() {
-		return (mailSession);
 	}
 
 	public Message getMessage() {

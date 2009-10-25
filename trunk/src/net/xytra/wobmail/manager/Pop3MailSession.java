@@ -114,7 +114,7 @@ public class Pop3MailSession extends AbstractMailSession
 
 			// Let's get each message in a wrapper and keep it all for future use:
 			for (int i=0; i<messages.length; i++) {
-				messageRowsArray.addObject(new MessageRow(this, messages[i]));
+				messageRowsArray.addObject(new MessageRow(messages[i]));
 			}
 			
 			allMessageRows = messageRowsArray;
