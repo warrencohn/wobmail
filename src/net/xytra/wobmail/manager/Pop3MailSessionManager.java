@@ -3,7 +3,6 @@ package net.xytra.wobmail.manager;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.mail.Folder;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 
@@ -46,19 +45,6 @@ public class Pop3MailSessionManager implements MailSessionManager
 
 		// Setup the mail session in the WO Session for easy access
 		session.setMailSession(entry);
-	}
-
-	// Folders
-	public Folder obtainOpenInboxFor(String sessionId) throws MessagingException
-	{
-		if (sessionId == null)
-			return (null);
-
-		Pop3MailSession entry = (Pop3MailSession)entries.get(sessionId);
-		if (entry == null)
-			return (null);
-
-		return (entry.obtainOpenInboxFolder());
 	}
 
 	// Messages

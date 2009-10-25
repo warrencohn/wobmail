@@ -61,7 +61,7 @@ public class XWMList extends XWMAbstractPage
 		// Mark selected messages as deleted and return to List
 		NSArray<MessageRow> selectedMessageRows = getSelectedMessageRows();
 		if (selectedMessageRows.size() > 0) {
-			selectedMessageRows.objectAtIndex(0).getMailSession().moveMessageRowsToFolderWithName(
+			session().getMailSession().moveMessageRowsToFolderWithName(
 					selectedMessageRows, MailSession.TRASH_FOLDER_NAME);
 
 			// Reset cached arrays
