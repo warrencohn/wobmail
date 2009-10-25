@@ -2,6 +2,13 @@ package net.xytra.wobmail.misc;
 
 import java.util.Date;
 
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.Flags.Flag;
+
+import net.xytra.wobmail.manager.MailSession;
+import net.xytra.wobmail.util.XWMUtils;
+
 import com.webobjects.foundation.NSKeyValueCoding;
 
 public class MessageRow implements NSKeyValueCoding
@@ -10,24 +17,86 @@ public class MessageRow implements NSKeyValueCoding
 	public static final String SENDER_SORT_FIELD = "sender"; 
 	public static final String SUBJECT_SORT_FIELD = "subject";
 
-	private int messageNumber;
+	private MailSession mailSession;
+	private Message message;
+
 	private Date dateSent;
+	private Boolean isDeleted;
+	private Number messageNumber;
 	private String sender;
 	private String subject;
 
-	public MessageRow(int messageNumber, Date dateSent, String sender, String subject)
-	{
-		this.messageNumber = messageNumber;
-		this.dateSent = dateSent;
-		this.sender = sender;
-		this.subject = subject;
+	private boolean isSelected = false;
+
+	public MessageRow(MailSession mailSession, Message message) {
+		this.mailSession = mailSession;
+		this.message = message;
 	}
 
-	public int getMessageNumber() { return (this.messageNumber); }
-	public Date getDateSent() { return (this.dateSent); }
-	public String getSender() { return (this.sender); }
-	public String getSubject() { return (this.subject); }
+	public Date getDateSent() throws MessagingException {
+		if (dateSent == null) {
+			dateSent = message.getSentDate();
+		}
 
+		return (dateSent);
+	}
+
+	public MailSession getMailSession() {
+		return (mailSession);
+	}
+
+	public Message getMessage() {
+		return (message);
+	}
+
+	public int getMessageNumber() {
+		if (messageNumber == null) {
+			messageNumber = Integer.valueOf(message.getMessageNumber());
+		}
+
+		return (messageNumber.intValue());
+	}
+
+	public String getSender() throws MessagingException {
+		if (sender == null) {
+			sender = XWMUtils.fromAddressesAsStringForMessage(message);
+		}
+
+		return (sender);
+	}
+
+	public String getSubject() throws MessagingException {
+		if (subject == null) {
+			subject = message.getSubject();
+		}
+
+		return (subject);
+	}
+
+	public boolean isDeleted() throws MessagingException {
+		if (isDeleted == null) {
+			isDeleted = Boolean.valueOf(message.isSet(Flag.DELETED));
+		}
+
+		return (isDeleted.booleanValue());
+	}
+
+	public void setIsDeleted(boolean value) throws MessagingException {
+		message.setFlag(Flag.DELETED, value);
+
+		// Update the cached version
+		isDeleted = Boolean.valueOf(value);
+	}
+
+	public boolean isSelected() {
+		return (isSelected);
+	}
+
+	public void setIsSelected(boolean value) {
+		isSelected = value;
+	}
+
+	// NSKeyValueCoding stuff
 	public void takeValueForKey(Object value, String key) {
 		NSKeyValueCoding.DefaultImplementation.takeValueForKey(this, value, key);
 	}

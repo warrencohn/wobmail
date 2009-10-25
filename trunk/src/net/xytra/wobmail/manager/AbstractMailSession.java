@@ -12,6 +12,7 @@ import javax.mail.Store;
 import javax.mail.internet.MimeMessage;
 
 import net.xytra.wobmail.application.Application;
+import net.xytra.wobmail.misc.MessageRow;
 
 import com.webobjects.foundation.NSArray;
 
@@ -96,6 +97,10 @@ public abstract class AbstractMailSession implements MailSession
 	protected abstract NSArray getOpenFolders();
 
 	// Messages
+	public void moveMessageRowToFolderWithName(MessageRow messageRow, String folderName) throws MessagingException {
+		moveMessageRowsToFolderWithName(new NSArray<MessageRow>(messageRow), folderName);
+	}
+
 	public MimeMessage obtainNewMimeMessage() {
 		return (new MimeMessage(mailSession));
 	}
@@ -108,6 +113,7 @@ public abstract class AbstractMailSession implements MailSession
 		}
 
 		ERXLogger.log.debug("cancelCloseSessionTask() at " + System.currentTimeMillis());
+		System.err.println("cancelCloseSessionTask() at " + System.currentTimeMillis());
 		closeSessionTask.cancel();
 		closeSessionTask = null;
 	}
@@ -119,6 +125,7 @@ public abstract class AbstractMailSession implements MailSession
 		}
 
 		ERXLogger.log.debug("scheduleCloseSessionTask() at " + System.currentTimeMillis());
+		System.err.println("scheduleCloseSessionTask() at " + System.currentTimeMillis());
 		closeSessionTask = new CloseStoreTimerTask(this); 
 		sessionTimer.schedule(closeSessionTask, 30000l);			
 	}
@@ -134,6 +141,7 @@ public abstract class AbstractMailSession implements MailSession
 		@Override
 		public void run() {
 			ERXLogger.log.debug("Closing the session!");
+			System.err.println("Closing the session!");
 			this.session.closeSession();
 		}
 	}

@@ -29,7 +29,7 @@ public class Main extends ERXNonSynchronizingComponent
 		Pop3MailSessionManager manager = Pop3MailSessionManager.instance();
 
 		try {
-			manager.registerMailSession(session().sessionID(), username, password);
+			manager.registerMailSession((Session)session(), username, password);
 		}
 		catch (MessagingException e) {
 			errorMessage = "Invalid username or password (" + e.getMessage() + ')';

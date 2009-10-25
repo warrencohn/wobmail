@@ -7,6 +7,8 @@ import javax.mail.Folder;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 
+import net.xytra.wobmail.application.Session;
+
 public class Pop3MailSessionManager implements MailSessionManager
 {
 	private static Pop3MailSessionManager _instance = new Pop3MailSessionManager();
@@ -33,14 +35,17 @@ public class Pop3MailSessionManager implements MailSessionManager
 
 		entry.closeSession();
 		entries.remove(sessionId);
-//		System.err.println(entries.keySet().size());
 	}
 
-	public void registerMailSession(String sessionId, String username, String password) throws MessagingException
+	public void registerMailSession(Session session, String username, String password) throws MessagingException
 	{
 		Pop3MailSession entry = new Pop3MailSession(username, password);
 
-		entries.put(sessionId, entry);
+		// Logging in to server worked, remember mail session
+		entries.put(session.sessionID(), entry);
+
+		// Setup the mail session in the WO Session for easy access
+		session.setMailSession(entry);
 	}
 
 	// Folders
