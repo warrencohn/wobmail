@@ -2,11 +2,6 @@ DefaultMessageContentString: WOString {
 	value = defaultMessageContent;
 }
 
-DeleteHyperlink: WOHyperlink {
-	action = deleteAction;
-	string = "Delete";
-}
-
 ForwardAsAttachmentHyperlink: WOHyperlink {
 	action = forwardAsAttachmentAction;
 	string = "Forward as attachment";
@@ -22,7 +17,12 @@ FromString: WOString {
 }
 
 MessageContent: XWMContent {
-	message = message;
+	message = messageRow.message;
+}
+
+MoveToTrashHyperlink: WOHyperlink {
+	action = moveToTrashAction;
+	string = "Delete";
 }
 
 PageWrapper: WOSwitchComponent {
