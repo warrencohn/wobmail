@@ -215,7 +215,7 @@ public class XWMList extends XWMAbstractPage
 	public WOComponent viewMessageAction() throws MessagingException
 	{
 		XWMViewMessage page = (XWMViewMessage)pageWithName(XWMViewMessage.class.getName());
-		page.setMessageRow(currentMessageRow);
+		page.setMessageFolderNameAndIndex(currentFolderName(), getCurrentMessageIndexInFullArray());
 
 		return (page);
 	}
@@ -237,18 +237,18 @@ public class XWMList extends XWMAbstractPage
 	// TODO: This would well be served by a caching mechanism
 	protected NSArray<MessageRow> messageArrayForCurrentFolder() throws MessagingException {
 		if (messageArrayForCurrentFolder == null) {
-			NSArray<MessageRow> inboxMessageRows = session().getMailSession().getMessageRowsForFolderWithName(MailSession.INBOX_FOLDER_NAME);
+			NSArray<MessageRow> folderMessageRows = getMailSession().getMessageRowsForFolderWithName(MailSession.INBOX_FOLDER_NAME);
 
 			// Sort message rows according to session's parameters, if any is specified:
 			if (session().getCurrentSortField() != null) {
 				messageArrayForCurrentFolder = ERXArrayUtilities.sortedArraySortedWithKey(
-						inboxMessageRows,
+						folderMessageRows,
 						session().getCurrentSortField(),
 						session().getCurrentSortReverse() ?
 								EOSortOrdering.CompareCaseInsensitiveDescending :
 								EOSortOrdering.CompareCaseInsensitiveAscending);
 			} else {
-				messageArrayForCurrentFolder = inboxMessageRows;
+				messageArrayForCurrentFolder = folderMessageRows;
 			}
 		}
 
@@ -326,6 +326,13 @@ public class XWMList extends XWMAbstractPage
 		}
 
 		return (_currentEndIndex.intValue());
+	}
+
+	/**
+	 * @return the index of the current message within the full array of MessageRows.
+	 */
+	public int getCurrentMessageIndexInFullArray() {
+		return (currentStartIndex() + currentMessageIndex);
 	}
 
 	// Check boxes

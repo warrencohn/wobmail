@@ -12,7 +12,11 @@ public interface MailSession {
 
 	public void closeSession();
 
+	public MessageRow getMessageRowForFolderWithName(int index, String folderName) throws MessagingException;
+
 	public NSArray<MessageRow> getMessageRowsForFolderWithName(String folderName) throws MessagingException;
+
+	public int getNumberMessagesInFolderWithName(String folderName) throws MessagingException;
 
 	public void moveMessageRowToFolderWithName(MessageRow messageRow, String folderName) throws MessagingException;
 
