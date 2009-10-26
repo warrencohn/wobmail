@@ -61,7 +61,11 @@ public class Pop3MailSession extends AbstractMailSession
 	private NSMutableArray<MessageRow> inboxMessageRows = null;
 	private NSMutableArray<MessageRow> trashMessageRows = null;
 
-	public NSArray<MessageRow> getMessageRowsForFolderWithName(String folderName) throws MessagingException  {
+	public MessageRow getMessageRowForFolderWithName(int index, String folderName) throws MessagingException {
+		return (getMessageRowsForFolderWithName(folderName).objectAtIndex(index));
+	}
+
+	public NSArray<MessageRow> getMessageRowsForFolderWithName(String folderName) throws MessagingException {
 		if (MailSession.INBOX_FOLDER_NAME.equals(folderName)) {
 			return (getInboxMessageRows());
 		} else if (MailSession.TRASH_FOLDER_NAME.equals(folderName)) {
@@ -69,6 +73,10 @@ public class Pop3MailSession extends AbstractMailSession
 		} else {
 			throw (new MailSessionException("Cannot get MessageRow objects for specified folderName as such a folder does not exist"));
 		}
+	}
+
+	public int getNumberMessagesInFolderWithName(String folderName) throws MessagingException {
+		return (getMessageRowsForFolderWithName(folderName).size());
 	}
 
 	protected NSArray<MessageRow> getInboxMessageRows() throws MessagingException {

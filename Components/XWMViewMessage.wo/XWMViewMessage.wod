@@ -25,9 +25,19 @@ MoveToTrashHyperlink: WOHyperlink {
 	string = "Delete";
 }
 
+NextMessageHyperlink: WOHyperlink {
+	action = nextMessageAction;
+	string = "Next";
+}
+
 PageWrapper: WOSwitchComponent {
 	WOComponentName = pageWrapperName;
 	pageTitle = messageSubject;
+}
+
+PreviousMessageHyperlink: WOHyperlink {
+	action = previousMessageAction;
+	string = "Previous";
 }
 
 ReplyHyperlink: WOHyperlink {
@@ -42,6 +52,14 @@ ReplyToAllHyperlink: WOHyperlink {
 
 SentDateString: WOString {
 	value = messageSentDate;
+}
+
+ShowNextLinkConditional: WOConditional {
+	condition = showNextMessageLink;
+}
+
+ShowPreviousLinkConditional: WOConditional {
+	condition = showPreviousMessageLink;
 }
 
 SubjectString: WOString {

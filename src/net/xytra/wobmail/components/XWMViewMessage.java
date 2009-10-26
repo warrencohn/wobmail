@@ -21,6 +21,8 @@ import com.webobjects.foundation.NSTimestamp;
 
 public class XWMViewMessage extends XWMAbstractPage
 {
+	private String messageFolderName;
+	private int messageIndex;
 	private MessageRow messageRow;
 
 	public XWMViewMessage(WOContext context)
@@ -54,11 +56,25 @@ public class XWMViewMessage extends XWMAbstractPage
 		return (page);
 	}
 
-	public WOComponent forwardAsAttachmentAction()
+	public WOComponent forwardAsAttachmentAction() throws MessagingException
 	{
 		XWMCompose page = (XWMCompose)pageWithName(XWMCompose.class.getName());
 		// TODO: check if type really matches
 		page.attachMimeMessage((MimeMessage)getMessage());
+
+		return (page);
+	}
+
+	public WOComponent nextMessageAction() {
+		XWMViewMessage page = (XWMViewMessage)pageWithName(XWMViewMessage.class.getName());
+		page.setMessageFolderNameAndIndex(getMessageFolderName(), getMessageIndex()+1);
+
+		return (page);
+	}
+
+	public WOComponent previousMessageAction() {
+		XWMViewMessage page = (XWMViewMessage)pageWithName(XWMViewMessage.class.getName());
+		page.setMessageFolderNameAndIndex(getMessageFolderName(), getMessageIndex()-1);
 
 		return (page);
 	}
@@ -88,16 +104,56 @@ public class XWMViewMessage extends XWMAbstractPage
 	}
 
 	// Data
-	protected Message getMessage() {
-		return (messageRow.getMessage());
+	/**
+	 * @return true if link for next message in same folder should be shown, false otherwise.
+	 * @throws MessagingException
+	 */
+	public boolean showNextMessageLink() throws MessagingException {
+		int numMessagesInFolder = getMailSession().getNumberMessagesInFolderWithName(getMessageFolderName());
+
+		return (getMessageIndex() < numMessagesInFolder-1);
 	}
 
-	public MessageRow getMessageRow() {
+	/**
+	 * @return true if link for previous message in same folder should be shown, false otherwise.
+	 */
+	public boolean showPreviousMessageLink() {
+		return (getMessageIndex() > 0);
+	}
+
+	protected Message getMessage() throws MessagingException {
+		return (getMessageRow().getMessage());
+	}
+
+	/**
+	 * @return the MessageRow corresponding to the displayed Message.
+	 * @throws MessagingException 
+	 */
+	public MessageRow getMessageRow() throws MessagingException {
+		if (messageRow == null) {
+			messageRow = getMailSession().getMessageRowForFolderWithName(getMessageIndex(), getMessageFolderName());
+		}
+
 		return (messageRow);
 	}
 
-	public void setMessageRow(MessageRow messageRow) {
-		this.messageRow = messageRow;
+	/**
+	 * @return the folder name of the folder in which to find the message with the index specified earlier.
+	 */
+	protected String getMessageFolderName() {
+		return (messageFolderName);
+	}
+
+	/**
+	 * @return the index of message as passed in earlier.
+	 */
+	protected int getMessageIndex() {
+		return (messageIndex);
+	}
+
+	public void setMessageFolderNameAndIndex(String folderName, int index) {
+		messageFolderName = folderName;
+		messageIndex = index;
 	}
 
 	public String defaultMessageContent() throws MessagingException, IOException

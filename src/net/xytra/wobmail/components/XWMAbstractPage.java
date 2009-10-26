@@ -1,6 +1,7 @@
 package net.xytra.wobmail.components;
 
 import net.xytra.wobmail.application.Session;
+import net.xytra.wobmail.manager.MailSession;
 
 import com.webobjects.appserver.WOContext;
 
@@ -12,8 +13,19 @@ public class XWMAbstractPage extends ERXNonSynchronizingComponent
 		super(context);
 	}
 
+	/**
+	 * @return class name of page wrapper component, "XWMPageWrapper" by default.
+	 */
 	public String pageWrapperName() {
 		return (XWMPageWrapper.class.getName());
+	}
+
+	/**
+	 * Convenience method to get the MailSession.
+	 * @return the WO session's associated MailSession.
+	 */
+	protected MailSession getMailSession() {
+		return session().getMailSession();
 	}
 
 	/**
