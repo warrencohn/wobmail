@@ -36,6 +36,24 @@ public abstract class AbstractMailSession implements MailSession
 		this.sessionTimer = new Timer("AbstractMailSession Timer");
 	}
 
+	// Connection
+	/**
+	 * Obtain open connection to Store.
+	 * @return whether the connection to Store is really open.
+	 * @throws MessagingException
+	 */
+	boolean keepConnectionOpen() throws MessagingException {
+		// Deschedule closeSessionTask
+		cancelCloseSessionTask();
+
+		boolean isConnectionToStoreOpen = getStore().isConnected();
+
+		// Reschedule closeSessionTask
+		scheduleCloseSessionTask();
+
+		return (isConnectionToStoreOpen);
+	}
+
 	// Session
 	synchronized public void closeSession()
 	{
@@ -80,6 +98,8 @@ public abstract class AbstractMailSession implements MailSession
 		}
 
 		if (!store.isConnected()) {
+			ERXLogger.log.debug("About to connect to store...");
+			System.err.println("About to connect to store...");
 			store.connect(
 					((Application)Application.application()).getDefaultIncomingMailServerAddress(),
 					this.username,
