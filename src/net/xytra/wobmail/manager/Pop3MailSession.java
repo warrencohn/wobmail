@@ -26,8 +26,9 @@ public class Pop3MailSession extends AbstractMailSession
 		// Deschedule closeSessionTask
 		cancelCloseSessionTask();
 
-		if (inboxFolder == null)
-			inboxFolder = getStore().getFolder("INBOX");
+		if (inboxFolder == null) {
+			inboxFolder = getOpenStore().getFolder("INBOX");
+		}
 		
 		if (!inboxFolder.isOpen())
 			inboxFolder.open(Folder.READ_WRITE);
@@ -61,10 +62,6 @@ public class Pop3MailSession extends AbstractMailSession
 	private NSMutableArray<MessageRow> inboxMessageRows = null;
 	private NSMutableArray<MessageRow> trashMessageRows = null;
 
-	public MessageRow getMessageRowForFolderWithName(int index, String folderName) throws MessagingException {
-		return (getMessageRowsForFolderWithName(folderName).objectAtIndex(index));
-	}
-
 	public NSArray<MessageRow> getMessageRowsForFolderWithName(String folderName) throws MessagingException {
 		if (MailSession.INBOX_FOLDER_NAME.equals(folderName)) {
 			return (getInboxMessageRows());
@@ -73,10 +70,6 @@ public class Pop3MailSession extends AbstractMailSession
 		} else {
 			throw (new MailSessionException("Cannot get MessageRow objects for specified folderName as such a folder does not exist"));
 		}
-	}
-
-	public int getNumberMessagesInFolderWithName(String folderName) throws MessagingException {
-		return (getMessageRowsForFolderWithName(folderName).size());
 	}
 
 	protected NSArray<MessageRow> getInboxMessageRows() throws MessagingException {

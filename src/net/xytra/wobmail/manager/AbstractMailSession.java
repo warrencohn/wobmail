@@ -7,6 +7,7 @@ import java.util.TimerTask;
 
 import javax.mail.Folder;
 import javax.mail.MessagingException;
+import javax.mail.NoSuchProviderException;
 import javax.mail.Session;
 import javax.mail.Store;
 import javax.mail.internet.MimeMessage;
@@ -46,7 +47,7 @@ public abstract class AbstractMailSession implements MailSession
 		// Deschedule closeSessionTask
 		cancelCloseSessionTask();
 
-		boolean isConnectionToStoreOpen = getStore().isConnected();
+		boolean isConnectionToStoreOpen = getOpenStore().isConnected();
 
 		// Reschedule closeSessionTask
 		scheduleCloseSessionTask();
@@ -91,19 +92,29 @@ public abstract class AbstractMailSession implements MailSession
 	}
 
 	// Store
-	protected Store getStore() throws MessagingException
+	protected Store getOpenStore() throws MessagingException
 	{
-		if (store == null) {
-			store = getSession().getStore(getMailProtocolName());
-		}
+		Store mailStore = getStore();
 
-		if (!store.isConnected()) {
+		if (!mailStore.isConnected()) {
 			ERXLogger.log.debug("About to connect to store...");
 			System.err.println("About to connect to store...");
-			store.connect(
+			mailStore.connect(
 					((Application)Application.application()).getDefaultIncomingMailServerAddress(),
 					this.username,
 					this.password);
+		}
+
+		return (mailStore);
+	}
+
+	/**
+	 * @return a cached Store instance, with no effort to ensure it's open.
+	 * @throws NoSuchProviderException
+	 */
+	protected Store getStore() throws NoSuchProviderException {
+		if (store == null) {
+			store = getSession().getStore(getMailProtocolName());
 		}
 
 		return (store);
@@ -117,6 +128,14 @@ public abstract class AbstractMailSession implements MailSession
 	protected abstract NSArray getOpenFolders();
 
 	// Messages
+	public MessageRow getMessageRowForFolderWithName(int index, String folderName) throws MessagingException {
+		return (getMessageRowsForFolderWithName(folderName).objectAtIndex(index));
+	}
+
+	public int getNumberMessagesInFolderWithName(String folderName) throws MessagingException {
+		return (getMessageRowsForFolderWithName(folderName).size());
+	}
+
 	public void moveMessageRowToFolderWithName(MessageRow messageRow, String folderName) throws MessagingException {
 		moveMessageRowsToFolderWithName(new NSArray<MessageRow>(messageRow), folderName);
 	}
