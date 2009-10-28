@@ -1,6 +1,8 @@
 package net.xytra.wobmail.manager;
 
+import javax.mail.Message;
 import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
 
 import net.xytra.wobmail.misc.MessageRow;
 
@@ -18,8 +20,11 @@ public interface MailSession {
 
 	public int getNumberMessagesInFolderWithName(String folderName) throws MessagingException;
 
+	public void keepConnectionOpenForMessage(Message message) throws MessagingException;
+
 	public void moveMessageRowToFolderWithName(MessageRow messageRow, String folderName) throws MessagingException;
 
 	public void moveMessageRowsToFolderWithName(NSArray<MessageRow> messageRows, String folderName) throws MessagingException;
 
+	public MimeMessage obtainNewMimeMessage();
 }

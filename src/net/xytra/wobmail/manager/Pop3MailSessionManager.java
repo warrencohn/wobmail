@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.mail.MessagingException;
-import javax.mail.internet.MimeMessage;
 
 import net.xytra.wobmail.application.Session;
 
@@ -48,19 +47,6 @@ public class Pop3MailSessionManager implements MailSessionManager
 
 		// Setup the mail session in the WO Session for easy access
 		session.setMailSession(entry);
-	}
-
-	// Messages
-	public MimeMessage obtainNewMimeMessageFor(String sessionId)
-	{
-		if (sessionId == null)
-			return (null);
-
-		Pop3MailSession entry = (Pop3MailSession)entries.get(sessionId);
-		if (entry == null)
-			return (null);
-
-		return (entry.obtainNewMimeMessage());
 	}
 
 }

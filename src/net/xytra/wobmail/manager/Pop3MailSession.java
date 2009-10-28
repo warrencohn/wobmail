@@ -23,22 +23,16 @@ public class Pop3MailSession extends AbstractMailSession
 	// Folders
 	public Folder obtainOpenInboxFolder() throws MessagingException
 	{
-		// Deschedule closeSessionTask
-		cancelCloseSessionTask();
-
 		if (inboxFolder == null) {
 			inboxFolder = getOpenStore().getFolder("INBOX");
 		}
-		
-		if (!inboxFolder.isOpen())
-			inboxFolder.open(Folder.READ_WRITE);
 
-		// Reschedule closeSessionTask
-		scheduleCloseSessionTask();
+		inboxFolder = obtainOpenFolder(inboxFolder);
 
 		return (inboxFolder);
 	}
 
+	@Override
 	protected String getMailProtocolName() {
 		return ("pop3");
 	}

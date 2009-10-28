@@ -10,7 +10,6 @@ import javax.mail.internet.MimeMessage;
 import net.xytra.wobmail.application.Session;
 import net.xytra.wobmail.export.ExportVisitor;
 import net.xytra.wobmail.manager.MailSession;
-import net.xytra.wobmail.manager.Pop3MailSessionManager;
 import net.xytra.wobmail.misc.MessageRow;
 import net.xytra.wobmail.util.XWMUtils;
 
@@ -44,7 +43,7 @@ public class XWMViewMessage extends XWMAbstractPage
 	public WOComponent forwardAction() throws MessagingException, IOException
 	{
 		XWMCompose page = (XWMCompose)pageWithName(XWMCompose.class.getName());
-		page.setConstituentMessage(Pop3MailSessionManager.instance().obtainNewMimeMessageFor(session().sessionID()));
+		page.setConstituentMessage(getMailSession().obtainNewMimeMessage());
 		page.setSubject("Fwd: " + getMessage().getSubject());
 		page.setEmailText(XWMUtils.quotedText(
 				XWMUtils.defaultStringContentForPart(getMessage()),
@@ -132,6 +131,9 @@ public class XWMViewMessage extends XWMAbstractPage
 	public MessageRow getMessageRow() throws MessagingException {
 		if (messageRow == null) {
 			messageRow = getMailSession().getMessageRowForFolderWithName(getMessageIndex(), getMessageFolderName());
+
+			// Ensure connection is still open and folder too:
+			getMailSession().keepConnectionOpenForMessage(messageRow.getMessage());
 		}
 
 		return (messageRow);
