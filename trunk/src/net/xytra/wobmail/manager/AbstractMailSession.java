@@ -6,6 +6,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import javax.mail.Folder;
+import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.NoSuchProviderException;
 import javax.mail.Session;
@@ -44,6 +45,8 @@ public abstract class AbstractMailSession implements MailSession
 	 * @throws MessagingException
 	 */
 	boolean keepConnectionOpen() throws MessagingException {
+		System.err.println("keepConnectionOpen() ...");
+
 		// Deschedule closeSessionTask
 		cancelCloseSessionTask();
 
@@ -55,9 +58,31 @@ public abstract class AbstractMailSession implements MailSession
 		return (isConnectionToStoreOpen);
 	}
 
+	public void keepConnectionOpenForMessage(Message message) throws MessagingException {
+		if (keepConnectionOpen()) {
+			obtainOpenFolder(message.getFolder());
+		} else {
+			throw (new MailSessionException("Could not get folder open: " + message.getFolder()));
+		}
+	}
+
+	/**
+	 * @param folder
+	 * @return the same folder as passed in, open as READ_WRITE.
+	 * @throws MessagingException
+	 */
+	protected Folder obtainOpenFolder(Folder folder) throws MessagingException {
+		if (!folder.isOpen()) {
+			folder.open(Folder.READ_WRITE);
+		}
+
+		return (folder);
+	}
+
 	// Session
 	synchronized public void closeSession()
 	{
+		System.err.println("closeSession()...");
 		Enumeration<Folder> openFoldersEnumeration = getOpenFolders().objectEnumerator();
 
 		while (openFoldersEnumeration.hasMoreElements()) {
