@@ -44,22 +44,26 @@ public abstract class AbstractMailSession implements MailSession
 	 * @return whether the connection to Store is really open.
 	 * @throws MessagingException
 	 */
-	boolean keepConnectionOpen() throws MessagingException {
-		System.err.println("keepConnectionOpen() ...");
+	synchronized boolean keepConnectionOpen(boolean reschedule) throws MessagingException {
+		System.err.println("keepConnectionOpen("+reschedule+") ...");
 
 		// Deschedule closeSessionTask
-		cancelCloseSessionTask();
+		if (reschedule) {
+			cancelCloseSessionTask();
+		}
 
 		boolean isConnectionToStoreOpen = getOpenStore().isConnected();
 
 		// Reschedule closeSessionTask
-		scheduleCloseSessionTask();
+		if (reschedule) {
+			scheduleCloseSessionTask();
+		}
 
 		return (isConnectionToStoreOpen);
 	}
 
 	public void keepConnectionOpenForMessage(Message message) throws MessagingException {
-		if (keepConnectionOpen()) {
+		if (keepConnectionOpen(false)) {
 			obtainOpenFolder(message.getFolder());
 		} else {
 			throw (new MailSessionException("Could not get folder open: " + message.getFolder()));
@@ -71,7 +75,7 @@ public abstract class AbstractMailSession implements MailSession
 	 * @return the same folder as passed in, open as READ_WRITE.
 	 * @throws MessagingException
 	 */
-	protected Folder obtainOpenFolder(Folder folder) throws MessagingException {
+	synchronized protected Folder obtainOpenFolder(Folder folder) throws MessagingException {
 		if (!folder.isOpen()) {
 			folder.open(Folder.READ_WRITE);
 		}
@@ -83,6 +87,10 @@ public abstract class AbstractMailSession implements MailSession
 	synchronized public void closeSession()
 	{
 		System.err.println("closeSession()...");
+
+		// Start by cancelling any timed event:
+		cancelCloseSessionTask();
+
 		Enumeration<Folder> openFoldersEnumeration = getOpenFolders().objectEnumerator();
 
 		while (openFoldersEnumeration.hasMoreElements()) {
@@ -128,6 +136,8 @@ public abstract class AbstractMailSession implements MailSession
 					((Application)Application.application()).getDefaultIncomingMailServerAddress(),
 					this.username,
 					this.password);
+
+			scheduleCloseSessionTask();
 		}
 
 		return (mailStore);
@@ -155,6 +165,10 @@ public abstract class AbstractMailSession implements MailSession
 	// Messages
 	public MessageRow getMessageRowForFolderWithName(int index, String folderName) throws MessagingException {
 		return (getMessageRowsForFolderWithName(folderName).objectAtIndex(index));
+	}
+
+	public NSArray<MessageRow> getMessageRowsForFolderWithName(String folderName) throws MessagingException {
+		return (getMessageRowsForFolderWithName(folderName, false));
 	}
 
 	public int getNumberMessagesInFolderWithName(String folderName) throws MessagingException {

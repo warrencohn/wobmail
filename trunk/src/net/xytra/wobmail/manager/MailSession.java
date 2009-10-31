@@ -18,6 +18,8 @@ public interface MailSession {
 
 	public NSArray<MessageRow> getMessageRowsForFolderWithName(String folderName) throws MessagingException;
 
+	public NSArray<MessageRow> getMessageRowsForFolderWithName(String folderName, boolean forceReload) throws MessagingException;
+
 	public int getNumberMessagesInFolderWithName(String folderName) throws MessagingException;
 
 	public void keepConnectionOpenForMessage(Message message) throws MessagingException;

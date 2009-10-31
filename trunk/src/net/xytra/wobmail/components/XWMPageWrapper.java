@@ -17,12 +17,11 @@ public class XWMPageWrapper extends ERXNonSynchronizingComponent
 		return (pageWithName(XWMCompose.class.getName()));
 	}
 
-	public WOComponent inboxAction()
-	{
-//		((Session)session()).resetAvailableInboxMessages();
-		// TODO: force a reload of inbox on mail session
+	public WOComponent inboxAction() {
+		XWMList page = (XWMList)pageWithName(XWMList.class.getName());
+		page.setForceListReload(true);
 
-		return (pageWithName(XWMList.class.getName()));
+		return (page);
 	}
 
 	/**
