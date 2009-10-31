@@ -29,6 +29,8 @@ public class XWMList extends XWMAbstractPage
 	private NSArray<MessageRow> availableMessages = null;
 	private NSArray<MessageRow> messageArrayForCurrentFolder = null;
 
+	private boolean forceListReload = false;
+
 	private Integer _currentEndIndex = null;
 	private Integer _currentStartIndex = null;
 
@@ -237,7 +239,7 @@ public class XWMList extends XWMAbstractPage
 	// TODO: This would well be served by a caching mechanism
 	protected NSArray<MessageRow> messageArrayForCurrentFolder() throws MessagingException {
 		if (messageArrayForCurrentFolder == null) {
-			NSArray<MessageRow> folderMessageRows = getMailSession().getMessageRowsForFolderWithName(MailSession.INBOX_FOLDER_NAME);
+			NSArray<MessageRow> folderMessageRows = getMailSession().getMessageRowsForFolderWithName(MailSession.INBOX_FOLDER_NAME, getForceListReload());
 
 			// Sort message rows according to session's parameters, if any is specified:
 			if (session().getCurrentSortField() != null) {
@@ -333,6 +335,15 @@ public class XWMList extends XWMAbstractPage
 	 */
 	public int getCurrentMessageIndexInFullArray() {
 		return (currentStartIndex() + currentMessageIndex);
+	}
+
+	// Internal switches
+	protected boolean getForceListReload() {
+		return (forceListReload);
+	}
+
+	public void setForceListReload(boolean value) {
+		forceListReload = value;
 	}
 
 	// Check boxes

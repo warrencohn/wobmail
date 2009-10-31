@@ -21,7 +21,7 @@ public class Pop3MailSession extends AbstractMailSession
 	}
 
 	// Folders
-	public Folder obtainOpenInboxFolder() throws MessagingException
+	synchronized protected Folder obtainOpenInboxFolder() throws MessagingException
 	{
 		if (inboxFolder == null) {
 			inboxFolder = getOpenStore().getFolder("INBOX");
@@ -54,21 +54,19 @@ public class Pop3MailSession extends AbstractMailSession
 	// Folder contents
 	private NSMutableArray<MessageRow> allMessageRows = null;
 	private NSMutableArray<MessageRow> inboxMessageRows = null;
-	private NSMutableArray<MessageRow> trashMessageRows = null;
 
-	public NSArray<MessageRow> getMessageRowsForFolderWithName(String folderName) throws MessagingException {
+	public NSArray<MessageRow> getMessageRowsForFolderWithName(String folderName, boolean forceReload) throws MessagingException {
 		if (MailSession.INBOX_FOLDER_NAME.equals(folderName)) {
-			return (getInboxMessageRows());
-		} else if (MailSession.TRASH_FOLDER_NAME.equals(folderName)) {
-			return (getTrashMessageRows());
+			return (getInboxMessageRows(forceReload));
 		} else {
 			throw (new MailSessionException("Cannot get MessageRow objects for specified folderName as such a folder does not exist"));
 		}
 	}
 
-	protected NSArray<MessageRow> getInboxMessageRows() throws MessagingException {
-		if (inboxMessageRows == null) {
-			Enumeration<MessageRow> en1 = getAllMessageRows().objectEnumerator();
+	protected NSArray<MessageRow> getInboxMessageRows(boolean forceReload) throws MessagingException {
+		System.err.println("getInboxMessageRows with forceReload="+forceReload);
+		if (forceReload || (inboxMessageRows == null)) {
+			Enumeration<MessageRow> en1 = getAllMessageRows(forceReload).objectEnumerator();
 			NSMutableArray<MessageRow> rows = new NSMutableArray<MessageRow>();
 
 			while (en1.hasMoreElements()) {
@@ -84,26 +82,8 @@ public class Pop3MailSession extends AbstractMailSession
  		return (inboxMessageRows);
 	}
 
-	protected NSArray<MessageRow> getTrashMessageRows() throws MessagingException {
-		if (trashMessageRows == null) {
-			Enumeration<MessageRow> en1 = getAllMessageRows().objectEnumerator();
-			NSMutableArray<MessageRow> rows = new NSMutableArray<MessageRow>();
-
-			while (en1.hasMoreElements()) {
-				MessageRow mr = en1.nextElement();
-				if (mr.isDeleted()) {
-					rows.addObject(mr);
-				}
-			}
-
-			trashMessageRows = rows;
-		}
-
- 		return (trashMessageRows);
-	}
-
-	protected NSArray<MessageRow> getAllMessageRows() throws MessagingException {
-		if (allMessageRows == null) {
+	protected NSArray<MessageRow> getAllMessageRows(boolean forceReload) throws MessagingException {
+		if (forceReload || (allMessageRows == null)) {
 			Message[] messages = obtainOpenInboxFolder().getMessages();
 			NSMutableArray<MessageRow> messageRowsArray = new NSMutableArray<MessageRow>();
 
@@ -130,7 +110,6 @@ public class Pop3MailSession extends AbstractMailSession
 
 		// Reset these two cached lists as they are no longer valid after a move
 		inboxMessageRows = null;
-		trashMessageRows = null;
 	}
 
 	protected void moveMessageRowsToInbox(NSArray<MessageRow> messageRows) throws MessagingException {

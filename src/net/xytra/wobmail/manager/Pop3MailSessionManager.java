@@ -40,7 +40,7 @@ public class Pop3MailSessionManager implements MailSessionManager
 		Pop3MailSession entry = new Pop3MailSession(username, password);
 
 		// Try a login before we do anything else
-		entry.keepConnectionOpen();
+		entry.keepConnectionOpen(true);
 		
 		// Logging in to server worked, remember mail session
 		entries.put(session.sessionID(), entry);
