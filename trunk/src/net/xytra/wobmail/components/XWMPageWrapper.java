@@ -8,6 +8,8 @@ import er.extensions.ERXNonSynchronizingComponent;
 
 public class XWMPageWrapper extends ERXNonSynchronizingComponent
 {
+	private static final String PAGE_WRAPPER_PAGE_NAME = "XWMPageWrapper";
+
 	public XWMPageWrapper(WOContext context) {
 		super(context);
 	}
@@ -40,10 +42,10 @@ public class XWMPageWrapper extends ERXNonSynchronizingComponent
 
 		// If that wasn't specified, get key and localize
 		if (pageTitle == null) {
-			String pageTitleKey = stringValueForBinding("pageTitleKey");
-	
-			// TODO: Localization should occur here
-			pageTitle = pageTitleKey;
+			// Get page title key for localizer
+			String pageTitleKey = PAGE_WRAPPER_PAGE_NAME + stringValueForBinding("pageTitleKey");
+
+			pageTitle = localizer().localizedStringForKeyWithDefault(pageTitleKey);
 		}
 
 		return ("Wobmail" + (pageTitle != null ? " :: " + pageTitle : ""));

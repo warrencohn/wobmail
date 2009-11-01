@@ -3,7 +3,7 @@ ComponentContent: WOComponentContent {
 
 ComposeHyperlink: WOHyperlink {
 	action = composeAction;
-	string = "Compose";
+	string = session.localizer.XWMPageWrapper.Compose;
 }
 
 InboxHyperlink: WOHyperlink {
@@ -13,7 +13,7 @@ InboxHyperlink: WOHyperlink {
 
 LogoutHyperlink: WOHyperlink {
 	directActionName = "logout";
-	string = "Logout";
+	string = session.localizer.XWMPageWrapper.Logout;
 	?wosid = session.sessionID;
 }
 
