@@ -11,6 +11,10 @@ InboxHyperlink: WOHyperlink {
 	string = "Inbox";
 }
 
+LoggedInAsString: XWMLocalizedString {
+	value = "XWMPageWrapper.LoggedInAs";
+}
+
 LogoutHyperlink: WOHyperlink {
 	directActionName = "logout";
 	string = session.localizer.XWMPageWrapper.Logout;
