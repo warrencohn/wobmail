@@ -1,5 +1,5 @@
 # Domain name or IP address of default incoming mail server 
-net.xytra.wobmail.DefaultIncomingMailServerAddress = 172.16.1.20
+#net.xytra.wobmail.DefaultIncomingMailServerAddress = localhost
 
 #########################################################################
 # Log4j Configuration
@@ -86,7 +86,7 @@ er.javamail.defaultEncoding = iso-8859-1
 
 # * Enables ERJavaMail to send all the mails to only one destination
 # This is useful when debugging
-er.javamail.centralize = false
+er.javamail.centralize = true
 
 # * Prints javamail debug infos
 # It is recommended to activate this switch when there are problems
@@ -94,7 +94,7 @@ er.javamail.centralize = false
 er.javamail.debugEnabled = false
 
 # * The admin email, this is where "centralized" mails will go
-er.javamail.adminEmail = jonny@xl.xytra.net
+#er.javamail.adminEmail = admin@example.com
 
 # * SMTP outbound host
 mail.smtp.host = 172.16.1.20
@@ -117,7 +117,6 @@ er.javamail.milliSecondsWaitIfSenderOverflowed = 3600
 # you only want to allow emails to be sent to *@mycompany.com
 # In this case you would add:
 # er.javamail.WhiteListEmailAddressPatterns=("*@mycompany.com", "somebody@mac.com")
-er.javamail.WhiteListEmailAddressPatters=("*@xl.xytra.net")
 
 # To prevent sending mail to certain addresses you can use the black list
 # er.javamail.BlackListEmailAddressPatterns=("*@baddomain.com", "badperson@mycompany.com")
