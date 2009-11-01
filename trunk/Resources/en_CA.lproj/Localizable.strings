@@ -1,0 +1,20 @@
+{
+    "Main.Login" = Login; 
+    "Main.Password" = Password; 
+    "Main.Username" = Username; 
+    "XWMList.All" = All; 
+    "XWMList.DateSent" = "Date Sent"; 
+    "XWMList.Delete" = Delete; 
+    "XWMList.Display" = Display; 
+    "XWMList.FirstPage" = "First Page"; 
+    "XWMList.Go" = "Go!"; 
+    "XWMList.LastPage" = "Last Page"; 
+    "XWMList.NextPage" = "Next Page"; 
+    "XWMList.None" = None; 
+    "XWMList.PreviousPage" = "Previous Page"; 
+    "XWMList.Select" = Select; 
+    "XWMList.Sender" = Sender; 
+    "XWMList.Subject" = Subject; 
+    "XWMList.messagesPerPage" = "messages per page"; 
+    "XWMList.of" = of; 
+}

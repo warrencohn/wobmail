@@ -12,6 +12,7 @@ import net.xytra.wobmail.manager.Pop3MailSessionManager;
 import com.webobjects.appserver.WOComponent;
 import com.webobjects.appserver.WOContext;
 
+import er.extensions.ERXLocalizer;
 import er.extensions.ERXNonSynchronizingComponent;
 
 public class Main extends ERXNonSynchronizingComponent
@@ -20,6 +21,8 @@ public class Main extends ERXNonSynchronizingComponent
 	public String password;
 
 	public String errorMessage;
+
+	private ERXLocalizer localizer;
 
 	public Main(WOContext context) {
 		super(context);
@@ -46,4 +49,13 @@ public class Main extends ERXNonSynchronizingComponent
 
 		return (pageWithName(XWMList.class.getName()));
 	}
+
+	public ERXLocalizer getLocalizer() {
+		if (localizer == null) {
+			localizer = ERXLocalizer.defaultLocalizer();
+		}
+
+		return (localizer);
+	}
+
 }

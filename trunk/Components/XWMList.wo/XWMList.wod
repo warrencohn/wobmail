@@ -1,11 +1,11 @@
 ChangeNumPerPageSubmitButton : WOSubmitButton {
 	action = changeNumberPerPageAction;
-	value = "Go!";
+	value = session.localizer.XWMList.Go;
 }
 
 DateSentHeaderHyperlink: WOHyperlink {
 	action = sortByDateSentAction;
-	string = "Date Sent";
+	string = session.localizer.XWMList.DateSent;
 }
 
 DateSentString: WOString {
@@ -15,7 +15,11 @@ DateSentString: WOString {
 DeleteSelectedMessagesButton: WOSubmitButton {
 	action = moveToTrashSelectedMessagesAction;
 	class = "XWMsubmitButton";
-	value = "Delete";
+	value = session.localizer.XWMList.Delete;
+}
+
+DisplayString: XWMLocalizedString {
+	value = "XWMList.Display";
 }
 
 EndIndexString: WOString {
@@ -24,6 +28,7 @@ EndIndexString: WOString {
 
 FirstPageHyperlink : WOHyperlink {
 	action = firstPageAction;
+	string = session.localizer.XWMList.FirstPage;
 }
 
 Form: WOForm {
@@ -32,6 +37,7 @@ Form: WOForm {
 
 LastPageHyperlink : WOHyperlink {
 	action = lastPageAction;
+	string = session.localizer.XWMList.LastPage;
 }
 
 ListRowGeneric: WOGenericContainer {
@@ -45,6 +51,10 @@ MessageRepetition: WORepetition {
 	list = availableMessages;
 }
 
+MessagesPerPageString: XWMLocalizedString {
+	value = "XWMList.messagesPerPage";
+}
+
 MessageSubjectHyperlink: WOHyperlink {
 	action = viewMessageAction;
 	string = currentMessageRow.subject;
@@ -52,6 +62,7 @@ MessageSubjectHyperlink: WOHyperlink {
 
 NextPageHyperlink: WOHyperlink {
 	action = nextPageAction;
+	string = session.localizer.XWMList.NextPage;
 }
 
 NumPerPageForm: WOForm {
@@ -62,6 +73,10 @@ NumPerPagePopUpButton: WOPopUpButton {
 	selection = session.selectedNumberPerPage;
 }
 
+OfString: XWMLocalizedString {
+	value = "XWMList.of";
+}
+
 PageWrapper: WOSwitchComponent {
 	WOComponentName = pageWrapperName;
 	pageTitle = currentFolderName;
@@ -69,11 +84,12 @@ PageWrapper: WOSwitchComponent {
 
 PreviousPageHyperlink: WOHyperlink {
 	action = previousPageAction;
+	string = session.localizer.XWMList.PreviousPage;
 }
 
 SelectAllMessagesHyperlink: WOHyperlink {
 	action = selectAllMessagesAction;
-	string = "All";
+	string = session.localizer.XWMList.All;
 }
 
 SelectMessageCheckbox: WOCheckBox {
@@ -82,12 +98,16 @@ SelectMessageCheckbox: WOCheckBox {
 
 SelectNoMessagesHyperlink: WOHyperlink {
 	action = selectNoMessagesAction;
-	string = "None";
+	string = session.localizer.XWMList.None;
+}
+
+SelectString: XWMLocalizedString {
+	value = "XWMList.Select";
 }
 
 SenderHeaderHyperlink: WOHyperlink {
 	action = sortBySenderAction;
-	string = "Sender";
+	string = session.localizer.XWMList.Sender;
 }
 
 SenderString: WOString {
@@ -108,7 +128,7 @@ StartIndexString: WOString {
 
 SubjectHeaderHyperlink: WOHyperlink {
 	action = sortBySubjectAction;
-	string = "Subject";
+	string = session.localizer.XWMList.Subject;
 }
 
 TotalNumberMessagesString: WOString {

@@ -11,12 +11,23 @@ PasswordField: WOPasswordField {
 	value = password;
 }
 
+PasswordString: XWMLocalizedString {
+	localizer = localizer;
+	value = "Main.Password";
+}
+
 ShowErrorConditional: ERXNonNullConditional {
 	condition = errorMessage;
 }
 
 SubmitButton: WOSubmitButton {
 	action = loginAction;
+	value = session.localizer.Main.Login;
+}
+
+UsernameString: ERXLocalizedString {
+	localizer = localizer;
+	value = "Main.Username";
 }
 
 UsernameTextField: WOTextField {

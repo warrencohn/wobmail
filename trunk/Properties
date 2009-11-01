@@ -33,9 +33,37 @@ log4j.appender.A2.layout.ConversionPattern = %d{ISO8601} %-5p %W{n[i:p s]} %c (%
 
 # Base Category
 log4j.logger.er = INFO
-log4j.logger.ca = INFO
-log4j.logger.org = INFO
-log4j.logger.httpclient = INFO
+log4j.logger.net = INFO
+
+log4j.logger.Application = DEBUG
+log4j.additivity.Application = false
+
+log4j.logger.Session = DEBUG
+log4j.additivity.Session = false
+
+log4j.logger.Main = DEBUG
+log4j.additivity.Main = false
+
+#########################################################################
+# ERExtensions settings
+#########################################################################
+
+# ERXLocalizer settings
+#er.extensions.ERXLocalizer.isLocalizationEnabled = true
+
+er.extensions.ERXLocalizer.frameworkSearchPath = (app)
+
+#er.extensions.ERXLocalizer.fileNamesToWatch = ("Localizable.strings", "ValidationTemplate.strings")
+
+er.extensions.ERXLocalizer.defaultLanguage = en_CA
+er.extensions.ERXLocalizer.availableLanguages = (en_CA, fr_CA)
+
+# Mapping of internal language names to Locale (standard) names
+er.extensions.ERXLocalizer.en_CA.locale = en_CA
+er.extensions.ERXLocalizer.fr_CA.locale = fr_CA
+
+log4j.logger.er.extensions.ERXLocalizer = DEBUG, A1
+log4j.additivity.er.extensions.ERXLocalizer = false
 
 #########################################################################
 # ERJavaMail settings
