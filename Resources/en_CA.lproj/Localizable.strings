@@ -2,6 +2,14 @@
     "Main.Login" = Login; 
     "Main.Password" = Password; 
     "Main.Username" = Username; 
+    "XWMCompose.Attachments" = Attachments; 
+    "XWMCompose.Bcc" = Bcc; 
+    "XWMCompose.Cancel" = Cancel; 
+    "XWMCompose.Cc" = Cc; 
+    "XWMCompose.DeleteAttachment" = Delete; 
+    "XWMCompose.Send" = Send; 
+    "XWMCompose.Subject" = Subject; 
+    "XWMCompose.To" = To; 
     "XWMList.All" = All; 
     "XWMList.DateSent" = "Date Sent"; 
     "XWMList.Delete" = Delete; 
@@ -17,4 +25,18 @@
     "XWMList.Subject" = Subject; 
     "XWMList.messagesPerPage" = "messages per page"; 
     "XWMList.of" = of; 
+    "XWMPageWrapper.Compose" = Compose; 
+    "XWMPageWrapper.Logout" = Logout; 
+    "XWMViewMessage.Forward" = Forward; 
+    "XWMViewMessage.ForwardAsAttachment" = "Forward as Attachment"; 
+    "XWMViewMessage.From" = From; 
+    "XWMViewMessage.MoveToTrash" = Delete; 
+    "XWMViewMessage.NextMessage" = Next; 
+    "XWMViewMessage.PreviousMessage" = Previous; 
+    "XWMViewMessage.Reply" = Reply; 
+    "XWMViewMessage.ReplyToAll" = "Reply to All"; 
+    "XWMViewMessage.SentDate" = Date; 
+    "XWMViewMessage.Subject" = Subject; 
+    "XWMViewMessage.To" = To; 
+    "XWMViewMessage.ViewMessageSource" = "View Message Source"; 
 }

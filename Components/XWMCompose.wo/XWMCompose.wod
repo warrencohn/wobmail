@@ -8,9 +8,22 @@ AttachmentsRepetition: WORepetition {
 	list = attachments;
 }
 
+AttachmentsString: XWMLocalizedString {
+	value = "XWMCompose.Attachments";
+}
+
 BccAddressesTextField: WOTextField {
 	size = 55;
 	value = bccAddresses;
+}
+
+BccString: XWMLocalizedString {
+	value = "XWMCompose.Bcc";
+}
+
+CancelButton: WOSubmitButton {
+	action = cancelAction;
+	value = session.localizer.XWMCompose.Cancel;
 }
 
 CcAddressesTextField: WOTextField {
@@ -18,14 +31,13 @@ CcAddressesTextField: WOTextField {
 	value = ccAddresses;
 }
 
-CancelButton: WOSubmitButton {
-	action = cancelAction;
-	value = "Cancel";
+CcString: XWMLocalizedString {
+	value = "XWMCompose.Cc";
 }
 
 DeleteAttachmentHyperlink: WOHyperlink {
 	action = deleteAttachmentAction;
-	string = "Delete";
+	string = session.localizer.XWMCompose.DeleteAttachment;
 }
 
 ErrorMessageString: WOString {
@@ -43,7 +55,7 @@ PageWrapper: WOSwitchComponent {
 
 SendButton: WOSubmitButton {
 	action = sendAction;
-	value = "Send";
+	value = session.localizer.XWMCompose.Send;
 }
 
 ShowAttachmentsConditional: ERXNonZeroConditional {
@@ -52,6 +64,10 @@ ShowAttachmentsConditional: ERXNonZeroConditional {
 
 ShowErrorMessageConditional: ERXNonNullConditional {
 	condition = errorMessage;
+}
+
+SubjectString: XWMLocalizedString {
+	value = "XWMCompose.Subject";
 }
 
 SubjectTextField: WOTextField {
@@ -68,4 +84,8 @@ Textbox: WOText {
 ToAddressesTextField: WOTextField {
 	size = 55;
 	value = toAddresses;
+}
+
+ToString: XWMLocalizedString {
+	value = "XWMCompose.To";
 }
