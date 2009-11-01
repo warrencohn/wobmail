@@ -26,6 +26,7 @@
     "XWMList.messagesPerPage" = "messages per page"; 
     "XWMList.of" = of; 
     "XWMPageWrapper.Compose" = Compose; 
+    "XWMPageWrapper.LoggedInAs" = "Logged in as"; 
     "XWMPageWrapper.Logout" = Logout; 
     "XWMViewMessage.Forward" = Forward; 
     "XWMViewMessage.ForwardAsAttachment" = "Forward as Attachment"; 
