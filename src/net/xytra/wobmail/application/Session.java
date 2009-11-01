@@ -14,11 +14,7 @@ public class Session extends ERXSession
 {
 	private String username;
 
-//	private NSMutableArray selectedMessagesForDeletion = new NSMutableArray();
 	private NSMutableArray downloadableObjects = new NSMutableArray();
-
-//	private NSArray _availableInboxMessageRows;
-//	private NSArray _availableInboxMessages;
 
 	private String currentSortField = null;
 	private boolean currentSortReverse = false;
