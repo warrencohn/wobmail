@@ -3,8 +3,21 @@ ErrorString: WOString {
 }
 
 Form: WOForm {
-	action = loginAction;
-	multipleSubmit = false;
+	action = updateAction;
+	multipleSubmit = true;
+}
+
+LanguagePopUpButton: WOPopUpButton {
+	displayString = currentLanguageName;
+	item = currentLanguage;
+	list = availableLanguages;
+	otherTagString = "onChange='submit()'";
+	selection = selectedLanguage;
+}
+
+LanguageString: XWMLocalizedString {
+	localizer = localizer;
+	value = "Main.Language";
 }
 
 PasswordField: WOPasswordField {
@@ -22,10 +35,10 @@ ShowErrorConditional: ERXNonNullConditional {
 
 SubmitButton: WOSubmitButton {
 	action = loginAction;
-	value = session.localizer.Main.Login;
+	value = localizedStringLogin;
 }
 
-UsernameString: ERXLocalizedString {
+UsernameString: XWMLocalizedString {
 	localizer = localizer;
 	value = "Main.Username";
 }
