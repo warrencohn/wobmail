@@ -13,10 +13,13 @@ import com.webobjects.appserver.WOComponent;
 import com.webobjects.appserver.WOContext;
 
 import er.extensions.ERXLocalizer;
+import er.extensions.ERXLogger;
 import er.extensions.ERXNonSynchronizingComponent;
 
 public class Main extends ERXNonSynchronizingComponent
 {
+	public static final String INVALID_USER_PASS_ERROR_KEY = "Main.InvalidUsernameOrPassword";
+
 	public String username;
 	public String password;
 
@@ -37,7 +40,8 @@ public class Main extends ERXNonSynchronizingComponent
 			manager.registerMailSession((Session)session(), username, password);
 		}
 		catch (AuthenticationFailedException e) {
-			errorMessage = "Invalid username or password (" + e.getMessage() + ')';
+			errorMessage = getLocalizer().localizedStringForKeyWithDefault(INVALID_USER_PASS_ERROR_KEY);
+			ERXLogger.log.debug(e);
 		} catch (MessagingException me) {
 			throw (new MailSessionException(me));
 		}
