@@ -1,5 +1,6 @@
 {
     "Main.InvalidUsernameOrPassword" = "Invalid username or password"; 
+    "Main.Language" = Language; 
     "Main.Login" = Login; 
     "Main.Password" = Password; 
     "Main.Username" = Username; 
