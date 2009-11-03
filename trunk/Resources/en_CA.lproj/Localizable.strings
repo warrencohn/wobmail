@@ -1,4 +1,5 @@
 {
+    "Main.InvalidUsernameOrPassword" = "Invalid username or password"; 
     "Main.Login" = Login; 
     "Main.Password" = Password; 
     "Main.Username" = Username; 
@@ -26,6 +27,7 @@
     "XWMList.messagesPerPage" = "messages per page"; 
     "XWMList.of" = of; 
     "XWMPageWrapper.Compose" = Compose; 
+    "XWMPageWrapper.Inbox" = Inbox; 
     "XWMPageWrapper.LoggedInAs" = "Logged in as"; 
     "XWMPageWrapper.Logout" = Logout; 
     "XWMViewMessage.Forward" = Forward; 

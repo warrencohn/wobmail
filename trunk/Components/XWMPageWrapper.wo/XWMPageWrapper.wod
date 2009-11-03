@@ -8,7 +8,7 @@ ComposeHyperlink: WOHyperlink {
 
 InboxHyperlink: WOHyperlink {
 	action = inboxAction;
-	string = "Inbox";
+	string = session.localizer.XWMPageWrapper.Inbox;
 }
 
 LoggedInAsString: XWMLocalizedString {
