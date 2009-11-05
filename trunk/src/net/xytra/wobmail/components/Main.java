@@ -12,6 +12,7 @@ import javax.mail.MessagingException;
 import net.xytra.wobmail.application.Session;
 import net.xytra.wobmail.manager.MailSessionException;
 import net.xytra.wobmail.manager.Pop3MailSessionManager;
+import net.xytra.wobmail.util.LocaleUtils;
 
 import com.webobjects.appserver.WOComponent;
 import com.webobjects.appserver.WOContext;
@@ -26,7 +27,7 @@ public class Main extends ERXNonSynchronizingComponent
 {
 	public static final String INVALID_USER_PASS_ERROR_KEY = "Main.InvalidUsernameOrPassword";
 
-	public String selectedLanguage = "en_CA";
+	public String selectedLanguage = LocaleUtils.defaultERXLocalizerLocaleName();
 
 	public String username;
 	public String password;
@@ -94,19 +95,7 @@ public class Main extends ERXNonSynchronizingComponent
 
 	public String getCurrentLanguageName() {
 		if (languageNameMap.get(currentLanguage) == null) {
-			String[] languageNameParts = currentLanguage.split("_");
-			Locale locale;
-
-			if (languageNameParts.length == 1) {
-				locale = new Locale(languageNameParts[0]);
-			} else if (languageNameParts.length == 2) {
-				locale = new Locale(languageNameParts[0], languageNameParts[1]);
-			} else if (languageNameParts.length == 3) {
-				locale = new Locale(languageNameParts[0], languageNameParts[1], languageNameParts[2]);
-			} else {
-				throw (new IllegalArgumentException("Wrong number of parts in languageName: " + languageNameParts.length));
-			}
-
+			Locale locale = LocaleUtils.localeForLocaleName(currentLanguage);
 			String rawLanguageName = locale.getDisplayLanguage(locale);
 
 			// Capitalize first letter of language name:
