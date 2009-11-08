@@ -171,12 +171,12 @@ public class XWMViewMessage extends XWMAbstractPage
 		return (XWMUtils.toAddressesAsStringForMessage(getMessage()));
 	}
 
-	public String messageSentDate() throws MessagingException {
-		return (getMessage().getSentDate().toString());
+	public String messageSubject() throws MessagingException {
+		return (getMessageRow().getSubject());
 	}
 
-	public String messageSubject() throws MessagingException {
-		return (getMessage().getSubject());
+	public String presentableDateSent() throws MessagingException {
+		return (session().localizedDateTimeFormat().format(getMessageRow().getDateSent()));
 	}
 
 	public String viewSourceUrl()

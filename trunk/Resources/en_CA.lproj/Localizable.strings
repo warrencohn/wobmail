@@ -5,6 +5,7 @@
     "Main.Login" = Login; 
     "Main.Password" = Password; 
     "Main.Username" = Username; 
+    "Session.dateTimeFormatString" = "yyyy-MM-dd HH:mm:ss"; 
     "XWMCompose.Attachments" = Attachments; 
     "XWMCompose.Bcc" = Bcc; 
     "XWMCompose.Cancel" = Cancel; 

@@ -337,6 +337,10 @@ public class XWMList extends XWMAbstractPage
 		return (currentStartIndex() + currentMessageIndex);
 	}
 
+	public String presentableDateSent() throws MessagingException {
+		return (session().localizedDateTimeFormat().format(currentMessageRow.getDateSent()));
+	}
+
 	// Internal switches
 	protected boolean getForceListReload() {
 		return (forceListReload);
