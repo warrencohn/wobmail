@@ -1,4 +1,5 @@
 {
+    "Main.ChangeLanguage" = Changer; 
     "Main.InvalidUsernameOrPassword" = "Nom d'utilisateur ou mot de passe incorrect"; 
     "Main.Language" = Langue; 
     "Main.Login" = Connexion; 

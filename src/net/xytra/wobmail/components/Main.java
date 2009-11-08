@@ -47,6 +47,13 @@ public class Main extends ERXNonSynchronizingComponent
 	public WOComponent loginAction()
 	{
 		errorMessage = null;
+
+		// Don't try to login with no username nor password but don't display an
+		// error message either:
+		if ((username == null) && (password == null)) {
+			return (this);
+		}
+
 		Pop3MailSessionManager manager = Pop3MailSessionManager.instance();
 
 		try {
@@ -64,24 +71,13 @@ public class Main extends ERXNonSynchronizingComponent
 		}
 
 		if (errorMessage != null) {
-			return (context().page());
+			return (this);
 		}
 
 		((Session)session()).setUsername(username);
 		((Session)session()).setLanguage(selectedLanguage);
 
 		return (pageWithName(XWMList.class.getName()));
-	}
-
-	/**
-	 * Update the language before returning the same page.
-	 *
-	 * @return same page.
-	 */
-	public WOComponent updateAction() {
-		localizer = ERXLocalizer.localizerForLanguage(selectedLanguage);
-
-		return (context().page());
 	}
 
 	// Data
@@ -109,13 +105,21 @@ public class Main extends ERXNonSynchronizingComponent
 		return (languageNameMap.get(currentLanguage));
 	}
 
+	public String getLanguageOptionOtherTag() {
+		return (currentLanguage.equals(selectedLanguage) ? "selected" : "");
+	}
+
+	public String getLocalizedStringChangeLanguage() {
+		return (getLocalizer().localizedStringForKeyWithDefault("Main.ChangeLanguage"));
+	}
+
 	public String getLocalizedStringLogin() {
 		return (getLocalizer().localizedStringForKeyWithDefault("Main.Login"));
 	}
 
 	public ERXLocalizer getLocalizer() {
 		if (localizer == null) {
-			localizer = ERXLocalizer.defaultLocalizer();
+			localizer = ERXLocalizer.localizerForLanguage(selectedLanguage);
 		}
 
 		return (localizer);

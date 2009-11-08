@@ -16,7 +16,13 @@ public class XWMLocalizedString extends ERXLocalizedString {
 
 	@Override
 	public ERXLocalizer localizer() {
-		return ((ERXLocalizer)objectValueForBinding("localizer", ((ERXSession)session()).localizer()));
+		ERXLocalizer localizer = (ERXLocalizer)objectValueForBinding("localizer");
+
+		if (localizer == null) {
+			localizer = ((ERXSession)session()).localizer();
+		}
+
+		return (localizer);
 	}
 
 	private String objectToString(Object value) {
