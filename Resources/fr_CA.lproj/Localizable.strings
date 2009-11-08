@@ -5,6 +5,7 @@
     "Main.Login" = Connexion; 
     "Main.Password" = "Mot de passe"; 
     "Main.Username" = "Nom d'utilisateur"; 
+    "Session.dateTimeFormatString" = "yyyy-MM-dd HH:mm:ss"; 
     "XWMCompose.Attachments" = "Pi\U00e8ces jointes"; 
     "XWMCompose.Bcc" = Cci; 
     "XWMCompose.Cancel" = Annuler; 

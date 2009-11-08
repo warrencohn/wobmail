@@ -20,6 +20,7 @@ public class LocaleUtils {
 	}
 
 	public static Locale localeForLocaleName(String name) {
+		// TODO: Consider caching these
 		String[] parts = name.split("_");
 		Locale locale;
 

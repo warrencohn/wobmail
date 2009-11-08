@@ -9,7 +9,7 @@ DateSentHeaderHyperlink: WOHyperlink {
 }
 
 DateSentString: WOString {
-	value = currentMessageRow.dateSent;
+	value = presentableDateSent;
 }
 
 DeleteSelectedMessagesButton: WOSubmitButton {

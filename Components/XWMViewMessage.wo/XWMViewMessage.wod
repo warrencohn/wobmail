@@ -59,7 +59,7 @@ SentDateString: XWMLocalizedString {
 }
 
 SentDateValueString: WOString {
-	value = messageSentDate;
+	value = presentableDateSent;
 }
 
 ShowNextLinkConditional: WOConditional {
