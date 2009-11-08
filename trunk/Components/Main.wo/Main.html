@@ -1,28 +1,46 @@
+<!DOCTYPE html
+	PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
 	<body>
 		<div align="center">
-			<br/><br/><br/><br/>
-			<webobject name="ShowErrorConditional"><webobject name="ErrorString" /></webobject>
-			<webobject name="Form">
-				<table>
+			<table>
+				<tbody>
 					<tr>
-						<td><webobject name="UsernameString" />:</td>
-						<td><webobject name="UsernameTextField" /></td>
+						<td>
+							<form action="login" method="get" name="languageForm">
+								<webobject name="LanguageString" />:
+								<webobject name="LanguagePopUpButton"><webobject name="LanguageOptionsRepetition"><webobject name="LanguageOptionGeneric"><webobject name="LanguageOptionNameString" /></webobject></webobject></webobject>
+								<noscript><webobject name="LanguageChangeSubmitGeneric" /></noscript>
+							</form>
+						</td>
 					</tr>
 					<tr>
-						<td><webobject name="PasswordString" />:</td>
-						<td><webobject name="PasswordField" /></td>
+						<td>
+							<br/><br/><br/><br/>
+							<webobject name="ShowErrorConditional"><webobject name="ErrorString" /></webobject>
+							<form action="login" method="post" name="loginForm">
+								<table>
+									<tr>
+										<td><webobject name="UsernameString" />:</td>
+										<td><input type="text" name="u" /></td>
+									</tr>
+									<tr>
+										<td><webobject name="PasswordString" />:</td>
+										<td><input type="password" name="p" /></td>
+									</tr>
+									<tr>
+										<td>&nbsp;</td>
+										<td><webobject name="SubmitGeneric" /></td>
+									</tr>
+								</table>
+								<webobject name="LanguageHiddenGeneric" />
+							</form>
+							<br/><br/><br/><br/>
+						</td>
 					</tr>
-					<tr>
-						<td><webobject name="LanguageString" />:</td>
-						<td><webobject name="LanguagePopUpButton" /></td>
-					</tr>
-					<tr>
-						<td>&nbsp;</td>
-						<td><webobject name="SubmitButton" /></td>
-					</tr>
-				</table>
-			</webobject>
+				</tbody>
+			</table>
 		</div>
 	</body>
 </html>

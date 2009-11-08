@@ -23,6 +23,22 @@ public class DirectAction extends WODirectAction
 		return pageWithName(Main.class.getName());
 	}
 
+	public WOActionResults loginAction() {
+		Main page = (Main)pageWithName(Main.class.getName());
+
+		// Set language, username and password from form values; the component
+		// will deal with the rest
+		String language = request().stringFormValueForKey("l");
+		if (language != null) {
+			page.selectedLanguage = language;
+		}
+
+		page.username = request().stringFormValueForKey("u");
+		page.password = request().stringFormValueForKey("p");
+
+		return (page.loginAction());
+	}
+
 	public WOActionResults logoutAction()
 	{
 		if (hasSession())
