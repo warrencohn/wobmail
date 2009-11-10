@@ -2,12 +2,15 @@
 	PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
 	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
-	<head><title>Wobmail</title></head>
+	<head>
+		<title>Wobmail</title>
+		<link href="/wobmail/css/login.css" rel="StyleSheet" type="text/css" />
+	</head>
 	<body>
 		<div align="center">
-			<table>
+			<table id="mainTable">
 				<tbody>
-					<tr>
+					<tr id="languageSelectionRow">
 						<td>
 							<form action="login" method="get" name="languageForm">
 								<webobject name="LanguageString" />:
@@ -16,27 +19,35 @@
 							</form>
 						</td>
 					</tr>
-					<tr>
-						<td>
+					<tr id="mainRow">
+						<td align="center">
 							<br/><br/><br/><br/>
-							<webobject name="ShowErrorConditional"><webobject name="ErrorString" /></webobject>
-							<form action="login" method="post" name="loginForm">
-								<table>
-									<tr>
-										<td><webobject name="UsernameString" />:</td>
-										<td><input type="text" name="u" /></td>
-									</tr>
-									<tr>
-										<td><webobject name="PasswordString" />:</td>
-										<td><input type="password" name="p" /></td>
-									</tr>
-									<tr>
-										<td>&nbsp;</td>
-										<td><webobject name="SubmitGeneric" /></td>
-									</tr>
-								</table>
-								<webobject name="LanguageHiddenGeneric" />
-							</form>
+							<table id="mainLoginTable">
+								<tr>
+									<td align="center"><img src="/wobmail/images/wobmail-logo.png" /></td>
+									<td bgcolor="black" width="1"><img src="/wobmail/images/spacer.gif" border="0" height="1" width="1" /></td>
+									<td align="center">
+										<webobject name="ShowErrorConditional"><webobject name="ErrorString" /></webobject>
+										<form action="login" method="post" name="loginForm">
+											<table align="center">
+												<tr>
+													<td class="loginLabel"><webobject name="UsernameString" />:</td>
+													<td class="loginTextField"><input type="text" name="u" /></td>
+												</tr>
+												<tr>
+													<td class="loginLabel"><webobject name="PasswordString" />:</td>
+													<td class="loginTextField"><input type="password" name="p" /></td>
+												</tr>
+												<tr>
+													<td>&nbsp;</td>
+													<td class="loginTextField"><webobject name="SubmitGeneric" /></td>
+												</tr>
+											</table>
+											<webobject name="LanguageHiddenGeneric" />
+										</form>
+									</td>
+								</tr>
+							</table>
 							<br/><br/><br/><br/>
 						</td>
 					</tr>
