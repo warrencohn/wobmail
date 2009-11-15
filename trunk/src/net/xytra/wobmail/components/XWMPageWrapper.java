@@ -43,7 +43,7 @@ public class XWMPageWrapper extends ERXNonSynchronizingComponent
 		// If that wasn't specified, get key and localize
 		if (pageTitle == null) {
 			// Get page title key for localizer
-			String pageTitleKey = PAGE_WRAPPER_PAGE_NAME + stringValueForBinding("pageTitleKey");
+			String pageTitleKey = PAGE_WRAPPER_PAGE_NAME + '.' + stringValueForBinding("pageTitleKey");
 
 			pageTitle = localizer().localizedStringForKeyWithDefault(pageTitleKey);
 		}
