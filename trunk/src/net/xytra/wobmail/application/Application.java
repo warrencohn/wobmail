@@ -3,9 +3,11 @@ package net.xytra.wobmail.application;
 
 import java.util.Locale;
 
+import net.xytra.wobmail.components.Main;
 import net.xytra.wobmail.util.LocaleUtils;
 
 import com.webobjects.foundation.NSLog;
+import com.webobjects.foundation._NSUtilities;
 
 import er.extensions.ERXApplication;
 import er.extensions.ERXProperties;
@@ -21,6 +23,9 @@ public class Application extends ERXApplication
 	public Application() {
 		super();
 		NSLog.out.appendln("Welcome to " + this.name() + " !");
+
+		// Make sure WO recognizes the Main component:
+		_NSUtilities.setClassForName(Main.class, "Main");
 
 		// Set default locale to the default ERXLocalizer parameter:
 		Locale.setDefault(LocaleUtils.defaultERXLocalizerLocale());

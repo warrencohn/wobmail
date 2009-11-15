@@ -20,13 +20,13 @@ mv A$PROJNAME.jar ../../WEB-INF/lib/ &&
 cd ../.. &&
 rm -rf $PROJNAME.woa &&
 cd WEB-INF/lib &&
-ln /Users/jmeijer/Roots/ERExtensions-4.0.jar &&
+ln ~/Roots/ERExtensions-4.0.jar &&
 ln /Library/WebObjects/lib/JavaEOAccess.jar &&
 ln /Library/WebObjects/lib/JavaEOControl-fixed.jar &&
 ln /Library/WebObjects/lib/JavaEOProject.jar &&
 ln /Library/WebObjects/lib/JavaFoundation-fixed.jar &&
 ln /Library/WebObjects/lib/JavaJDBCAdaptor.jar &&
-ln /Users/jmeijer/Roots/JavaWOExtensions-4.0.jar &&
+ln ~/Roots/JavaWOExtensions-4.0.jar &&
 ln /Library/WebObjects/lib/JavaWOJSPServlet.jar &&
 ln /Library/WebObjects/lib/JavaWebObjects-fixed.jar &&
 ln /Library/WebObjects/lib/JavaXML.jar &&
