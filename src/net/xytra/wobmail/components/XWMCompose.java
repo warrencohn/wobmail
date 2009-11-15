@@ -10,6 +10,7 @@ import javax.mail.internet.MimeMessage;
 
 import net.xytra.wobmail.export.ExportVisitor;
 import net.xytra.wobmail.export.MimeMessageExportVisitor;
+import net.xytra.wobmail.manager.Pop3SessionManager;
 import net.xytra.wobmail.util.XWMUtils;
 
 import com.webobjects.appserver.WOComponent;
@@ -128,9 +129,8 @@ public class XWMCompose extends XWMAbstractPage
 	// getters/setters
 	protected MimeMessage constituentMessage()
 	{
-		if (this.constituentMessage == null) {
-			this.constituentMessage = getMailSession().obtainNewMimeMessage();
-		}
+		if (this.constituentMessage == null)
+			this.constituentMessage = Pop3SessionManager.instance().obtainNewMimeMessageFor(session().sessionID());
 
 		return (this.constituentMessage);
 	}

@@ -3,26 +3,23 @@ ComponentContent: WOComponentContent {
 
 ComposeHyperlink: WOHyperlink {
 	action = composeAction;
-	string = session.localizer.XWMPageWrapper.Compose;
+	string = "Compose";
 }
 
 InboxHyperlink: WOHyperlink {
 	action = inboxAction;
-	string = session.localizer.XWMPageWrapper.Inbox;
+	string = "Inbox";
 }
 
-LoggedInAsString: XWMLocalizedString {
-	value = "XWMPageWrapper.LoggedInAs";
+ListTitleBgImageURL: WOResourceURL {
+	filename = "listTitleBg.gif";
+	framework = "app";
 }
 
 LogoutHyperlink: WOHyperlink {
 	directActionName = "logout";
-	string = session.localizer.XWMPageWrapper.Logout;
+	string = "Logout";
 	?wosid = session.sessionID;
-}
-
-TitleString: WOString {
-	value = pageTitle;
 }
 
 UsernameString: WOString {

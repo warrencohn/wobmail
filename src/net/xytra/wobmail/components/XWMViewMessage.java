@@ -3,14 +3,14 @@ package net.xytra.wobmail.components;
 
 import java.io.IOException;
 
+import javax.mail.Flags;
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 
 import net.xytra.wobmail.application.Session;
 import net.xytra.wobmail.export.ExportVisitor;
-import net.xytra.wobmail.manager.MailSession;
-import net.xytra.wobmail.misc.MessageRow;
+import net.xytra.wobmail.manager.Pop3SessionManager;
 import net.xytra.wobmail.util.XWMUtils;
 
 import com.webobjects.appserver.WOComponent;
@@ -20,22 +20,19 @@ import com.webobjects.foundation.NSTimestamp;
 
 public class XWMViewMessage extends XWMAbstractPage
 {
-	private String messageFolderName;
-	private int messageIndex;
-	private MessageRow messageRow;
+	private Message message;
 
 	public XWMViewMessage(WOContext context)
 	{
 		super(context);
-		session().clearDownloadableObjects();
+		((Session)context.session()).clearDownloadableObjects();
 	}
 
 	// Actions
-	public WOComponent moveToTrashAction() throws MessagingException
+	public WOComponent deleteAction() throws MessagingException
 	{
 		// Mark message as deleted and return to List
-		session().getMailSession().moveMessageRowToFolderWithName(
-				getMessageRow(), MailSession.TRASH_FOLDER_NAME);
+		message.setFlag(Flags.Flag.DELETED, true);
 
 		return (pageWithName(XWMList.class.getName()));
 	}
@@ -43,37 +40,23 @@ public class XWMViewMessage extends XWMAbstractPage
 	public WOComponent forwardAction() throws MessagingException, IOException
 	{
 		XWMCompose page = (XWMCompose)pageWithName(XWMCompose.class.getName());
-		page.setConstituentMessage(getMailSession().obtainNewMimeMessage());
-		page.setSubject("Fwd: " + getMessage().getSubject());
+		page.setConstituentMessage(Pop3SessionManager.instance().obtainNewMimeMessageFor(session().sessionID()));
+		page.setSubject("Fwd: " + message().getSubject());
 		page.setEmailText(XWMUtils.quotedText(
-				XWMUtils.defaultStringContentForPart(getMessage()),
-				getMessage().getSentDate(),
-				XWMUtils.fromAddressesAsStringForMessage(getMessage()),
+				XWMUtils.defaultStringContentForPart(message()),
+				message().getSentDate(),
+				XWMUtils.fromAddressesAsStringForMessage(message()),
 				false));
 		page.propagateAddresses();
 
 		return (page);
 	}
 
-	public WOComponent forwardAsAttachmentAction() throws MessagingException
+	public WOComponent forwardAsAttachmentAction()
 	{
 		XWMCompose page = (XWMCompose)pageWithName(XWMCompose.class.getName());
 		// TODO: check if type really matches
-		page.attachMimeMessage((MimeMessage)getMessage());
-
-		return (page);
-	}
-
-	public WOComponent nextMessageAction() {
-		XWMViewMessage page = (XWMViewMessage)pageWithName(XWMViewMessage.class.getName());
-		page.setMessageFolderNameAndIndex(getMessageFolderName(), getMessageIndex()+1);
-
-		return (page);
-	}
-
-	public WOComponent previousMessageAction() {
-		XWMViewMessage page = (XWMViewMessage)pageWithName(XWMViewMessage.class.getName());
-		page.setMessageFolderNameAndIndex(getMessageFolderName(), getMessageIndex()-1);
+		page.attachMimeMessage((MimeMessage)message);
 
 		return (page);
 	}
@@ -86,11 +69,11 @@ public class XWMViewMessage extends XWMAbstractPage
 	protected WOComponent replyAction(boolean replyToAll) throws MessagingException, IOException
 	{
 		XWMCompose page = (XWMCompose)pageWithName(XWMCompose.class.getName());
-		page.setConstituentMessage((MimeMessage)getMessage().reply(replyToAll));
+		page.setConstituentMessage((MimeMessage)message().reply(replyToAll));
 		page.setEmailText(XWMUtils.quotedText(
-				XWMUtils.defaultStringContentForPart(getMessage()),
-				getMessage().getSentDate(),
-				XWMUtils.fromAddressesAsStringForMessage(getMessage()),
+				XWMUtils.defaultStringContentForPart(message()),
+				message().getSentDate(),
+				XWMUtils.fromAddressesAsStringForMessage(message()),
 				true));
 		page.propagateAddresses();
 
@@ -103,80 +86,33 @@ public class XWMViewMessage extends XWMAbstractPage
 	}
 
 	// Data
-	/**
-	 * @return true if link for next message in same folder should be shown, false otherwise.
-	 * @throws MessagingException
-	 */
-	public boolean showNextMessageLink() throws MessagingException {
-		int numMessagesInFolder = getMailSession().getNumberMessagesInFolderWithName(getMessageFolderName());
-
-		return (getMessageIndex() < numMessagesInFolder-1);
-	}
-
-	/**
-	 * @return true if link for previous message in same folder should be shown, false otherwise.
-	 */
-	public boolean showPreviousMessageLink() {
-		return (getMessageIndex() > 0);
-	}
-
-	protected Message getMessage() throws MessagingException {
-		return (getMessageRow().getMessage());
-	}
-
-	/**
-	 * @return the MessageRow corresponding to the displayed Message.
-	 * @throws MessagingException 
-	 */
-	public MessageRow getMessageRow() throws MessagingException {
-		if (messageRow == null) {
-			messageRow = getMailSession().getMessageRowForFolderWithName(getMessageIndex(), getMessageFolderName());
-
-			// Ensure connection is still open and folder too:
-			getMailSession().keepConnectionOpenForMessage(messageRow.getMessage());
-		}
-
-		return (messageRow);
-	}
-
-	/**
-	 * @return the folder name of the folder in which to find the message with the index specified earlier.
-	 */
-	protected String getMessageFolderName() {
-		return (messageFolderName);
-	}
-
-	/**
-	 * @return the index of message as passed in earlier.
-	 */
-	protected int getMessageIndex() {
-		return (messageIndex);
-	}
-
-	public void setMessageFolderNameAndIndex(String folderName, int index) {
-		messageFolderName = folderName;
-		messageIndex = index;
-	}
-
 	public String defaultMessageContent() throws MessagingException, IOException
 	{
-		return (XWMUtils.defaultStringContentForPart(getMessage()));
+		return (XWMUtils.defaultStringContentForPart(message()));
 	}
 
 	public String messageSender() throws MessagingException {
-		return (XWMUtils.fromAddressesAsStringForMessage(getMessage()));
+		return (XWMUtils.fromAddressesAsStringForMessage(this.message));
 	}
 
 	public String messageToRecipient() throws MessagingException {
-		return (XWMUtils.toAddressesAsStringForMessage(getMessage()));
+		return (XWMUtils.toAddressesAsStringForMessage(this.message));
+	}
+
+	public String messageSentDate() throws MessagingException {
+		return (this.message.getSentDate().toString());
 	}
 
 	public String messageSubject() throws MessagingException {
-		return (getMessageRow().getSubject());
+		return (this.message.getSubject());
 	}
 
-	public String presentableDateSent() throws MessagingException {
-		return (session().localizedDateTimeFormat().format(getMessageRow().getDateSent()));
+	public Message message() {
+		return (this.message);
+	}
+
+	public void setMessage(Message message) {
+		this.message = message;
 	}
 
 	public String viewSourceUrl()
@@ -187,7 +123,7 @@ public class XWMViewMessage extends XWMAbstractPage
 			{
 				try
 				{
-					return (XWMUtils.fullMimeMessageSource((MimeMessage)getMessage()));
+					return (XWMUtils.fullMimeMessageSource((MimeMessage)message()));
 				}
 				catch (IOException e)
 				{

@@ -2,59 +2,23 @@ ErrorString: WOString {
 	value = errorMessage;
 }
 
-LanguageChangeSubmitGeneric: WOGenericElement {
-	elementName = "input";
-	type = "submit";
-	value = localizedStringChangeLanguage;
+Form: WOForm {
+	action = loginAction;
+	multipleSubmit = false;
 }
 
-LanguageHiddenGeneric: WOHiddenField {
-	name = "l";
-	value = selectedLanguage;
-}
-
-LanguageOptionGeneric: WOGenericContainer {
-	elementName = "option";
-	otherTagString = languageOptionOtherTag;
-	value = currentLanguage;
-}
-
-LanguageOptionNameString: WOString {
-	value = currentLanguageName;
-}
-
-LanguageOptionsRepetition: WORepetition {
-	item = currentLanguage;
-	list = availableLanguages;
-}
-
-LanguagePopUpButton: WOGenericContainer {
-	elementName = "select";
-	name = "l";
-	otherTagString = "onChange='submit()'";
-}
-
-LanguageString: XWMLocalizedString {
-	localizer = localizer;
-	value = "Main.Language";
-}
-
-PasswordString: XWMLocalizedString {
-	localizer = localizer;
-	value = "Main.Password";
+PasswordField: WOPasswordField {
+	value = password;
 }
 
 ShowErrorConditional: ERXNonNullConditional {
 	condition = errorMessage;
 }
 
-SubmitGeneric: WOGenericElement {
-	elementName = "input";
-	type = "submit";
-	value = localizedStringLogin;
+SubmitButton: WOSubmitButton {
+	action = loginAction;
 }
 
-UsernameString: XWMLocalizedString {
-	localizer = localizer;
-	value = "Main.Username";
+UsernameTextField: WOTextField {
+	value = username;
 }

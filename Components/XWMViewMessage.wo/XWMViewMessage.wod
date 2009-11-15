@@ -2,92 +2,57 @@ DefaultMessageContentString: WOString {
 	value = defaultMessageContent;
 }
 
+DeleteHyperlink: WOHyperlink {
+	action = deleteAction;
+	string = "Delete";
+}
+
 ForwardAsAttachmentHyperlink: WOHyperlink {
 	action = forwardAsAttachmentAction;
-	string = session.localizer.XWMViewMessage.ForwardAsAttachment;
+	string = "Forward as attachment";
 }
 
 ForwardHyperlink: WOHyperlink {
 	action = forwardAction;
-	string = session.localizer.XWMViewMessage.Forward;
+	string = "Forward";
 }
 
-FromString: XWMLocalizedString {
-	value = "XWMViewMessage.From";
-}
-
-FromValueString: WOString {
+FromString: WOString {
 	value = messageSender;
 }
 
 MessageContent: XWMContent {
-	message = messageRow.message;
-}
-
-MoveToTrashHyperlink: WOHyperlink {
-	action = moveToTrashAction;
-	string = session.localizer.XWMViewMessage.MoveToTrash;
-}
-
-NextMessageHyperlink: WOHyperlink {
-	action = nextMessageAction;
-	string = session.localizer.XWMViewMessage.NextMessage;
+	message = message;
 }
 
 PageWrapper: WOSwitchComponent {
 	WOComponentName = pageWrapperName;
-	pageTitle = messageSubject;
-}
-
-PreviousMessageHyperlink: WOHyperlink {
-	action = previousMessageAction;
-	string = session.localizer.XWMViewMessage.PreviousMessage;
 }
 
 ReplyHyperlink: WOHyperlink {
 	action = replyAction;
-	string = session.localizer.XWMViewMessage.Reply;
+	string = "Reply";
 }
 
 ReplyToAllHyperlink: WOHyperlink {
 	action = replyToAllAction;
-	string = session.localizer.XWMViewMessage.ReplyToAll;
+	string = "Reply to all";
 }
 
-SentDateString: XWMLocalizedString {
-	value = "XWMViewMessage.SentDate";
+SentDateString: WOString {
+	value = messageSentDate;
 }
 
-SentDateValueString: WOString {
-	value = presentableDateSent;
-}
-
-ShowNextLinkConditional: WOConditional {
-	condition = showNextMessageLink;
-}
-
-ShowPreviousLinkConditional: WOConditional {
-	condition = showPreviousMessageLink;
-}
-
-SubjectString: XWMLocalizedString {
-	value = "XWMViewMessage.Subject";
-}
-
-SubjectValueString: WOString {
+SubjectString: WOString {
 	value = messageSubject;
 }
 
-ToString: XWMLocalizedString {
-	value = "XWMViewMessage.To";
-}
-
-ToValueString: WOString {
+ToString: WOString {
 	value = messageToRecipient;
 }
 
 ViewSourceHyperlink: WOHyperlink {
 	href = viewSourceUrl;
-	string = session.localizer.XWMViewMessage.ViewMessageSource;
+	string = "View message source";
 	target = "_blank";
 }

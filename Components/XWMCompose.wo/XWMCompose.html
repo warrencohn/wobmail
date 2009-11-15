@@ -2,13 +2,13 @@
 	<webobject name="Form">
 		<table>
 			<webobject name="ShowErrorMessageConditional"><tr><td align="center" colspan="2"><webobject name="ErrorMessageString" /></td></tr></webobject>
-			<tr><td><webobject name="ToString" />:&nbsp;</td><td><webobject name="ToAddressesTextField" /></td></tr>
-			<tr><td><webobject name="CcString" />:&nbsp;</td><td><webobject name="CcAddressesTextField" /></td></tr>
-			<tr><td><webobject name="BccString" />:&nbsp;</td><td><webobject name="BccAddressesTextField" /></td></tr>
-			<tr><td><webobject name="SubjectString" />:&nbsp;</td><td><webobject name="SubjectTextField" /></td></tr>
+			<tr><td>To:&nbsp;</td><td><webobject name="ToAddressesTextField" /></td></tr>
+			<tr><td>Cc:&nbsp;</td><td><webobject name="CcAddressesTextField" /></td></tr>
+			<tr><td>Bcc:&nbsp;</td><td><webobject name="BccAddressesTextField" /></td></tr>
+			<tr><td>Subject:&nbsp;</td><td><webobject name="SubjectTextField" /></td></tr>
 			<webobject name="ShowAttachmentsConditional">
 				<tr>
-					<td valign="top"><webobject name="AttachmentsString" />:</td>
+					<td valign="top">Attachments:</td>
 					<td><webobject name="AttachmentsRepetition"><li><webobject name="AttachmentHyperlink" /> [<webobject name="DeleteAttachmentHyperlink" />]</li></webobject></td>
 				</tr>
 			</webobject>
