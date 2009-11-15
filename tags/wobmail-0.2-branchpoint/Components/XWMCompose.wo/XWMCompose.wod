@@ -1,0 +1,91 @@
+AttachmentHyperlink: WOHyperlink {
+	action = downloadAttachmentAction;
+	string = currentAttachmentName;
+}
+
+AttachmentsRepetition: WORepetition {
+	item = currentAttachment;
+	list = attachments;
+}
+
+AttachmentsString: XWMLocalizedString {
+	value = "XWMCompose.Attachments";
+}
+
+BccAddressesTextField: WOTextField {
+	size = 55;
+	value = bccAddresses;
+}
+
+BccString: XWMLocalizedString {
+	value = "XWMCompose.Bcc";
+}
+
+CancelButton: WOSubmitButton {
+	action = cancelAction;
+	value = session.localizer.XWMCompose.Cancel;
+}
+
+CcAddressesTextField: WOTextField {
+	size = 55;
+	value = ccAddresses;
+}
+
+CcString: XWMLocalizedString {
+	value = "XWMCompose.Cc";
+}
+
+DeleteAttachmentHyperlink: WOHyperlink {
+	action = deleteAttachmentAction;
+	string = session.localizer.XWMCompose.DeleteAttachment;
+}
+
+ErrorMessageString: WOString {
+	value = errorMessage;
+}
+
+Form: WOForm {
+	multipleSubmit = true;
+}
+
+PageWrapper: WOSwitchComponent {
+	WOComponentName = pageWrapperName;
+	pageTitleKey = "Compose";
+}
+
+SendButton: WOSubmitButton {
+	action = sendAction;
+	value = session.localizer.XWMCompose.Send;
+}
+
+ShowAttachmentsConditional: ERXNonZeroConditional {
+	condition = attachments.count;
+}
+
+ShowErrorMessageConditional: ERXNonNullConditional {
+	condition = errorMessage;
+}
+
+SubjectString: XWMLocalizedString {
+	value = "XWMCompose.Subject";
+}
+
+SubjectTextField: WOTextField {
+	size = 55;
+	value = subject;
+}
+
+Textbox: WOText {
+	cols = 60;
+	rows = 20;
+	value = emailText;
+}
+
+ToAddressesTextField: WOTextField {
+	size = 55;
+	value = toAddresses;
+}
+
+ToString: XWMLocalizedString {
+	value = "XWMCompose.To";
+}

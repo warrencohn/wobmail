@@ -1,0 +1,24 @@
+ErrorString: WOString {
+	value = errorMessage;
+}
+
+Form: WOForm {
+	action = loginAction;
+	multipleSubmit = false;
+}
+
+PasswordField: WOPasswordField {
+	value = password;
+}
+
+ShowErrorConditional: ERXNonNullConditional {
+	condition = errorMessage;
+}
+
+SubmitButton: WOSubmitButton {
+	action = loginAction;
+}
+
+UsernameTextField: WOTextField {
+	value = username;
+}

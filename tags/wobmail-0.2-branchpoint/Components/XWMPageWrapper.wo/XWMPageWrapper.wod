@@ -1,0 +1,30 @@
+ComponentContent: WOComponentContent {
+}
+
+ComposeHyperlink: WOHyperlink {
+	action = composeAction;
+	string = session.localizer.XWMPageWrapper.Compose;
+}
+
+InboxHyperlink: WOHyperlink {
+	action = inboxAction;
+	string = session.localizer.XWMPageWrapper.Inbox;
+}
+
+LoggedInAsString: XWMLocalizedString {
+	value = "XWMPageWrapper.LoggedInAs";
+}
+
+LogoutHyperlink: WOHyperlink {
+	directActionName = "logout";
+	string = session.localizer.XWMPageWrapper.Logout;
+	?wosid = session.sessionID;
+}
+
+TitleString: WOString {
+	value = pageTitle;
+}
+
+UsernameString: WOString {
+	value = session.username;
+}

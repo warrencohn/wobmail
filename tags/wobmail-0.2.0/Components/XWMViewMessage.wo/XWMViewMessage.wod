@@ -1,0 +1,93 @@
+DefaultMessageContentString: WOString {
+	value = defaultMessageContent;
+}
+
+ForwardAsAttachmentHyperlink: WOHyperlink {
+	action = forwardAsAttachmentAction;
+	string = session.localizer.XWMViewMessage.ForwardAsAttachment;
+}
+
+ForwardHyperlink: WOHyperlink {
+	action = forwardAction;
+	string = session.localizer.XWMViewMessage.Forward;
+}
+
+FromString: XWMLocalizedString {
+	value = "XWMViewMessage.From";
+}
+
+FromValueString: WOString {
+	value = messageSender;
+}
+
+MessageContent: XWMContent {
+	message = messageRow.message;
+}
+
+MoveToTrashHyperlink: WOHyperlink {
+	action = moveToTrashAction;
+	string = session.localizer.XWMViewMessage.MoveToTrash;
+}
+
+NextMessageHyperlink: WOHyperlink {
+	action = nextMessageAction;
+	string = session.localizer.XWMViewMessage.NextMessage;
+}
+
+PageWrapper: WOSwitchComponent {
+	WOComponentName = pageWrapperName;
+	pageTitle = messageSubject;
+}
+
+PreviousMessageHyperlink: WOHyperlink {
+	action = previousMessageAction;
+	string = session.localizer.XWMViewMessage.PreviousMessage;
+}
+
+ReplyHyperlink: WOHyperlink {
+	action = replyAction;
+	string = session.localizer.XWMViewMessage.Reply;
+}
+
+ReplyToAllHyperlink: WOHyperlink {
+	action = replyToAllAction;
+	string = session.localizer.XWMViewMessage.ReplyToAll;
+}
+
+SentDateString: XWMLocalizedString {
+	value = "XWMViewMessage.SentDate";
+}
+
+SentDateValueString: WOString {
+	value = presentableDateSent;
+}
+
+ShowNextLinkConditional: WOConditional {
+	condition = showNextMessageLink;
+}
+
+ShowPreviousLinkConditional: WOConditional {
+	condition = showPreviousMessageLink;
+}
+
+SubjectString: XWMLocalizedString {
+	value = "XWMViewMessage.Subject";
+}
+
+SubjectValueString: WOString {
+	value = messageSubject;
+}
+
+ToString: XWMLocalizedString {
+	value = "XWMViewMessage.To";
+}
+
+ToValueString: WOString {
+	value = messageToRecipient;
+}
+
+ViewSourceHyperlink: WOHyperlink {
+	href = viewSourceUrl;
+	string = session.localizer.XWMViewMessage.ViewMessageSource;
+	target = "_blank";
+}

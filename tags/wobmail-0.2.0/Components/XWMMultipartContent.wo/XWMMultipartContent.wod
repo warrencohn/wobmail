@@ -1,0 +1,12 @@
+Content: XWMContent {
+	message = currentPart;
+}
+
+PartInfoString: WOString {
+	value = partInfo;
+}
+
+PartsRepetition: WORepetition {
+	count = partsCount;
+	index = currentPartIndex;
+}

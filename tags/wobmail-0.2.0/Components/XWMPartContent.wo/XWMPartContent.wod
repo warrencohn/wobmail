@@ -1,0 +1,17 @@
+IsMimePartConditional: WOConditional {
+	condition = isMimePart;
+}
+
+MimeContent: XWMContent {
+	message = partContent;
+}
+
+PartInfoString: WOString {
+	value = partInfo;
+}
+
+ViewPartHyperlink: WOHyperlink {
+	href = partUrl;
+	string = "View part";
+	target = "_blank";
+}

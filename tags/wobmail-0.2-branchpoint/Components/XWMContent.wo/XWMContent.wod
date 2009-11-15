@@ -1,0 +1,16 @@
+IsMultipartConditional: WOConditional {
+	condition = isMultipart;
+}
+
+IsNotMultipartConditional: WOConditional {
+	condition = isMultipart;
+	negate = true;
+}
+
+MultipartContent: XWMMultipartContent {
+	part = ^message;
+}
+
+PartContent: XWMPartContent {
+	part = ^message;
+}

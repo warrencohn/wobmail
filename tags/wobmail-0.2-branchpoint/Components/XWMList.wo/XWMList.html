@@ -1,0 +1,41 @@
+<webobject name="PageWrapper">
+	<script src="/wobmail/js/mailList.js" type="text/javascript"Ê/>
+	<webobject name="Form">
+		<table border="0" cellpadding="0" cellspacing="0" width="100%">
+			<tr>
+				<td><div class="XWMlistOperations"><webobject name="DeleteSelectedMessagesButton"Ê/></div></td>
+				<td align="right">
+					<webobject name="ShowFirstPreviousConditional">
+						<webobject name="FirstPageHyperlink" />
+						<webobject name="PreviousPageHyperlink" />
+					</webobject>
+					<b><webobject name="StartIndexString" /></b> - <b><webobject name="EndIndexString" /></b> <webobject name="OfString" /> <b><webobject name="TotalNumberMessagesString" /></b>
+					<webobject name="ShowNextLastConditional">
+						<webobject name="NextPageHyperlink" />
+						<webobject name="LastPageHyperlink" />
+					</webobject>
+				</td>
+			</tr>
+		</table>
+		<table class="XWMmessageList" id="XWMmessageList">
+			<tr class="XWMheaderListRow">
+				<th>&nbsp;</th>
+				<th><webobject name="SubjectHeaderHyperlink" /></th>
+				<th><webobject name="SenderHeaderHyperlink" /></th>
+				<th><webobject name="DateSentHeaderHyperlink" /></th>
+			</tr>
+			<webobject name="MessageRepetition">
+				<webobject name="ListRowGeneric">
+					<td align="center"><webobject name="SelectMessageCheckbox" /></td>
+					<td><webobject name="MessageSubjectHyperlink" /></td>
+					<td nowrap><webobject name="SenderString" /></td>
+					<td nowrap><webobject name="DateSentString" /></td>
+				</webobject>
+			</webobject>
+		</table>
+		<div class="XWMlistOperations"><webobject name="SelectString"Ê/>: <webobject name="SelectAllMessagesHyperlink" /> <webobject name="SelectNoMessagesHyperlink" /></div>
+	</webobject>
+	<webobject name="NumPerPageForm">
+		<webobject name="DisplayString"Ê/> <webobject name="NumPerPagePopUpButton" /> <webobject name="MessagesPerPageString"Ê/> <webobject name="ChangeNumPerPageSubmitButton" />
+	</webobject>
+</webobject>
