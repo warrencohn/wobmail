@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="con" path="org.objectstyle.wolips.WO_CLASSPATH/ERExtensions/ERJars/ERJavaMail/JavaWOExtensions/JavaEOAccess/JavaEOControl/JavaFoundation/JavaJDBCAdaptor/JavaWebObjects/JavaWOJSPServlet/JavaXML"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="Java/smtp.jar"/>
 	<classpathentry kind="lib" path="Java/pop3.jar"/>
 	<classpathentry kind="lib" path="Java/mailapi.jar"/>
@@ -10,6 +8,17 @@
 	<classpathentry kind="lib" path="Java/dsn.jar"/>
 	<classpathentry kind="lib" path="Java/activation.jar"/>
 	<classpathentry kind="lib" path="NonIncludedJARs/JavaWOJSPServlet_client.jar"/>
-	<classpathentry kind="lib" path="NonIncludedJARs/servlet-api.jar"/>
+	<classpathentry kind="lib" path="Java/servlet-api.jar"/>
+	<classpathentry kind="con" path="WOFramework/ERExtensions"/>
+	<classpathentry kind="con" path="WOFramework/ERJars"/>
+	<classpathentry kind="con" path="WOFramework/ERJavaMail"/>
+	<classpathentry kind="con" path="WOFramework/JavaWOExtensions"/>
+	<classpathentry kind="con" path="WOFramework/JavaEOAccess"/>
+	<classpathentry kind="con" path="WOFramework/JavaEOControl"/>
+	<classpathentry kind="con" path="WOFramework/JavaFoundation"/>
+	<classpathentry kind="con" path="WOFramework/JavaJDBCAdaptor"/>
+	<classpathentry kind="con" path="WOFramework/JavaWebObjects"/>
+	<classpathentry kind="con" path="WOFramework/JavaXML"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

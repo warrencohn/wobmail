@@ -9,8 +9,8 @@ import net.xytra.wobmail.util.LocaleUtils;
 import com.webobjects.foundation.NSLog;
 import com.webobjects.foundation._NSUtilities;
 
-import er.extensions.ERXApplication;
-import er.extensions.ERXProperties;
+import er.extensions.appserver.ERXApplication;
+import er.extensions.foundation.ERXProperties;
 
 public class Application extends ERXApplication
 {

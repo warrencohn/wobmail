@@ -3,7 +3,7 @@ package net.xytra.wobmail.export;
 import com.webobjects.appserver.WOContext;
 import com.webobjects.appserver.WOResponse;
 
-import er.extensions.ERXNonSynchronizingComponent;
+import er.extensions.components.ERXNonSynchronizingComponent;
 
 public abstract class ExportVisitable extends ERXNonSynchronizingComponent
 {

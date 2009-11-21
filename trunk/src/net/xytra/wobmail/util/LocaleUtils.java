@@ -2,7 +2,7 @@ package net.xytra.wobmail.util;
 
 import java.util.Locale;
 
-import er.extensions.ERXProperties;
+import er.extensions.foundation.ERXProperties;
 
 public class LocaleUtils {
 	protected static final String ERXLOCALIZER_DEFAULT_LANGUAGE = "en_CA";

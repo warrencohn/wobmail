@@ -18,7 +18,7 @@ import net.xytra.wobmail.misc.MessageRow;
 
 import com.webobjects.foundation.NSArray;
 
-import er.extensions.ERXLogger;
+import er.extensions.logging.ERXLogger;
 
 public abstract class AbstractMailSession implements MailSession
 {

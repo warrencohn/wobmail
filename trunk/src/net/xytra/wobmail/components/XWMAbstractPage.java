@@ -5,7 +5,7 @@ import net.xytra.wobmail.manager.MailSession;
 
 import com.webobjects.appserver.WOContext;
 
-import er.extensions.ERXNonSynchronizingComponent;
+import er.extensions.components.ERXNonSynchronizingComponent;
 
 public class XWMAbstractPage extends ERXNonSynchronizingComponent
 {

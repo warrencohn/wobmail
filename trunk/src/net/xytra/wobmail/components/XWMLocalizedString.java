@@ -5,9 +5,9 @@ import com.webobjects.appserver.WOContext;
 import com.webobjects.eocontrol.EOEnterpriseObject;
 import com.webobjects.foundation.NSKeyValueCodingAdditions;
 
-import er.extensions.ERXLocalizedString;
-import er.extensions.ERXLocalizer;
-import er.extensions.ERXSession;
+import er.extensions.appserver.ERXSession;
+import er.extensions.localization.ERXLocalizedString;
+import er.extensions.localization.ERXLocalizer;
 
 public class XWMLocalizedString extends ERXLocalizedString {
 	public XWMLocalizedString(WOContext context) {

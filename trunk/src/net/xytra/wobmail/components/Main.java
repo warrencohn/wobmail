@@ -18,10 +18,10 @@ import com.webobjects.appserver.WOComponent;
 import com.webobjects.appserver.WOContext;
 import com.webobjects.foundation.NSArray;
 
-import er.extensions.ERXLocalizer;
-import er.extensions.ERXLogger;
-import er.extensions.ERXNonSynchronizingComponent;
-import er.extensions.ERXProperties;
+import er.extensions.components.ERXNonSynchronizingComponent;
+import er.extensions.foundation.ERXProperties;
+import er.extensions.localization.ERXLocalizer;
+import er.extensions.logging.ERXLogger;
 
 public class Main extends ERXNonSynchronizingComponent
 {

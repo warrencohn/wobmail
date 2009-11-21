@@ -4,7 +4,7 @@ package net.xytra.wobmail.components;
 import com.webobjects.appserver.WOComponent;
 import com.webobjects.appserver.WOContext;
 
-import er.extensions.ERXNonSynchronizingComponent;
+import er.extensions.components.ERXNonSynchronizingComponent;
 
 public class XWMPageWrapper extends ERXNonSynchronizingComponent
 {

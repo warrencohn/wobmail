@@ -39,7 +39,7 @@ public class XWMUtils
 	{
 		NSMutableData content = new NSMutableData();
 
-		Enumeration en1 = message.getAllHeaderLines();
+		Enumeration<String> en1 = message.getAllHeaderLines();
 		while (en1.hasMoreElements())
 		{
 			content.appendBytes(((String)en1.nextElement()).getBytes());
@@ -145,12 +145,12 @@ public class XWMUtils
 		else if (addresses.length == 0)
 			return ("(None)");
 
-		Enumeration en1 = new NSArray(addresses).objectEnumerator();
+		Enumeration<Address> en1 = new NSArray(addresses).objectEnumerator();
 		StringBuffer sb = new StringBuffer();
-		sb.append(((Address)en1.nextElement()).toString());
+		sb.append(en1.nextElement().toString());
 
 		while (en1.hasMoreElements())
-			sb.append(", ").append(((Address)en1.nextElement()).toString());
+			sb.append(", ").append(en1.nextElement().toString());
 
 		return (sb.toString());
 	}
@@ -171,13 +171,13 @@ public class XWMUtils
 						stringToAddressStringArray(s)));
 	}
 
-	protected static String addressStringArrayToString(NSArray array)
+	protected static String addressStringArrayToString(NSArray<String> array)
 	{
 		if (array.count() == 0)
 			return (null);
 
 		StringBuffer sb = new StringBuffer();
-		Enumeration en1 = array.objectEnumerator();
+		Enumeration<String> en1 = array.objectEnumerator();
 		sb.append(en1.nextElement());
 		
 		while (en1.hasMoreElements())
@@ -186,9 +186,9 @@ public class XWMUtils
 		return (sb.toString());
 	}
 
-	protected static NSArray stringToAddressStringArray(String s)
+	protected static NSArray<String> stringToAddressStringArray(String s)
 	{
-		NSMutableArray array = new NSMutableArray();
+		NSMutableArray<String> array = new NSMutableArray<String>();
 		String[] addresses = s.split(",");
 		for (int i=0; i<addresses.length; i++)
 			array.addObject(addresses[i].trim());
