@@ -33,7 +33,7 @@ public class XWMCompose extends XWMAbstractPage
 	private MimeMessage constituentMessage;
 
 	public ExportVisitor currentAttachment;
-	public NSMutableArray attachments = new NSMutableArray();
+	public NSMutableArray<ExportVisitor> attachments = new NSMutableArray<ExportVisitor>();
 
 	public XWMCompose(WOContext context) {
 		super(context);

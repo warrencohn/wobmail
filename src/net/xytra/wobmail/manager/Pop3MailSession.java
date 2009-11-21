@@ -43,11 +43,11 @@ public class Pop3MailSession extends AbstractMailSession
 	}
 
 	@Override
-	protected NSArray getOpenFolders() {
+	protected NSArray<Folder> getOpenFolders() {
 		if (inboxFolder == null) {
 			return (NSArray.EmptyArray);
 		} else {
-			return (new NSArray(inboxFolder));
+			return (new NSArray<Folder>(inboxFolder));
 		}
 	}
 

@@ -17,11 +17,11 @@ import com.webobjects.foundation.NSArray;
 import com.webobjects.foundation.NSMutableArray;
 import com.webobjects.foundation.NSRange;
 
-import er.extensions.ERXArrayUtilities;
+import er.extensions.foundation.ERXArrayUtilities;
 
 public class XWMList extends XWMAbstractPage
 {
-	public final NSArray numberPerPageArray = new NSArray(new Object[] { 2, 5, 10, 25, 50, 100 });
+	public final NSArray<Integer> numberPerPageArray = new NSArray<Integer>(new Integer[] { 2, 5, 10, 25, 50, 100 });
 
 	public int currentMessageIndex;
 	public MessageRow currentMessageRow;

@@ -10,7 +10,7 @@ import javax.mail.Part;
 
 import com.webobjects.appserver.WOContext;
 
-import er.extensions.ERXNonSynchronizingComponent;
+import er.extensions.components.ERXNonSynchronizingComponent;
 
 public class XWMMultipartContent extends ERXNonSynchronizingComponent
 {

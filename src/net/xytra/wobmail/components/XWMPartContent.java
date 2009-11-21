@@ -13,7 +13,7 @@ import net.xytra.wobmail.util.XWMUtils;
 
 import com.webobjects.appserver.WOContext;
 
-import er.extensions.ERXNonSynchronizingComponent;
+import er.extensions.components.ERXNonSynchronizingComponent;
 
 public class XWMPartContent extends ERXNonSynchronizingComponent
 {

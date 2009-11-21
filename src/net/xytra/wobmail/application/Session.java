@@ -12,14 +12,14 @@ import net.xytra.wobmail.util.LocaleUtils;
 import com.webobjects.foundation.NSDictionary;
 import com.webobjects.foundation.NSMutableArray;
 
-import er.extensions.ERXLogger;
-import er.extensions.ERXSession;
+import er.extensions.appserver.ERXSession;
+import er.extensions.logging.ERXLogger;
 
 public class Session extends ERXSession
 {
 	private String username;
 
-	private NSMutableArray downloadableObjects = new NSMutableArray();
+	private NSMutableArray<ExportVisitor> downloadableObjects = new NSMutableArray<ExportVisitor>();
 
 	private String currentSortField = null;
 	private boolean currentSortReverse = false;
@@ -124,7 +124,7 @@ public class Session extends ERXSession
 	{
 		return (context().directActionURLForActionNamed(
 				directActionName,
-				new NSDictionary(
+				new NSDictionary<String, Object>(
 						new Object[] { sessionID(), Integer.toString(index) },
 						new String[] { "wosid", "id" })));
 	}

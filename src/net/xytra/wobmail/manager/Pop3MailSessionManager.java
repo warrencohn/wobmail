@@ -11,10 +11,10 @@ public class Pop3MailSessionManager implements MailSessionManager
 {
 	private static Pop3MailSessionManager _instance = new Pop3MailSessionManager();
 
-	private Map entries;
+	private Map<String, MailSession> entries;
 
 	private Pop3MailSessionManager() {
-		this.entries = new HashMap();
+		this.entries = new HashMap<String, MailSession>();
 	}
 
 	public static Pop3MailSessionManager instance() {

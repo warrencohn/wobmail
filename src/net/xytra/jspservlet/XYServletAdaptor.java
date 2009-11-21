@@ -6,7 +6,7 @@ import com.webobjects.foundation.NSForwardException;
 import com.webobjects.foundation.NSLog;
 import com.webobjects.jspservlet.WOServletAdaptor;
 
-import er.extensions.ERXApplication;
+import er.extensions.appserver.ERXApplication;
 
 public class XYServletAdaptor extends WOServletAdaptor
 {
