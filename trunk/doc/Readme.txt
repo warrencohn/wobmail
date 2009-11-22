@@ -1,6 +1,6 @@
-Readme.txt for Wobmail v0.2.0
+Readme.txt for Wobmail v0.3.0
 Jonathan Meijer
-Last updated: 2009-11-14
+Last updated: 2009-11-21
 
 Project website:
 http://wobmail.googlecode.com/ or
@@ -14,7 +14,9 @@ For installation instructions, please read doc/Install.txt
 -------------------------------------------------------------------------------
 Version history
 
-Current version, 0.2.0, released November 12, 2009, contains the following
+Current version, 0.3.0, is under development.
+
+Version, 0.2.0, released November 12, 2009, contains the following
  improvements:
 - issue  #2: E-mail list split into pages
 - issue  #3: Previous and Next links to navigate between messages
