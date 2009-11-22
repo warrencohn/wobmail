@@ -8,7 +8,7 @@
 	<classpathentry kind="lib" path="Java/dsn.jar"/>
 	<classpathentry kind="lib" path="Java/activation.jar"/>
 	<classpathentry kind="lib" path="NonIncludedJARs/JavaWOJSPServlet_client.jar"/>
-	<classpathentry kind="lib" path="Java/servlet-api.jar"/>
+	<classpathentry kind="lib" path="NonIncludedJARs/servlet-api.jar"/>
 	<classpathentry kind="con" path="WOFramework/ERExtensions"/>
 	<classpathentry kind="con" path="WOFramework/ERJars"/>
 	<classpathentry kind="con" path="WOFramework/ERJavaMail"/>

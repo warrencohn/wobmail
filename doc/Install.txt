@@ -1,6 +1,6 @@
-Install.txt for Wobmail v0.2.0
+Install.txt for Wobmail v0.3.0
 Jonathan Meijer
-Last updated: 2009-11-15
+Last updated: 2009-11-21
 
 -------------------------------------------------------------------------------
 Table of contents
@@ -16,16 +16,16 @@ Table of contents
 1. Requirements
 -------------------------------------------------------------------------------
 
-The following are the conditions in which v0.2.0 is developed, and therefore
+The following are the conditions in which v0.3.0 is developed, and therefore
 represent the configuration for which building works:
 
 - Mac OS X 10.4.11
-- Eclipse SDK 3.3.1.1
-- Subclipse 1.2.4
-- WOLips 3.3.4578
+- Eclipse SDK 3.4.2
+- Subclipse 1.4.8
+- WOLips 3.4.5830
 - XCode 2.4.1
-- WebObjects 5.3.3 
-- Project Wonder, December 29, 2007 (or before)
+- WebObjects 5.3.3
+- Project Wonder, version 5.0 (latest from SVN repository, 2009-11-20)
 
 
 -------------------------------------------------------------------------------
@@ -55,6 +55,7 @@ and testing in development or deployment mode:
 3. Building for and Installation on Mac OS X
 -------------------------------------------------------------------------------
 
+(The following needs to be reviewed.)
 - Backup the existing wobmail.woa under /Library/WebObjects/Applications if
   necessary.
 - Ensure build.xml is added as an Ant buildfile in Eclipse.
@@ -71,12 +72,9 @@ and testing in development or deployment mode:
 -------------------------------------------------------------------------------
 
 The steps below assume the following:
-- the 4.0 Jar versions of the Wonder frameworks are in ~/Roots and the other
+- the 5.0 Jar versions of the Wonder frameworks are in ~/Roots and the other
   versions are in /Library/WebObjects/lib;
-- Apache Tomcat 5.5.26 or 6.0.18 can be used; some more recent version do not
-  work;
-- a version of Apache commons-io is present under tomcat's common/lib
-  directory.
+- Apache Tomcat 5.5.28 can be used, 6.0.18 seems to be problematic.
 
 Here are the steps to build as standalone WAR:
 - On the target server, backup the existing wobmail.war if deemed necessary.
@@ -86,3 +84,8 @@ Here are the steps to build as standalone WAR:
   run './buildwar.sh'.  wobmail.war is now a standalone WAR.
 
 The WAR can now be deployed on the Tomcat server.
+
+You might want to copy over the css, images and js folder (from under
+WebServer) into the right place.  If testing straight on Tomcat, copy them (or
+extract them from the wobmail.jar) into the wobmail folder under webapps, under
+the Tomcat root folder.
