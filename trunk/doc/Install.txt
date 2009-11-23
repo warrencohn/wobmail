@@ -1,6 +1,6 @@
 Install.txt for Wobmail v0.3.0
 Jonathan Meijer
-Last updated: 2009-11-21
+Last updated: 2009-11-22
 
 -------------------------------------------------------------------------------
 Table of contents
@@ -89,3 +89,8 @@ You might want to copy over the css, images and js folder (from under
 WebServer) into the right place.  If testing straight on Tomcat, copy them (or
 extract them from the wobmail.jar) into the wobmail folder under webapps, under
 the Tomcat root folder.
+
+cd wobmail &&
+jar xf WEB-INF/lib/wobmail.jar &&
+mv WebServerResources/WebServer/* ./ &&
+rm -rf net Resources WebServerResources

@@ -1,12 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="lib" path="Java/smtp.jar"/>
-	<classpathentry kind="lib" path="Java/pop3.jar"/>
-	<classpathentry kind="lib" path="Java/mailapi.jar"/>
-	<classpathentry kind="lib" path="Java/imap.jar"/>
-	<classpathentry kind="lib" path="Java/dsn.jar"/>
-	<classpathentry kind="lib" path="Java/activation.jar"/>
 	<classpathentry kind="lib" path="NonIncludedJARs/JavaWOJSPServlet_client.jar"/>
 	<classpathentry kind="lib" path="NonIncludedJARs/servlet-api.jar"/>
 	<classpathentry kind="con" path="WOFramework/ERExtensions"/>
