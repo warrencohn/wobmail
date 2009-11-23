@@ -97,11 +97,20 @@ er.javamail.debugEnabled = false
 #er.javamail.adminEmail = admin@example.com
 
 # * SMTP outbound host
-mail.smtp.host = 172.16.1.20
-mail.smtp.port = 25
-mail.smtp.connectiontimeout = 600000
-mail.smtp.timeout = 600000
-mail.smtp.sendpartial = true
+#er.javamail.smtpHost = smtp.example.com
+
+# * The port to use with the smtp server, if not set, defaults to 25
+#er.javamail.smtpPort = 25
+
+# Valid ERJavaMail email pattern. If null, then the internal default will be used
+#er.javamail.emailPattern = ^.*?@.*$
+
+# Other JavaMail properties (the following are not defaults)
+#mail.smtp.host = smtp.example.com
+#mail.smtp.port = 25
+#mail.smtp.connectiontimeout = 600000
+#mail.smtp.timeout = 600000
+#mail.smtp.sendpartial = true
 
 # * Number of messages that the sender queue can hold at a time
 er.javamail.senderQueue.size = 50
