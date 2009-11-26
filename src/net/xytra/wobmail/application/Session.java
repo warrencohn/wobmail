@@ -21,6 +21,8 @@ public class Session extends ERXSession
 
 	private NSMutableArray<ExportVisitor> downloadableObjects = new NSMutableArray<ExportVisitor>();
 
+	private String currentFolderName = null;
+
 	private String currentSortField = null;
 	private boolean currentSortReverse = false;
 
@@ -73,6 +75,24 @@ public class Session extends ERXSession
 
 	public void setMailSession(MailSession ms) {
 		this.mailSession = ms;
+	}
+
+	// Current mail folder name
+	// By default, return Inbox
+	public String getCurrentFolderName() {
+		if (currentFolderName == null) {
+			currentFolderName = MailSession.INBOX_FOLDER_NAME;
+		}
+
+		return (currentFolderName);
+	}
+
+	public void setCurrentFolderName(String newName) {
+		if (newName == null) {
+			throw (new NullPointerException());
+		}
+
+		currentFolderName = newName;
 	}
 
 	// Username
