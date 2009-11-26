@@ -18,10 +18,11 @@ import com.webobjects.appserver.WOContext;
 import com.webobjects.foundation.NSData;
 import com.webobjects.foundation.NSTimestamp;
 
+import er.extensions.eof.ERXConstant;
+
 public class XWMViewMessage extends XWMAbstractPage
 {
-	private String messageFolderName;
-	private int messageIndex;
+	private Integer messageIndex;
 	private MessageRow messageRow;
 
 	public XWMViewMessage(WOContext context)
@@ -60,20 +61,6 @@ public class XWMViewMessage extends XWMAbstractPage
 		XWMCompose page = (XWMCompose)pageWithName(XWMCompose.class.getName());
 		// TODO: check if type really matches
 		page.attachMimeMessage((MimeMessage)getMessage());
-
-		return (page);
-	}
-
-	public WOComponent nextMessageAction() {
-		XWMViewMessage page = (XWMViewMessage)pageWithName(XWMViewMessage.class.getName());
-		page.setMessageFolderNameAndIndex(getMessageFolderName(), getMessageIndex()+1);
-
-		return (page);
-	}
-
-	public WOComponent previousMessageAction() {
-		XWMViewMessage page = (XWMViewMessage)pageWithName(XWMViewMessage.class.getName());
-		page.setMessageFolderNameAndIndex(getMessageFolderName(), getMessageIndex()-1);
 
 		return (page);
 	}
@@ -130,6 +117,7 @@ public class XWMViewMessage extends XWMAbstractPage
 	 */
 	public MessageRow getMessageRow() throws MessagingException {
 		if (messageRow == null) {
+			System.err.println("messageIndex="+messageIndex);
 			messageRow = getMailSession().getMessageRowForFolderWithName(getMessageIndex(), getMessageFolderName());
 
 			// Ensure connection is still open and folder too:
@@ -143,19 +131,30 @@ public class XWMViewMessage extends XWMAbstractPage
 	 * @return the folder name of the folder in which to find the message with the index specified earlier.
 	 */
 	protected String getMessageFolderName() {
-		return (messageFolderName);
+		return (session().getCurrentFolderName());
+	}
+
+	public void setMessageFolderName(String newName) {
+		session().setCurrentFolderName(newName);
 	}
 
 	/**
 	 * @return the index of message as passed in earlier.
 	 */
 	protected int getMessageIndex() {
-		return (messageIndex);
+		return (messageIndex.intValue());
 	}
 
-	public void setMessageFolderNameAndIndex(String folderName, int index) {
-		messageFolderName = folderName;
-		messageIndex = index;
+	public void setMessageIndex(int index) {
+		messageIndex = ERXConstant.integerForInt(index);
+	}
+
+	public int getNextMessageIndex() {
+		return (getMessageIndex() + 1);
+	}
+
+	public int getPreviousMessageIndex() {
+		return (getMessageIndex() - 1);
 	}
 
 	public String defaultMessageContent() throws MessagingException, IOException

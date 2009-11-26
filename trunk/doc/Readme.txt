@@ -15,6 +15,9 @@ For installation instructions, please read doc/Install.txt
 Version history
 
 Current version, 0.3.0, is under development.
+- issue #24: Updated to the latest Project Wonder
+- issue #25: Fixed rendering issue in Firefox due to script tag
+- issue #26: Changed all component action URLs to direct actions
 
 Version, 0.2.0, released November 12, 2009, contains the following
  improvements:

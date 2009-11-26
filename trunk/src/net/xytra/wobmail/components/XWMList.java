@@ -74,69 +74,6 @@ public class XWMList extends XWMAbstractPage
 		return (context().page());
 	}
 
-	/**
-	 * Go to the first page of message list.
-	 *
-	 * @return same message list page.
-	 */
-	public WOComponent firstPageAction()
-	{
-		session().selectedPageIndex = 0;
-
-		// Flush the visible list of messages
-		availableMessages = null;
-
-		return (context().page());
-	}
-
-	/**
-	 * Go to the last page of message list.
-	 *
-	 * @return same message list page.
-	 * @throws MessagingException 
-	 */
-	public WOComponent lastPageAction() throws MessagingException
-	{
-		session().selectedPageIndex = (messageArrayForCurrentFolder().size()-1) / session().selectedNumberPerPage;
-
-		// Flush the visible list of messages
-		availableMessages = null;
-
-		return (context().page());
-	}
-
-	/**
-	 * Go to the next page of message list.
-	 *
-	 * @return same message list page.
-	 * @throws MessagingException 
-	 */
-	public WOComponent nextPageAction() throws MessagingException
-	{
-		session().selectedPageIndex = Math.min((messageArrayForCurrentFolder().size()-1) / session().selectedNumberPerPage,
-				session().selectedPageIndex+1);
-
-		// Flush the visible list of messages
-		availableMessages = null;
-
-		return (context().page());
-	}
-
-	/**
-	 * Go to the previous page of message list.
-	 *
-	 * @return same message list page.
-	 */
-	public WOComponent previousPageAction()
-	{
-		session().selectedPageIndex = Math.max(0, session().selectedPageIndex-1);
-
-		// Flush the visible list of messages
-		availableMessages = null;
-
-		return (context().page());
-	}
-
 	public WOComponent selectAllMessagesAction() throws MessagingException
 	{
 		// Set all messages listed on page as selected
@@ -212,14 +149,6 @@ public class XWMList extends XWMAbstractPage
 		availableMessages = null;
 
 		return (context().page());
-	}
-
-	public WOComponent viewMessageAction() throws MessagingException
-	{
-		XWMViewMessage page = (XWMViewMessage)pageWithName(XWMViewMessage.class.getName());
-		page.setMessageFolderNameAndIndex(currentFolderName(), getCurrentMessageIndexInFullArray());
-
-		return (page);
 	}
 
 	// Data
@@ -339,6 +268,29 @@ public class XWMList extends XWMAbstractPage
 
 	public String presentableDateSent() throws MessagingException {
 		return (session().localizedDateTimeFormat().format(currentMessageRow.getDateSent()));
+	}
+
+	// Page indices
+	/**
+	 * @return the index of the last page of messages.
+	 * @throws MessagingException
+	 */
+	public int getLastPageIndex() throws MessagingException {
+		return ((messageArrayForCurrentFolder().size()-1) / session().selectedNumberPerPage);
+	}
+
+	/**
+	 * @return the index of the next page of messages, regardless if it exists.
+	 */
+	public int getNextPageIndex() {
+		return (session().selectedPageIndex + 1);
+	}
+
+	/**
+	 * @return the index of the previous page of messages, regardless if it exists.
+	 */
+	public int getPreviousPageIndex() {
+		return (session().selectedPageIndex - 1);
 	}
 
 	// Internal switches

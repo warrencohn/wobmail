@@ -27,8 +27,9 @@ EndIndexString: WOString {
 }
 
 FirstPageHyperlink : WOHyperlink {
-	action = firstPageAction;
+	directActionName = "list";
 	string = session.localizer.XWMList.FirstPage;
+	?page = 0;
 }
 
 Form: WOForm {
@@ -36,8 +37,9 @@ Form: WOForm {
 }
 
 LastPageHyperlink : WOHyperlink {
-	action = lastPageAction;
+	directActionName = "list";
 	string = session.localizer.XWMList.LastPage;
+	?page = lastPageIndex;
 }
 
 ListRowGeneric: WOGenericContainer {
@@ -56,13 +58,15 @@ MessagesPerPageString: XWMLocalizedString {
 }
 
 MessageSubjectHyperlink: WOHyperlink {
-	action = viewMessageAction;
+	directActionName = "viewMessage";
 	string = currentMessageRow.subject;
+	?mi = currentMessageIndexInFullArray;
 }
 
 NextPageHyperlink: WOHyperlink {
-	action = nextPageAction;
+	directActionName = "list";
 	string = session.localizer.XWMList.NextPage;
+	?page = nextPageIndex;
 }
 
 NumPerPageForm: WOForm {
@@ -83,8 +87,9 @@ PageWrapper: WOSwitchComponent {
 }
 
 PreviousPageHyperlink: WOHyperlink {
-	action = previousPageAction;
+	directActionName = "list";
 	string = session.localizer.XWMList.PreviousPage;
+	?page = previousPageIndex;
 }
 
 SelectAllMessagesHyperlink: WOHyperlink {

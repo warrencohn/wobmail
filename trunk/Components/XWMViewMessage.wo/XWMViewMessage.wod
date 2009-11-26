@@ -30,8 +30,9 @@ MoveToTrashHyperlink: WOHyperlink {
 }
 
 NextMessageHyperlink: WOHyperlink {
-	action = nextMessageAction;
+	directActionName = "viewMessage";
 	string = session.localizer.XWMViewMessage.NextMessage;
+	?mi = nextMessageIndex;
 }
 
 PageWrapper: WOSwitchComponent {
@@ -40,8 +41,9 @@ PageWrapper: WOSwitchComponent {
 }
 
 PreviousMessageHyperlink: WOHyperlink {
-	action = previousMessageAction;
+	directActionName = "viewMessage";
 	string = session.localizer.XWMViewMessage.PreviousMessage;
+	?mi = previousMessageIndex;
 }
 
 ReplyHyperlink: WOHyperlink {
