@@ -77,10 +77,18 @@ public class DirectAction extends WODirectAction
     		return (redirectToDefaultAction());
     	}
 
-		boolean shouldReload = "1".equals(request().stringFormValueForKey("rl"));
-
+		// Page number
 		int pageNumber = integerForFormValueForKeyWithDefault("page", 0);
-		session().selectedPageIndex = pageNumber;
+		session().setSelectedPageIndex(pageNumber);
+
+		// Batch size
+		Integer batchSize = integerForFormValueForKey("mpp");
+		if (batchSize != null) {
+			session().setSelectedNumberPerPage(batchSize.intValue());
+		}
+
+		// Whether reload needed
+		boolean shouldReload = "1".equals(request().stringFormValueForKey("rl"));
 
 		XWMList list = (XWMList)pageWithName(XWMList.class.getName());
 		list.setForceListReload(shouldReload);
@@ -160,19 +168,19 @@ public class DirectAction extends WODirectAction
 	}
 
 	protected Integer integerForFormValueForKeyWithDefault(String key, int defaultValue) {
-		return (integerForFormValueForKeyWithDefault(key, ERXConstant.integerForInt(defaultValue)));
+		return (integerForFormValueForKeyWithDefault(key, ERXConstant.integerForInt(defaultValue)).intValue());
 	}
 
 	protected Integer integerForFormValueForKeyWithDefault(String key, Integer defaultValue) {
 		if (key == null) {
-			throw (new NullPointerException("NULL key passed as argument"));
+			throw (new NullPointerException("NULL key passed as key"));
 		}
 
 		String s = request().stringFormValueForKey(key);
 		ERXLogger.log.debug("stringFormValueForKey(" + key + ")=" + s);
 
 		if (s == null) {
-			return (null);
+			return (defaultValue);
 		}
 
 		Integer value = null;

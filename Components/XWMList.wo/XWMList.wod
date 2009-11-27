@@ -1,5 +1,6 @@
-ChangeNumPerPageSubmitButton : WOSubmitButton {
-	action = changeNumberPerPageAction;
+ChangeNumPerPageSubmitGeneric: WOGenericElement {
+	elementName = "input";
+	type = "submit";
 	value = session.localizer.XWMList.Go;
 }
 
@@ -69,12 +70,18 @@ NextPageHyperlink: WOHyperlink {
 	?page = nextPageIndex;
 }
 
-NumPerPageForm: WOForm {
+NumPerPageFormGeneric: WOGenericContainer {
+	action = "list";
+	elementName = "form";
+	method = "get";
 }
 
 NumPerPagePopUpButton: WOPopUpButton {
+	item = currentNumberPerPage;
 	list = numberPerPageArray;
+	name = "mpp";
 	selection = session.selectedNumberPerPage;
+	value = currentNumberPerPage;
 }
 
 OfString: XWMLocalizedString {
@@ -117,6 +124,11 @@ SenderHeaderHyperlink: WOHyperlink {
 
 SenderString: WOString {
 	value = currentMessageRow.sender;
+}
+
+SessionIDHidden: WOHiddenField {
+	name = "wosid";
+	value = session.sessionID;
 }
 
 ShowFirstPreviousConditional: WOConditional {

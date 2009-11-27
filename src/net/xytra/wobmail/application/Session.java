@@ -32,8 +32,8 @@ public class Session extends ERXSession
 	private DateFormat localizedDateTimeFormat;
 
 	// Persistent parameters for display purposes
-	public int selectedPageIndex = 0;
-	public int selectedNumberPerPage = 50;
+	private int selectedPageIndex = 0;
+	private int selectedNumberPerPage = 50;
 
 	public Session() {
 		super();
@@ -77,8 +77,10 @@ public class Session extends ERXSession
 		this.mailSession = ms;
 	}
 
-	// Current mail folder name
-	// By default, return Inbox
+	// Current mail viewing parameters
+	/**
+	 * @return the current folder name, with INBOX as default if null. 
+	 */
 	public String getCurrentFolderName() {
 		if (currentFolderName == null) {
 			currentFolderName = MailSession.INBOX_FOLDER_NAME;
@@ -87,12 +89,49 @@ public class Session extends ERXSession
 		return (currentFolderName);
 	}
 
-	public void setCurrentFolderName(String newName) {
-		if (newName == null) {
+	/**
+	 * Set the new current folder by its name.
+	 *
+	 * @param newFolderName name of the folder to set as current.
+	 */
+	public void setCurrentFolderName(String newFolderName) {
+		if (newFolderName == null) {
 			throw (new NullPointerException());
 		}
 
-		currentFolderName = newName;
+		currentFolderName = newFolderName;
+	}
+
+	/**
+	 * @return the batch size, number of messages per page, when listing the message in a folder.
+	 */
+	public int getSelectedNumberPerPage() {
+		return (selectedNumberPerPage);
+	}
+
+	/**
+	 * Set the list page batch size when listing the message in a folder.
+	 *
+	 * @param newNumberPerPage new number of messages that should be shown per page.
+	 */
+	public void setSelectedNumberPerPage(int newNumberPerPage) {
+		selectedNumberPerPage = newNumberPerPage;
+	}
+
+	/**
+	 * @return the index of the currently viewed page of messages.
+	 */
+	public int getSelectedPageIndex() {
+		return (selectedPageIndex);
+	}
+
+	/**
+	 * Set the new currently viewed page of messages by its index.
+	 *
+	 * @param newPageIndex index of new page.
+	 */
+	public void setSelectedPageIndex(int newPageIndex) {
+		selectedPageIndex = newPageIndex;
 	}
 
 	// Username
