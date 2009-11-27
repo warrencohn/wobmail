@@ -31,6 +31,8 @@ public class XWMList extends XWMAbstractPage
 
 	private boolean forceListReload = false;
 
+	public int currentNumberPerPage;
+
 	private Integer _currentEndIndex = null;
 	private Integer _currentStartIndex = null;
 
@@ -50,7 +52,7 @@ public class XWMList extends XWMAbstractPage
 		// The new selected number of messages per page is already set through the dropdown.
 
 		// Set the page index back to the first page
-		session().selectedPageIndex = 0;
+		session().setSelectedPageIndex(0);
 
 		// Flush the visible list of messages
 		availableMessages = null;
@@ -216,11 +218,11 @@ public class XWMList extends XWMAbstractPage
 	}
 
 	public boolean showFirstAndPreviousLinks() {
-		return (session().selectedPageIndex > 0);
+		return (session().getSelectedPageIndex() > 0);
 	}
 
 	public boolean showNextAndLastLinks() throws MessagingException {
-		return (session().selectedPageIndex < ((messageArrayForCurrentFolder().size()-1) / session().selectedNumberPerPage));
+		return (session().getSelectedPageIndex() < ((messageArrayForCurrentFolder().size()-1) / session().getSelectedNumberPerPage()));
 	}
 
 	// Methods to access the current list bounds
@@ -241,7 +243,7 @@ public class XWMList extends XWMAbstractPage
 	 */
 	protected int currentStartIndex() {
 		if (_currentStartIndex == null) {
-			_currentStartIndex = session().selectedPageIndex * session().selectedNumberPerPage;
+			_currentStartIndex = session().getSelectedPageIndex() * session().getSelectedNumberPerPage();
 		}
 
 		return (_currentStartIndex.intValue());
@@ -253,7 +255,7 @@ public class XWMList extends XWMAbstractPage
 	 */
 	protected int currentEndIndex() throws MessagingException {
 		if (_currentEndIndex == null) {
-			_currentEndIndex = Math.min(currentStartIndex() + session().selectedNumberPerPage, messageArrayForCurrentFolder().size());
+			_currentEndIndex = Math.min(currentStartIndex() + session().getSelectedNumberPerPage(), messageArrayForCurrentFolder().size());
 		}
 
 		return (_currentEndIndex.intValue());
@@ -276,21 +278,21 @@ public class XWMList extends XWMAbstractPage
 	 * @throws MessagingException
 	 */
 	public int getLastPageIndex() throws MessagingException {
-		return ((messageArrayForCurrentFolder().size()-1) / session().selectedNumberPerPage);
+		return ((messageArrayForCurrentFolder().size()-1) / session().getSelectedNumberPerPage());
 	}
 
 	/**
 	 * @return the index of the next page of messages, regardless if it exists.
 	 */
 	public int getNextPageIndex() {
-		return (session().selectedPageIndex + 1);
+		return (session().getSelectedPageIndex() + 1);
 	}
 
 	/**
 	 * @return the index of the previous page of messages, regardless if it exists.
 	 */
 	public int getPreviousPageIndex() {
-		return (session().selectedPageIndex - 1);
+		return (session().getSelectedPageIndex() - 1);
 	}
 
 	// Internal switches
