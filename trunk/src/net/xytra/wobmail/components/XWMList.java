@@ -12,12 +12,9 @@ import net.xytra.wobmail.misc.MessageRow;
 import com.webobjects.appserver.WOComponent;
 import com.webobjects.appserver.WOContext;
 import com.webobjects.appserver.WOResponse;
-import com.webobjects.eocontrol.EOSortOrdering;
 import com.webobjects.foundation.NSArray;
 import com.webobjects.foundation.NSMutableArray;
 import com.webobjects.foundation.NSRange;
-
-import er.extensions.foundation.ERXArrayUtilities;
 
 public class XWMList extends XWMAbstractPage
 {
@@ -41,31 +38,12 @@ public class XWMList extends XWMAbstractPage
 	}
 
 	// Actions
-	/**
-	 * Process the new number of messages per page and return same page.
-	 * Ensure selected page index is reset to the first page.
-	 *
-	 * @return same message list page.
-	 */
-	public WOComponent changeNumberPerPageAction()
-	{
-		// The new selected number of messages per page is already set through the dropdown.
-
-		// Set the page index back to the first page
-		session().setSelectedPageIndex(0);
-
-		// Flush the visible list of messages
-		availableMessages = null;
-
-		return (context().page());
-	}
-
 	public WOComponent moveToTrashSelectedMessagesAction() throws MessagingException
 	{
 		// Mark selected messages as deleted and return to List
 		NSArray<MessageRow> selectedMessageRows = getSelectedMessageRows();
 		if (selectedMessageRows.size() > 0) {
-			session().getMailSession().moveMessageRowsToFolderWithName(
+			session().getMailSession().moveMessageRowsToFolder(
 					selectedMessageRows, MailSession.TRASH_FOLDER_NAME);
 
 			// Reset cached arrays
@@ -118,41 +96,6 @@ public class XWMList extends XWMAbstractPage
 		}
 	}
 
-	public WOComponent sortByDateSentAction()
-	{
-		return (sortByFieldAction(MessageRow.DATE_SENT_SORT_FIELD));
-	}
-
-	public WOComponent sortBySenderAction()
-	{
-		return (sortByFieldAction(MessageRow.SENDER_SORT_FIELD));
-	}
-
-	public WOComponent sortBySubjectAction()
-	{
-		return (sortByFieldAction(MessageRow.SUBJECT_SORT_FIELD));
-	}
-
-	protected WOComponent sortByFieldAction(String fieldName)
-	{
-		if (fieldName == session().getCurrentSortField()) {
-			session().setCurrentSortReverse(!session().getCurrentSortReverse());
-
-			// If only reversing, we will lighten the load by just reversing the existing array:
-			messageArrayForCurrentFolder = ERXArrayUtilities.reverse(messageArrayForCurrentFolder);
-		} else {
-			session().setCurrentSortField(fieldName);
-			session().setCurrentSortReverse(false);
-
-			messageArrayForCurrentFolder = null;
-		}
-
-		// Changing the sort field or direction invalidates our cached arrays:
-		availableMessages = null;
-
-		return (context().page());
-	}
-
 	// Data
 	public NSArray<MessageRow> getAvailableMessages() throws MessagingException
 	{
@@ -167,22 +110,9 @@ public class XWMList extends XWMAbstractPage
 	 * @return the array representing the full list of messages in this folder.
 	 * @throws MessagingException
 	 */
-	// TODO: This would well be served by a caching mechanism
 	protected NSArray<MessageRow> messageArrayForCurrentFolder() throws MessagingException {
 		if (messageArrayForCurrentFolder == null) {
-			NSArray<MessageRow> folderMessageRows = getMailSession().getMessageRowsForFolderWithName(MailSession.INBOX_FOLDER_NAME, getForceListReload());
-
-			// Sort message rows according to session's parameters, if any is specified:
-			if (session().getCurrentSortField() != null) {
-				messageArrayForCurrentFolder = ERXArrayUtilities.sortedArraySortedWithKey(
-						folderMessageRows,
-						session().getCurrentSortField(),
-						session().getCurrentSortReverse() ?
-								EOSortOrdering.CompareCaseInsensitiveDescending :
-								EOSortOrdering.CompareCaseInsensitiveAscending);
-			} else {
-				messageArrayForCurrentFolder = folderMessageRows;
-			}
+			messageArrayForCurrentFolder = getMailSession().getMessageRowsForFolder(MailSession.INBOX_FOLDER_NAME, getForceListReload());
 		}
 
 		return (messageArrayForCurrentFolder);
@@ -208,13 +138,48 @@ public class XWMList extends XWMAbstractPage
 		return (Application.application().resourceManager().urlForResourceNamed("mailList.js", "app", null, context().request()));
 	}
 
+	// Sorting
+	public String sortKeyForDateSent() {
+		return (MessageRow.DATE_SENT_SORT_FIELD);
+	}
+
+	public int reverseNextSortForDateSentAsInt() {
+		return (reverseNextSortForKeyAsInt(sortKeyForDateSent()));
+	}
+
+	public String sortKeyForSender() {
+		return (MessageRow.SENDER_SORT_FIELD);
+	}
+
+	public int reverseNextSortForSenderAsInt() {
+		return (reverseNextSortForKeyAsInt(sortKeyForSender()));
+	}
+
+	public String sortKeyForSubject() {
+		return (MessageRow.SUBJECT_SORT_FIELD);
+	}
+
+	public int reverseNextSortForSubjectAsInt() {
+		return (reverseNextSortForKeyAsInt(sortKeyForSubject()));
+	}
+
+	protected int reverseNextSortForKeyAsInt(String sortKey) {
+		return (!session().getCurrentSortReverse() &&
+				sortKey.equals(session().getCurrentSortField()) ? 1 : 0);
+	}
+
 	/**
 	 * @return current folder name or localized version of "Inbox" if current folder is "INBOX".
 	 */
-	public String currentFolderName()
-	{
-		// TODO: Link this with current folder and localize if "INBOX"
-		return ("Inbox");
+	public String currentFolderName() {
+		String currentFolderName = session().getCurrentFolderName();
+
+		if (currentFolderName.equals(MailSession.INBOX_FOLDER_NAME)) {
+			// TODO: Localize
+			return ("Inbox");
+		} else {
+			return (currentFolderName);
+		}
 	}
 
 	public boolean showFirstAndPreviousLinks() {

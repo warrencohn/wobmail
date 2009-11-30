@@ -162,20 +162,20 @@ public abstract class AbstractMailSession implements MailSession
 	protected abstract NSArray getOpenFolders();
 
 	// Messages
-	public MessageRow getMessageRowForFolderWithName(int index, String folderName) throws MessagingException {
-		return (getMessageRowsForFolderWithName(folderName).objectAtIndex(index));
+	public MessageRow getMessageRowForFolder(int index, String folderName) throws MessagingException {
+		return (getMessageRowsForFolder(folderName).objectAtIndex(index));
 	}
 
-	public NSArray<MessageRow> getMessageRowsForFolderWithName(String folderName) throws MessagingException {
-		return (getMessageRowsForFolderWithName(folderName, false));
+	public NSArray<MessageRow> getMessageRowsForFolder(String folderName) throws MessagingException {
+		return (getMessageRowsForFolder(folderName, false));
 	}
 
-	public int getNumberMessagesInFolderWithName(String folderName) throws MessagingException {
-		return (getMessageRowsForFolderWithName(folderName).size());
+	public int getNumberMessagesInFolder(String folderName) throws MessagingException {
+		return (getMessageRowsForFolder(folderName).size());
 	}
 
-	public void moveMessageRowToFolderWithName(MessageRow messageRow, String folderName) throws MessagingException {
-		moveMessageRowsToFolderWithName(new NSArray<MessageRow>(messageRow), folderName);
+	public void moveMessageRowToFolder(MessageRow messageRow, String folderName) throws MessagingException {
+		moveMessageRowsToFolder(new NSArray<MessageRow>(messageRow), folderName);
 	}
 
 	public MimeMessage obtainNewMimeMessage() {

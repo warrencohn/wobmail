@@ -35,7 +35,7 @@ public class XWMViewMessage extends XWMAbstractPage
 	public WOComponent moveToTrashAction() throws MessagingException
 	{
 		// Mark message as deleted and return to List
-		session().getMailSession().moveMessageRowToFolderWithName(
+		session().getMailSession().moveMessageRowToFolder(
 				getMessageRow(), MailSession.TRASH_FOLDER_NAME);
 
 		return (pageWithName(XWMList.class.getName()));
@@ -95,7 +95,7 @@ public class XWMViewMessage extends XWMAbstractPage
 	 * @throws MessagingException
 	 */
 	public boolean showNextMessageLink() throws MessagingException {
-		int numMessagesInFolder = getMailSession().getNumberMessagesInFolderWithName(getMessageFolderName());
+		int numMessagesInFolder = getMailSession().getNumberMessagesInFolder(getMessageFolderName());
 
 		return (getMessageIndex() < numMessagesInFolder-1);
 	}
@@ -118,7 +118,7 @@ public class XWMViewMessage extends XWMAbstractPage
 	public MessageRow getMessageRow() throws MessagingException {
 		if (messageRow == null) {
 			System.err.println("messageIndex="+messageIndex);
-			messageRow = getMailSession().getMessageRowForFolderWithName(getMessageIndex(), getMessageFolderName());
+			messageRow = getMailSession().getMessageRowForFolder(getMessageIndex(), getMessageFolderName());
 
 			// Ensure connection is still open and folder too:
 			getMailSession().keepConnectionOpenForMessage(messageRow.getMessage());

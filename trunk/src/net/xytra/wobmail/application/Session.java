@@ -23,9 +23,6 @@ public class Session extends ERXSession
 
 	private String currentFolderName = null;
 
-	private String currentSortField = null;
-	private boolean currentSortReverse = false;
-
 	private MailSession mailSession;
 
 	// To present dates
@@ -189,19 +186,11 @@ public class Session extends ERXSession
 	}
 
 	public String getCurrentSortField() {
-		return (currentSortField);
-	}
-
-	public void setCurrentSortField(String newField) {
-		currentSortField = newField;
+		return (getMailSession().sortKeyForFolder(getCurrentFolderName()));
 	}
 
 	public boolean getCurrentSortReverse() {
-		return (currentSortReverse);
-	}
-
-	public void setCurrentSortReverse(boolean isReverse) {
-		currentSortReverse = isReverse;
+		return (getMailSession().isReverseSortForFolder(getCurrentFolderName()));
 	}
 
 }
