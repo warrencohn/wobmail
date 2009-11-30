@@ -10,6 +10,7 @@ import net.xytra.wobmail.components.XWMCompose;
 import net.xytra.wobmail.components.XWMList;
 import net.xytra.wobmail.components.XWMViewMessage;
 import net.xytra.wobmail.export.ExportVisitable;
+import net.xytra.wobmail.misc.MessageRow;
 
 import com.webobjects.appserver.WOActionResults;
 import com.webobjects.appserver.WODirectAction;
@@ -72,7 +73,7 @@ public class DirectAction extends WODirectAction
     	return (pageWithName(XWMCompose.class.getName()));
     }
 
-	public WOActionResults listAction() {
+	public WOActionResults listAction() throws MessagingException {
     	if (!hasSession()) {
     		return (redirectToDefaultAction());
     	}
@@ -85,6 +86,18 @@ public class DirectAction extends WODirectAction
 		Integer batchSize = integerForFormValueForKey("mpp");
 		if (batchSize != null) {
 			session().setSelectedNumberPerPage(batchSize.intValue());
+		}
+
+		// -- Sorting
+		String sortKey = request().stringFormValueForKey("sort");
+		boolean reverseSort = "1".equals(request().stringFormValueForKey("rs"));
+
+		// If a valid sorting key was passed, sort accordingly:
+		if ((sortKey != null) && (MessageRow.isSortKeyValid(sortKey))) {
+			session().getMailSession().sortMessageRowsForFolderSortedWithKey(
+					session().getCurrentFolderName(),
+					sortKey,
+					reverseSort);
 		}
 
 		// Whether reload needed

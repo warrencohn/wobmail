@@ -5,8 +5,10 @@ ChangeNumPerPageSubmitGeneric: WOGenericElement {
 }
 
 DateSentHeaderHyperlink: WOHyperlink {
-	action = sortByDateSentAction;
+	directActionName = "list";
 	string = session.localizer.XWMList.DateSent;
+	?sort = sortKeyForDateSent;
+	?rs = reverseNextSortForDateSentAsInt;
 }
 
 DateSentString: WOString {
@@ -118,8 +120,10 @@ SelectString: XWMLocalizedString {
 }
 
 SenderHeaderHyperlink: WOHyperlink {
-	action = sortBySenderAction;
+	directActionName = "list";
 	string = session.localizer.XWMList.Sender;
+	?sort = sortKeyForSender;
+	?rs = reverseNextSortForSenderAsInt;
 }
 
 SenderString: WOString {
@@ -144,8 +148,10 @@ StartIndexString: WOString {
 }
 
 SubjectHeaderHyperlink: WOHyperlink {
-	action = sortBySubjectAction;
+	directActionName = "list";
 	string = session.localizer.XWMList.Subject;
+	?sort = sortKeyForSubject;
+	?rs = reverseNextSortForSubjectAsInt;
 }
 
 TotalNumberMessagesString: WOString {

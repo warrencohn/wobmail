@@ -89,6 +89,18 @@ public class MessageRow implements NSKeyValueCoding
 		isSelected = value;
 	}
 
+	// Static utility
+	/**
+	 * @param key The key to test.
+	 * @return true if <code>key</code> is one of the valid sorting keys
+	 */
+	public static boolean isSortKeyValid(String key) {
+		return ((key != null) &&
+				(DATE_SENT_SORT_FIELD.equals(key) ||
+				 SENDER_SORT_FIELD.equals(key) ||
+				 SUBJECT_SORT_FIELD.equals(key)));
+	}
+
 	// NSKeyValueCoding stuff
 	public void takeValueForKey(Object value, String key) {
 		NSKeyValueCoding.DefaultImplementation.takeValueForKey(this, value, key);
