@@ -70,6 +70,10 @@ public class XWMList extends XWMAbstractPage
 		return (context().page());
 	}
 
+	public String checkedStringIfCurrentMessageSelected() {
+		return (currentMessageRow.isSelected() ? "checked" : "");
+	}
+
 	protected NSArray<MessageRow> getSelectedMessageRows() throws MessagingException {
 		NSMutableArray<MessageRow> selectedMessageRows = new NSMutableArray<MessageRow>();
 		

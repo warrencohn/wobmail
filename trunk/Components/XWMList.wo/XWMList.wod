@@ -106,8 +106,12 @@ SelectAllMessagesHyperlink: WOHyperlink {
 	string = session.localizer.XWMList.All;
 }
 
-SelectMessageCheckbox: WOCheckBox {
-	checked = currentMessageChecked;
+SelectMessageCheckbox: WOGenericElement {
+	elementName = "input";
+	type = "checkbox";
+	name = "smi";
+	value = currentMessageIndexInFullArray;
+	otherTagString = checkedStringIfCurrentMessageSelected;
 }
 
 SelectNoMessagesHyperlink: WOHyperlink {
