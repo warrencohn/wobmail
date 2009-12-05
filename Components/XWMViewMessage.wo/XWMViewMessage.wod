@@ -47,13 +47,15 @@ PreviousMessageHyperlink: WOHyperlink {
 }
 
 ReplyHyperlink: WOHyperlink {
-	action = replyAction;
+	directActionName = "reply";
 	string = session.localizer.XWMViewMessage.Reply;
+	?mi = messageIndex;
 }
 
 ReplyToAllHyperlink: WOHyperlink {
-	action = replyToAllAction;
+	directActionName = "replyToAll";
 	string = session.localizer.XWMViewMessage.ReplyToAll;
+	?mi = messageIndex;
 }
 
 SentDateString: XWMLocalizedString {
