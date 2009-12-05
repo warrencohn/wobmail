@@ -65,30 +65,6 @@ public class XWMViewMessage extends XWMAbstractPage
 		return (page);
 	}
 
-	public WOComponent replyAction() throws MessagingException, IOException
-	{
-		return (replyAction(false));
-	}
-
-	protected WOComponent replyAction(boolean replyToAll) throws MessagingException, IOException
-	{
-		XWMCompose page = (XWMCompose)pageWithName(XWMCompose.class.getName());
-		page.setConstituentMessage((MimeMessage)getMessage().reply(replyToAll));
-		page.setEmailText(XWMUtils.quotedText(
-				XWMUtils.defaultStringContentForPart(getMessage()),
-				getMessage().getSentDate(),
-				XWMUtils.fromAddressesAsStringForMessage(getMessage()),
-				true));
-		page.propagateAddresses();
-
-		return (page);
-	}
-
-	public WOComponent replyToAllAction() throws MessagingException, IOException
-	{
-		return (replyAction(true));
-	}
-
 	// Data
 	/**
 	 * @return true if link for next message in same folder should be shown, false otherwise.
@@ -141,7 +117,7 @@ public class XWMViewMessage extends XWMAbstractPage
 	/**
 	 * @return the index of message as passed in earlier.
 	 */
-	protected int getMessageIndex() {
+	public int getMessageIndex() {
 		return (messageIndex.intValue());
 	}
 

@@ -160,7 +160,7 @@ public class XWMCompose extends XWMAbstractPage
 		constituentMessage().setSubject(subject);
 	}
 
-	void propagateAddresses() throws MessagingException
+	public void propagateAddresses() throws MessagingException
 	{
 		this.toAddresses = XWMUtils.internetAddressArrayToString(constituentMessage(), RecipientType.TO);
 		this.ccAddresses = XWMUtils.internetAddressArrayToString(constituentMessage(), RecipientType.CC);
