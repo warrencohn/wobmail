@@ -62,6 +62,7 @@ public class XWMUtils
 		if (originalText == null)
 			return (null);
 
+		// TODO: localize
 		StringBuffer sb = new StringBuffer();
 		if (isReply)
 			sb.append("\n\nOn ").append(date.toString()).append(", ").append(name).append(" wrote:\n> ");

@@ -41,30 +41,6 @@ public class XWMViewMessage extends XWMAbstractPage
 		return (pageWithName(XWMList.class.getName()));
 	}
 
-	public WOComponent forwardAction() throws MessagingException, IOException
-	{
-		XWMCompose page = (XWMCompose)pageWithName(XWMCompose.class.getName());
-		page.setConstituentMessage(getMailSession().obtainNewMimeMessage());
-		page.setSubject("Fwd: " + getMessage().getSubject());
-		page.setEmailText(XWMUtils.quotedText(
-				XWMUtils.defaultStringContentForPart(getMessage()),
-				getMessage().getSentDate(),
-				XWMUtils.fromAddressesAsStringForMessage(getMessage()),
-				false));
-		page.propagateAddresses();
-
-		return (page);
-	}
-
-	public WOComponent forwardAsAttachmentAction() throws MessagingException
-	{
-		XWMCompose page = (XWMCompose)pageWithName(XWMCompose.class.getName());
-		// TODO: check if type really matches
-		page.attachMimeMessage((MimeMessage)getMessage());
-
-		return (page);
-	}
-
 	// Data
 	/**
 	 * @return true if link for next message in same folder should be shown, false otherwise.

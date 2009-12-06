@@ -3,13 +3,15 @@ DefaultMessageContentString: WOString {
 }
 
 ForwardAsAttachmentHyperlink: WOHyperlink {
-	action = forwardAsAttachmentAction;
+	directActionName = "forwardAsAttachment";
 	string = session.localizer.XWMViewMessage.ForwardAsAttachment;
+	?mi = messageIndex;
 }
 
 ForwardHyperlink: WOHyperlink {
-	action = forwardAction;
+	directActionName = "forward";
 	string = session.localizer.XWMViewMessage.Forward;
+	?mi = messageIndex;
 }
 
 FromString: XWMLocalizedString {
