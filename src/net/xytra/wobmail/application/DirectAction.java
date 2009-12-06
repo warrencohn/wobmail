@@ -5,7 +5,6 @@ import java.io.IOException;
 
 import javax.mail.Message;
 import javax.mail.MessagingException;
-import javax.mail.internet.MimeMessage;
 
 import net.xytra.wobmail.components.FileDownloadPage;
 import net.xytra.wobmail.components.FileViewPage;
@@ -16,7 +15,6 @@ import net.xytra.wobmail.components.XWMViewMessage;
 import net.xytra.wobmail.export.ExportVisitable;
 import net.xytra.wobmail.manager.MailSession;
 import net.xytra.wobmail.misc.MessageRow;
-import net.xytra.wobmail.util.XWMUtils;
 
 import com.webobjects.appserver.WOActionResults;
 import com.webobjects.appserver.WODirectAction;
@@ -70,7 +68,7 @@ public class DirectAction extends WODirectAction
 		return (redirectToDefaultAction());
 	}
 
-	// Inside actions
+	// Inside actions from PageWrapper
     public WOActionResults composeAction() {
     	if (!hasSession()) {
     		return (redirectToDefaultAction());
@@ -115,23 +113,20 @@ public class DirectAction extends WODirectAction
 		return (list);
 	}
 
-	public WOActionResults replyAction() throws IOException, MessagingException {
+	// Inside actions from within message
+    public WOActionResults forwardAction() throws IOException, MessagingException {
+    	return (forwardAction(false));
+    }
+
+    public WOActionResults forwardAsAttachmentAction() throws IOException, MessagingException {
+    	return (forwardAction(true));
+    }
+
+    protected WOActionResults forwardAction(boolean forwardAsAttachment) throws IOException, MessagingException {
     	if (!hasSession()) {
     		return (redirectToDefaultAction());
     	}
 
-		return (replyAction(false));
-	}
-
-	public WOActionResults replyToAllAction() throws IOException, MessagingException {
-    	if (!hasSession()) {
-    		return (redirectToDefaultAction());
-    	}
-
-		return (replyAction(true));
-	}
-
-	protected WOActionResults replyAction(boolean replyToAll) throws IOException, MessagingException {
 		Integer messageIndex = integerForFormValueForKey("mi");
 
 		// If no message index was specified, just return list
@@ -139,17 +134,42 @@ public class DirectAction extends WODirectAction
 			return (listAction());
 		}
 
+		// TODO: Adapt for any folder
 		Message message = session().getMailSession().getMessageRowForFolder(
 				messageIndex.intValue(), MailSession.INBOX_FOLDER_NAME).getMessage();
 
 		XWMCompose page = (XWMCompose)pageWithName(XWMCompose.class.getName());
-		page.setConstituentMessage((MimeMessage)message.reply(replyToAll));
-		page.setEmailText(XWMUtils.quotedText(
-				XWMUtils.defaultStringContentForPart(message),
-				message.getSentDate(),
-				XWMUtils.fromAddressesAsStringForMessage(message),
-				true));
-		page.propagateAddresses();
+		page.forwardMessage(message, forwardAsAttachment);
+
+		return (page);
+    }
+
+	public WOActionResults replyAction() throws IOException, MessagingException {
+		return (replyAction(false));
+	}
+
+	public WOActionResults replyToAllAction() throws IOException, MessagingException {
+		return (replyAction(true));
+	}
+
+	protected WOActionResults replyAction(boolean replyToAll) throws IOException, MessagingException {
+    	if (!hasSession()) {
+    		return (redirectToDefaultAction());
+    	}
+
+		Integer messageIndex = integerForFormValueForKey("mi");
+
+		// If no message index was specified, just return list
+		if (messageIndex == null) {
+			return (listAction());
+		}
+
+		// TODO: Adapt for any folder
+		Message message = session().getMailSession().getMessageRowForFolder(
+				messageIndex.intValue(), MailSession.INBOX_FOLDER_NAME).getMessage();
+
+		XWMCompose page = (XWMCompose)pageWithName(XWMCompose.class.getName());
+		page.replyToMessage(message, replyToAll);
 
 		return (page);
 	}
