@@ -114,6 +114,28 @@ public class DirectAction extends WODirectAction
 	}
 
 	// Inside actions from within message
+	public WOActionResults deleteMessageAction() throws MessagingException {
+		if (!hasSession()) {
+			return (redirectToDefaultAction());
+		}
+
+		Integer messageIndex = integerForFormValueForKey("mi");
+
+		// If no message index was specified, just return list
+		if (messageIndex == null) {
+			return (listAction());
+		}
+
+		// TODO: Adapt for any folder
+		MessageRow messageRow = session().getMailSession().getMessageRowForFolderByIndex(
+				MailSession.INBOX_FOLDER_NAME, messageIndex);
+
+		session().getMailSession().moveMessageRowToFolder(messageRow, MailSession.TRASH_FOLDER_NAME);
+
+		// After deletion, return to list:
+		return (listAction());
+	}
+
     public WOActionResults forwardAction() throws IOException, MessagingException {
     	return (forwardAction(false));
     }
@@ -135,8 +157,8 @@ public class DirectAction extends WODirectAction
 		}
 
 		// TODO: Adapt for any folder
-		Message message = session().getMailSession().getMessageRowForFolder(
-				messageIndex.intValue(), MailSession.INBOX_FOLDER_NAME).getMessage();
+		Message message = session().getMailSession().getMessageRowForFolderByIndex(
+				MailSession.INBOX_FOLDER_NAME, messageIndex.intValue()).getMessage();
 
 		XWMCompose page = (XWMCompose)pageWithName(XWMCompose.class.getName());
 		page.forwardMessage(message, forwardAsAttachment);
@@ -165,8 +187,8 @@ public class DirectAction extends WODirectAction
 		}
 
 		// TODO: Adapt for any folder
-		Message message = session().getMailSession().getMessageRowForFolder(
-				messageIndex.intValue(), MailSession.INBOX_FOLDER_NAME).getMessage();
+		Message message = session().getMailSession().getMessageRowForFolderByIndex(
+				MailSession.INBOX_FOLDER_NAME, messageIndex.intValue()).getMessage();
 
 		XWMCompose page = (XWMCompose)pageWithName(XWMCompose.class.getName());
 		page.replyToMessage(message, replyToAll);

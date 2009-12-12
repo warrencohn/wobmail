@@ -9,11 +9,9 @@ import javax.mail.internet.MimeMessage;
 
 import net.xytra.wobmail.application.Session;
 import net.xytra.wobmail.export.ExportVisitor;
-import net.xytra.wobmail.manager.MailSession;
 import net.xytra.wobmail.misc.MessageRow;
 import net.xytra.wobmail.util.XWMUtils;
 
-import com.webobjects.appserver.WOComponent;
 import com.webobjects.appserver.WOContext;
 import com.webobjects.foundation.NSData;
 import com.webobjects.foundation.NSTimestamp;
@@ -29,16 +27,6 @@ public class XWMViewMessage extends XWMAbstractPage
 	{
 		super(context);
 		session().clearDownloadableObjects();
-	}
-
-	// Actions
-	public WOComponent moveToTrashAction() throws MessagingException
-	{
-		// Mark message as deleted and return to List
-		session().getMailSession().moveMessageRowToFolder(
-				getMessageRow(), MailSession.TRASH_FOLDER_NAME);
-
-		return (pageWithName(XWMList.class.getName()));
 	}
 
 	// Data
@@ -70,7 +58,7 @@ public class XWMViewMessage extends XWMAbstractPage
 	public MessageRow getMessageRow() throws MessagingException {
 		if (messageRow == null) {
 			System.err.println("messageIndex="+messageIndex);
-			messageRow = getMailSession().getMessageRowForFolder(getMessageIndex(), getMessageFolderName());
+			messageRow = getMailSession().getMessageRowForFolderByIndex(getMessageFolderName(), getMessageIndex());
 
 			// Ensure connection is still open and folder too:
 			getMailSession().keepConnectionOpenForMessage(messageRow.getMessage());

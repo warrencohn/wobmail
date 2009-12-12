@@ -27,8 +27,9 @@ MessageContent: XWMContent {
 }
 
 MoveToTrashHyperlink: WOHyperlink {
-	action = moveToTrashAction;
+	directActionName = "deleteMessage";
 	string = session.localizer.XWMViewMessage.MoveToTrash;
+	?mi = messageIndex;
 }
 
 NextMessageHyperlink: WOHyperlink {

@@ -14,7 +14,7 @@ public interface MailSession {
 
 	public void closeSession();
 
-	public MessageRow getMessageRowForFolder(int index, String folderName) throws MessagingException;
+	public MessageRow getMessageRowForFolderByIndex(String folderName, int index) throws MessagingException;
 
 	public NSArray<MessageRow> getMessageRowsForFolder(String folderName) throws MessagingException;
 
