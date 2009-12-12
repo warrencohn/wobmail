@@ -13,7 +13,9 @@ import net.xytra.wobmail.misc.MessageRow;
 
 import com.webobjects.eocontrol.EOSortOrdering;
 import com.webobjects.foundation.NSArray;
+import com.webobjects.foundation.NSDictionary;
 import com.webobjects.foundation.NSMutableArray;
+import com.webobjects.foundation.NSMutableDictionary;
 
 import er.extensions.foundation.ERXArrayUtilities;
 
@@ -58,32 +60,77 @@ public class Pop3MailSession extends AbstractMailSession
 	}
 
 	// Folder contents
-	public NSArray<MessageRow> getMessageRowsForFolder(String folderName) throws MessagingException {
-		return (getMessageRowsForFolder(folderName, false));
-	}
-
+	private NSDictionary<Integer, MessageRow> cachedInboxMessageRows = null;
+	private NSArray<Integer> cachedSortedInboxMessageNumbers = null;
 	private NSArray<MessageRow> cachedSortedInboxMessageRows = null;
 
+	/* (non-Javadoc)
+	 * @see net.xytra.wobmail.manager.MailSession#getMessageRowsForFolder(java.lang.String, boolean)
+	 * Return an array of MessageRow objects by using the cached ordered message numbers.
+	 */
 	public NSArray<MessageRow> getMessageRowsForFolder(String folderName, boolean forceReload) throws MessagingException {
 		if (!INBOX_FOLDER_NAME.equals(folderName)) {
 			throw (new MailSessionException("Cannot get MessageRow objects for specified folderName as such a folder does not exist"));
 		}
 
-		if (forceReload || (cachedSortedInboxMessageRows == null)) {
-			NSArray unsortedMessageRows = getFreshUnsortedMessageRowsForInbox();
-			cachedSortedInboxMessageRows = getMessageRowsSortedForFolder(unsortedMessageRows, INBOX_FOLDER_NAME);
+		if (forceReload || (cachedSortedInboxMessageNumbers == null) || (cachedSortedInboxMessageRows == null)) {
+			NSDictionary<Integer, MessageRow> messageRowsDictionary = getMessageRowDictionaryForFolder(folderName, forceReload);
+
+			if (cachedSortedInboxMessageNumbers == null) {
+				cachedSortedInboxMessageNumbers = getMessageNumbersSortedForFolder(messageRowsDictionary, folderName);
+	
+				// Invalidate cached inbox rows
+				cachedSortedInboxMessageRows = null;
+			}
+
+			if (cachedSortedInboxMessageRows == null) {
+				cachedSortedInboxMessageRows = getOrderedMessageRows(messageRowsDictionary, cachedSortedInboxMessageNumbers);
+			}
 		}
 
 		return (cachedSortedInboxMessageRows);
 	}
 
-	protected NSArray<MessageRow> getMessageRowsSortedForFolder(NSArray unsortedMessageRows, String folderName) {
-		return (ERXArrayUtilities.sortedArraySortedWithKey(
-				unsortedMessageRows,
+	protected NSArray<MessageRow> getOrderedMessageRows(NSDictionary<Integer, MessageRow> messageRows, NSArray<Integer> messageNumbers) {
+		NSMutableArray<MessageRow> orderedMessageRows = new NSMutableArray<MessageRow>();
+
+		Enumeration en1 = messageNumbers.objectEnumerator();
+		while (en1.hasMoreElements()) {
+			orderedMessageRows.addObject(messageRows.objectForKey(en1.nextElement()));
+		}
+
+		return (orderedMessageRows);
+	}
+
+	protected NSArray<Integer> getMessageNumbersSortedForFolder(NSDictionary<Integer, MessageRow> messageRows, String folderName) {
+		return ((NSArray<Integer>)ERXArrayUtilities.sortedArraySortedWithKey(
+				messageRows.allValues(),
 				sortKeyForFolder(folderName),
 				isReverseSortForFolder(folderName) ?
 						EOSortOrdering.CompareCaseInsensitiveDescending :
-						EOSortOrdering.CompareCaseInsensitiveAscending));
+						EOSortOrdering.CompareCaseInsensitiveAscending).valueForKey("messageNumber"));
+	}
+
+	protected NSDictionary<Integer, MessageRow> getMessageRowDictionaryForFolder(String folderName, boolean forceReload) throws MessagingException {
+		NSDictionary<Integer, MessageRow> dict = getCachedMessageRowDictionaryForFolder(folderName);
+
+		if (forceReload || (dict == null)) {
+			NSMutableDictionary<Integer, MessageRow> newMessageRowDict = new NSMutableDictionary<Integer, MessageRow>();
+
+			Enumeration<MessageRow> en1 = getFreshUnsortedMessageRowsForInbox().objectEnumerator();
+			while (en1.hasMoreElements()) {
+				MessageRow mr = en1.nextElement();
+				newMessageRowDict.setObjectForKey(mr, mr.getMessageNumber());
+			}
+
+			// Set the return value
+			dict = newMessageRowDict;
+
+			// Save our new dictionary
+			setCachedMessageRowDictionaryForFolder(dict, folderName);
+		}
+
+		return (dict);
 	}
 
 	protected NSArray<MessageRow> getFreshUnsortedMessageRowsForInbox() throws MessagingException {
@@ -106,17 +153,17 @@ public class Pop3MailSession extends AbstractMailSession
 		return (unsortedMessageRows);
 	}
 
-	protected NSArray<MessageRow> getCachedMessageRowArrayForFolder(String folderName) {
+	protected NSDictionary<Integer, MessageRow> getCachedMessageRowDictionaryForFolder(String folderName) {
 		if (MailSession.INBOX_FOLDER_NAME.equals(folderName)) {
-			return (cachedSortedInboxMessageRows);
+			return (cachedInboxMessageRows);
 		} else {
 			throw (new MailSessionException("Cannot set MessageRow objects for specified folderName as such a folder does not exist"));
 		}
 	}
 
-	protected void setCachedMessageRowArrayForFolder(NSArray<MessageRow> messageRows, String folderName) {
+	protected void setCachedMessageRowDictionaryForFolder(NSDictionary<Integer, MessageRow> messageRows, String folderName) {
 		if (MailSession.INBOX_FOLDER_NAME.equals(folderName)) {
-			cachedSortedInboxMessageRows = messageRows;
+			cachedInboxMessageRows = messageRows;
 		} else {
 			throw (new MailSessionException("Cannot set MessageRow objects for specified folderName as such a folder does not exist"));
 		}
@@ -140,17 +187,13 @@ public class Pop3MailSession extends AbstractMailSession
 		setReverseSortForFolder(reverseSort, folderName);
 
 		if (!currentSortKey.equals(sortKey)) {
-			// Sort key has changed, so re-sort according to new parameters:
-			setCachedMessageRowArrayForFolder(
-					getMessageRowsSortedForFolder(
-							getCachedMessageRowArrayForFolder(folderName),
-							folderName),
-					folderName);
+			// Sort key has changed, just invalidate cache
+			cachedSortedInboxMessageNumbers = null;
+			cachedSortedInboxMessageRows = null;
 		} else if (reverseSort != currentReverseSort) {
-			// Sort key hasn't changed.  Only reverse if that has changed:
-			setCachedMessageRowArrayForFolder(
-					ERXArrayUtilities.reverse(getCachedMessageRowArrayForFolder(folderName)),
-					folderName);
+			// Sort key hasn't changed; only reverse the order:
+			cachedSortedInboxMessageNumbers = ERXArrayUtilities.reverse(cachedSortedInboxMessageNumbers);
+			cachedSortedInboxMessageRows = ERXArrayUtilities.reverse(cachedSortedInboxMessageRows);
 		}
 	}
 
@@ -193,23 +236,31 @@ public class Pop3MailSession extends AbstractMailSession
 
 	// Messages
 	public void moveMessageRowsToFolder(NSArray<MessageRow> messageRows, String folderName) throws MessagingException {
-		throw (new MailSessionException("Unimplemented"));
-	}
+		if (!MailSession.TRASH_FOLDER_NAME.equals(folderName)) {
+			throw (new MailSessionException("Can only move to Trash in POP3.  Not allowed to use folderName="+folderName));
+		}
 
-	protected void moveMessageRowsToInbox(NSArray<MessageRow> messageRows) throws MessagingException {
-		setDeletedFlagOnMessageRows(messageRows, false);
+		moveMessageRowsToTrash(messageRows);
 	}
 
 	protected void moveMessageRowsToTrash(NSArray<MessageRow> messageRows) throws MessagingException {
-		setDeletedFlagOnMessageRows(messageRows, true);
+		deleteMessageRows(messageRows);
 	}
 
-	protected void setDeletedFlagOnMessageRows(NSArray<MessageRow> messageRows, boolean isDeleted) throws MessagingException {
+	synchronized protected void deleteMessageRows(NSArray<MessageRow> messageRows) throws MessagingException {
 		Enumeration<MessageRow> en1 = messageRows.objectEnumerator();
-
+		
 		while (en1.hasMoreElements()) {
-			en1.nextElement().setIsDeleted(isDeleted);
+			deleteMessageRow(en1.nextElement());
 		}
+	}
+
+	protected void deleteMessageRow(MessageRow messageRow) throws MessagingException {
+		messageRow.setIsDeleted(true);
+
+		cachedInboxMessageRows.remove(messageRow.getMessageNumber());
+		cachedSortedInboxMessageNumbers.remove(messageRow.getMessageNumber());
+		cachedSortedInboxMessageRows.remove(messageRow);
 	}
 
 }

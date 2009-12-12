@@ -162,7 +162,7 @@ public abstract class AbstractMailSession implements MailSession
 	protected abstract NSArray getOpenFolders();
 
 	// Messages
-	public MessageRow getMessageRowForFolder(int index, String folderName) throws MessagingException {
+	public MessageRow getMessageRowForFolderByIndex(String folderName, int index) throws MessagingException {
 		return (getMessageRowsForFolder(folderName).objectAtIndex(index));
 	}
 
