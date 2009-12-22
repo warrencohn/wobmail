@@ -1,3 +1,9 @@
+AjaxUploadButton: AjaxUploadButton {
+	filePath = fileName;
+	inputStream = fileData;
+	onComplete = "attachmentsListUpdate";
+}
+
 AttachmentHyperlink: WOHyperlink {
 	action = downloadAttachmentAction;
 	string = currentAttachmentName;
@@ -10,6 +16,11 @@ AttachmentsRepetition: WORepetition {
 
 AttachmentsString: XWMLocalizedString {
 	value = "XWMCompose.Attachments";
+}
+
+AttachmentsTrGeneric: AjaxUpdateContainer {
+	elementName = "tr";
+	id = "attachmentsList";
 }
 
 BccAddressesTextField: WOTextField {
@@ -56,10 +67,6 @@ PageWrapper: WOSwitchComponent {
 SendButton: WOSubmitButton {
 	action = sendAction;
 	value = session.localizer.XWMCompose.Send;
-}
-
-ShowAttachmentsConditional: ERXNonZeroConditional {
-	condition = attachments.count;
 }
 
 ShowErrorMessageConditional: ERXNonNullConditional {

@@ -8,10 +8,7 @@ import javax.mail.Part;
 import com.webobjects.foundation.NSData;
 import com.webobjects.foundation.NSTimestamp;
 
-import er.javamail.ERMailAttachment;
-import er.javamail.ERMailDataAttachment;
-
-public class PartExportVisitor implements MailExportVisitor
+public class PartExportVisitor extends MailAttachmentExportVisitor
 {
 	private Part part;
 
@@ -22,10 +19,6 @@ public class PartExportVisitor implements MailExportVisitor
 	public PartExportVisitor(Part part)
 	{
 		this.part = part;
-	}
-
-	public ERMailAttachment getMailAttachment() {
-		return (new ERMailDataAttachment(getFileName(), null, getFileContent()));
 	}
 
 	public NSData getFileContent()

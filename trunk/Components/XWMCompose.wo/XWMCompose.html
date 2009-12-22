@@ -6,12 +6,11 @@
 			<tr><td><webobject name="CcString" />:&nbsp;</td><td><webobject name="CcAddressesTextField" /></td></tr>
 			<tr><td><webobject name="BccString" />:&nbsp;</td><td><webobject name="BccAddressesTextField" /></td></tr>
 			<tr><td><webobject name="SubjectString" />:&nbsp;</td><td><webobject name="SubjectTextField" /></td></tr>
-			<webobject name="ShowAttachmentsConditional">
-				<tr>
-					<td valign="top"><webobject name="AttachmentsString" />:</td>
-					<td><webobject name="AttachmentsRepetition"><li><webobject name="AttachmentHyperlink" /> [<webobject name="DeleteAttachmentHyperlink" />]</li></webobject></td>
-				</tr>
+			<webobject name="AttachmentsTrGeneric">
+				<td valign="top"><webobject name="AttachmentsString" />:</td>
+				<td><webobject name="AttachmentsRepetition"><li><webobject name="AttachmentHyperlink" /> [<webobject name="DeleteAttachmentHyperlink" />]</li></webobject></td>
 			</webobject>
+			<tr><td colspan="2"><webobject name="AjaxUploadButton" /></td></tr>
 			<tr><td colspan="2"><webobject name="Textbox" /></td></tr>
 			<tr><td align="right" colspan="2"><webobject name="SendButton" /><webobject name="CancelButton" /></td></tr>
 		</table>
